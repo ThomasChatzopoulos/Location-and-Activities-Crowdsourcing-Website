@@ -21,7 +21,7 @@ if(isset($_POST['login_button'])){
     mysqli_stmt_store_result($stmt);
     if(mysqli_stmt_num_rows($stmt) !=1){
       printf("Number of rows: %d.\n", mysqli_stmt_num_rows($stmt));
-      //   header("Location: index.php?error=user_doesnt_exist");
+      header("Location: index.php?error=user_doesnt_exist");
       exit();
     }
   }
@@ -36,6 +36,7 @@ if(isset($_POST['login_button'])){
   else{
     session_start();
     $_SESSION['usrname'] = $username;
+    //TODO maybe more session variables name-surname-email
     header("Location: modulepage.php?login=success");
     exit();
   }

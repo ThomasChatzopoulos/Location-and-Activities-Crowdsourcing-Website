@@ -34,7 +34,7 @@ else{
       exit();
     }
     else{
-      $sql = "INSERT INTO `user` (userId, name, surname, username, password, email) values (?, ?, ?, ?, ?, ?)";
+      $sql = "INSERT INTO `user` (name, surname, username, password, email) values (?, ?, ?, ?, ?)";
       $stmt = mysqli_stmt_init($conn);
       if(!mysqli_stmt_prepare($stmt, $sql)){
         header("Location: SignUpPage.php?error=sqlerror");
@@ -42,9 +42,8 @@ else{
       }
       else{
         mysqli_stmt_prepare($stmt, $sql);
-        $userid = "4";
         $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-        mysqli_stmt_bind_param($stmt, 'isssss', $userid, $fname, $lname, $username, $password, $email);
+        mysqli_stmt_bind_param($stmt, 'sssss', $fname, $lname, $username, $hashedPwd, $email);
         if(!mysqli_stmt_execute($stmt)){
             die(mysqli_error($conn));
         }

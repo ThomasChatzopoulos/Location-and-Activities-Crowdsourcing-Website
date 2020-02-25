@@ -4,7 +4,7 @@ use `web_db`;
 
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `userId` INT(11) NOT NULL AUTO_INCREMENT,
+  `userId` VARCHAR(255) NOT NULL ,
   `name` VARCHAR(25) NOT NULL,
   `surname` VARCHAR(30) NOT NULL,
   `username` VARCHAR(45) NOT NULL,
@@ -16,7 +16,7 @@ DEFAULT CHARACTER SET = utf8;
 
 
 CREATE TABLE IF NOT EXISTS `uploaded_by_user` (
-  `userId` INT(11) NOT NULL,
+  `userId` VARCHAR(255) NOT NULL,
   `uploadTime` DATETIME NOT NULL,
   `jsonFIleName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`userId`, `uploadTime`),
@@ -29,7 +29,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `userMapData` (
-  `userId` INT(11) NOT NULL,
+  `userId` VARCHAR(255) NOT NULL,
   `timestampMs` INT(11) NOT NULL,
   `latitude` INT(11) NOT NULL,
   `longitude` INT(11) NOT NULL,
@@ -49,7 +49,7 @@ DEFAULT CHARACTER SET = utf8;
 
 
 CREATE TABLE IF NOT EXISTS `user_activity` (
-  `userMapData_userId` INT(11) NOT NULL,
+  `userMapData_userId` VARCHAR(255) NOT NULL,
   `userMapData_timestampMs` INT(11) NOT NULL,
   `activity_timestamp` INT(11) NOT NULL,
   `inVehicle` INT(11) NULL DEFAULT NULL,

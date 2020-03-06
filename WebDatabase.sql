@@ -30,7 +30,7 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `userMapData` (
   `userId` VARCHAR(255) NOT NULL,
-  `timestampMs` INT(11) NOT NULL,
+  `timestampMs` VARCHAR(255) NOT NULL,
   `latitude` INT(11) NOT NULL,
   `longitude` INT(11) NOT NULL,
   `accuracy` INT(11) NOT NULL,
@@ -50,16 +50,16 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `user_activity` (
   `userMapData_userId` VARCHAR(255) NOT NULL,
-  `userMapData_timestampMs` INT(11) NOT NULL,
-  `activity_timestamp` INT(11) NOT NULL,
-  `inVehicle` INT(11) NULL DEFAULT NULL,
-  `onBicycle` INT(11) NULL DEFAULT NULL,
-  `onFoot` INT(11) NULL DEFAULT NULL,
-  `running` INT(11) NULL DEFAULT NULL,
-  `still` INT(11) NULL DEFAULT NULL,
-  `tilting` INT(11) NULL DEFAULT NULL,
-  `unknown` INT(11) NULL DEFAULT NULL,
-  `walking` INT(11) NULL DEFAULT NULL,
+  `userMapData_timestampMs` VARCHAR(255) NOT NULL,
+  `activity_timestamp` VARCHAR(255) NOT NULL,
+  `IN_VEHICLE` INT(11) NULL DEFAULT NULL,
+  `ON_BICYCLE` INT(11) NULL DEFAULT NULL,
+  `ON_FOOT` INT(11) NULL DEFAULT NULL,
+  `RUNNING` INT(11) NULL DEFAULT NULL,
+  `STILL` INT(11) NULL DEFAULT NULL,
+  `TILTING` INT(11) NULL DEFAULT NULL,
+  `UNKNOWN` INT(11) NULL DEFAULT NULL,
+  `WALKING` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`userMapData_userId`, `userMapData_timestampMs`, `activity_timestamp`),
   CONSTRAINT `fk_useractivity_userMapData1`
     FOREIGN KEY (`userMapData_userId` , `userMapData_timestampMs`)

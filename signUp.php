@@ -12,19 +12,18 @@ if(isset($_POST['signup_button'])){
   $fname = $_POST['fname'];
   $lname = $_POST['lname'];
   $email = $_POST['email'];
-  $pattern ="^.*(?=.{8,})(?=.*\d)(?=.*[A-Z])(?=.*[#$*&@!]+).*$" ;
+  $pattern ="/^.*(?=.{8,})(?=.*\d)(?=.*[a-zA-Z])(?=.*[#$*&@!]+).*$/" ;
 
 if($password != $Rpassword){
   header("Location: SignUpPage.php?error_password&username =".$username."&email=".$email);
   exit();
 }
-
-elseif (!preg_match($pattern,$Rpassword)) {
-  header("Location: SignUpPage.php?error_password=not_valid");
+elseif (!preg_match($pattern,$password)) {
+  header("Location: SignUpPage.php?".$password."error_password=not_valid");
   exit();
 }
 else{
-  $sql = "SELECT userId from `user` where userId =?";
+  $sql = "SELECT userId from `user` where userId =?";   //Admin$1aaaa
   $stmt = mysqli_stmt_init($conn);
   if(!mysqli_stmt_prepare($stmt, $sql)){
     header("Location: SignUpPage.php?error=sqlerror");

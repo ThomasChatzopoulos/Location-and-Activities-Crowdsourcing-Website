@@ -80,20 +80,28 @@ BEGIN
 
 	IF NEW.ON_BICYCLE > 0 THEN
 		SET @eco_score=@eco_score+NEW.ON_BICYCLE;
+  END IF;
 	IF NEW.ON_FOOT > 0 THEN
 		SET @eco_score=@eco_score+NEW.ON_FOOT;
+  END IF;
 	IF NEW.RUNNING > 0 THEN
 		SET @eco_score=@eco_score+NEW.RUNNING;
+  END IF;
 	IF NEW.STILL > 0 THEN
 		SET @eco_score=@eco_score+NEW.STILL;
+  END IF;
 	IF NEW.TILTING > 0 THEN
 		SET @eco_score=@eco_score+NEW.TILTING;
+  END IF;
 	IF NEW.WALKING > 0 THEN
 		SET @eco_score=@eco_score+NEW.WALKING;
+  END IF;
 	IF NEW.UNKNOWN > 0 THEN
 		SET @eco_score=@eco_score+(NEW.UNKNOWN DIV 2);
+  END IF;
 
 	IF @eco_score>50 THEN
 		SET NEW.eco=1;
+  END IF;
 END$
 DELIMITER ;

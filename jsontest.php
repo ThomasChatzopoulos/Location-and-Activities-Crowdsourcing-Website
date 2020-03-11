@@ -6,6 +6,7 @@ $lat1=38.230462;
 $lng1=21.753150;
 $distance = 10;
 $mysql_timestamp = date ("Y-m-d H:i:s");
+//file name from starting page
 $filename = "data.json";
 $userId = "WmdUlzEQH197+N7AWPy4VmlsOUVTaHBvdTVpbGNxVXZUdG9XS3c9PQ==";
 $query = sprintf("INSERT INTO `uploaded_by_user` (jsonFIleName, uploadTime, userId) VALUES ('%s', '%s', '%s')",

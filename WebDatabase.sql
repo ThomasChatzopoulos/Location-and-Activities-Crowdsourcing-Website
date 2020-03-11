@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `user_activity` (
   `userMapData_userId` VARCHAR(255) NOT NULL,
   `userMapData_timestampMs` VARCHAR(255) NOT NULL,
   `activity_timestamp` VARCHAR(255) NOT NULL,
+  `eco` INT(1) NULL DEFAULT 0,
   `IN_VEHICLE` INT(11) NULL DEFAULT NULL,
   `ON_BICYCLE` INT(11) NULL DEFAULT NULL,
   `ON_FOOT` INT(11) NULL DEFAULT NULL,
@@ -68,3 +69,31 @@ CREATE TABLE IF NOT EXISTS `user_activity` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+DELIMITER $
+CREATE TRIGGER eco_check
+BEFORE INSERT ON user_activity
+FOR EACH ROW
+BEGIN
+	DECLARE eco_score INT(4);
+	SET @eco_score=0;
+
+	IF NEW.ON_BICYCLE > 0 THEN
+		SET @eco_score=@eco_score+NEW.ON_BICYCLE;
+	IF NEW.ON_FOOT > 0 THEN
+		SET @eco_score=@eco_score+NEW.ON_FOOT;
+	IF NEW.RUNNING > 0 THEN
+		SET @eco_score=@eco_score+NEW.RUNNING;
+	IF NEW.STILL > 0 THEN
+		SET @eco_score=@eco_score+NEW.STILL;
+	IF NEW.TILTING > 0 THEN
+		SET @eco_score=@eco_score+NEW.TILTING;
+	IF NEW.WALKING > 0 THEN
+		SET @eco_score=@eco_score+NEW.WALKING;
+	IF NEW.UNKNOWN > 0 THEN
+		SET @eco_score=@eco_score+(NEW.UNKNOWN DIV 2);
+
+	IF @eco_score>50 THEN
+		SET NEW.eco=1;
+END$
+DELIMITER ;

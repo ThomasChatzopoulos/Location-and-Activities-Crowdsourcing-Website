@@ -4,25 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>admin2-3Page</title>
+    <title>adminPage</title>
   </head>
   <body>
     <h1>hello</h1>
 
-If you want to select a range for any of the values (Year, Month, Day, Hour) please select 2 options from the boxes <br>
-Hold down the Ctrl (Windows) or Command (Mac) button to select multiple options <br> <br>
-
 <form action="admin.php" method="POST">
-<label for="yearBox[]">Select a year</label>
-
-
-  <input type="checkbox" name="yearsCheckBox" value="Yes" onclick="MyFunction();">
-
-
-
-<select multiple = "multiple" name="yearBox[]" required>
+<label for="startyearBox">Start year:</label>
+<select name="startyearBox">
+<option value=""></option>
 <?php
-  for ($i=1950; $i <=2025; $i++) {
+  for ($i=1980; $i <=2020; $i++) {
     ?>
       <option value = "<?=$i?>"> <?=$i?> </option>
     <?php
@@ -30,38 +22,89 @@ Hold down the Ctrl (Windows) or Command (Mac) button to select multiple options 
 ?>
 <option value ="all"> All </option>
 </select>
-<br>
-<label for="monthBox[]">Select a month</label>
-<select multiple = "multiple" name = "monthBox[]" required>
-  <option value = "1"> January</option>
-  <option value = "2"> February</option>
-  <option value = "3"> March</option>
-  <option value = "4"> April</option>
-  <option value = "5"> May</option>
-  <option value = "6"> June</option>
-  <option value = "7"> July</option>
-  <option value = "8"> August</option>
-  <option value = "9"> September</option>
+
+<label for="endyearBox">End year:</label>
+<select name="endyearBox">
+<option value=""></option>
+<?php
+  for ($i=1980; $i <=2020; $i++) {
+    ?>
+      <option value = "<?=$i?>"> <?=$i?> </option>
+    <?php
+  }
+?>
+</select>
+
+<br>Check to select All years: <input type="checkbox" name="allYearsCheckBox" value="Yes">
+
+<br> <br>
+<label for="startmonthBox">Start month:</label>
+<select name = "startmonthBox" >
+  <option value=""></option>
+  <option value = "01"> January</option>
+  <option value = "02"> February</option>
+  <option value = "03"> March</option>
+  <option value = "04"> April</option>
+  <option value = "05"> May</option>
+  <option value = "06"> June</option>
+  <option value = "07"> July</option>
+  <option value = "08"> August</option>
+  <option value = "09"> September</option>
   <option value = "10"> October</option>
   <option value = "11"> November</option>
   <option value = "12"> December</option>
-  <option value ="all"> All </option>
 </select>
-<br>
-<label for="dayBox[]">Select a Day</label>
-<select multiple = "multiple" name="dayBox[]" required>
-  <option value ="1"> Monday  </option>
-  <option value ="2"> Tuesday </option>
-  <option value ="3"> Wednesday </option>
-  <option value ="4"> Thursday </option>
-  <option value ="5"> Friday </option>
-  <option value ="6"> Saturday </option>
-  <option value ="7"> Sunday </option>
-  <option value ="all"> All </option>
+
+<label for="endmonthBox">End month:</label>
+<select name = "endmonthBox" >wq
+  <option value=""></option>
+  <option value = "01"> January</option>
+  <option value = "02"> February</option>
+  <option value = "03"> March</option>
+  <option value = "04"> April</option>
+  <option value = "05"> May</option>
+  <option value = "06"> June</option>
+  <option value = "07"> July</option>
+  <option value = "08"> August</option>
+  <option value = "09"> September</option>
+  <option value = "10"> October</option>
+  <option value = "11"> November</option>
+  <option value = "12"> December</option>
 </select>
-<br>
-<label for="hourBox[]">Select an hour</label>
-<select multiple = "multiple" name="hourBox[]" required>
+
+<br>Check to select all months: <input type="checkbox" name="allMonthsCheckBox" value="Yes">
+
+<br> <br>
+<label for="startdayBox">Start Day:</label>
+<select name="startdayBox">
+  <option value=""></option>
+  <option value ="2"> Monday  </option>
+  <option value ="3"> Tuesday </option>
+  <option value ="4"> Wednesday </option>
+  <option value ="5"> Thursday </option>
+  <option value ="6"> Friday </option>
+  <option value ="7"> Saturday </option>
+  <option value ="1"> Sunday </option>
+</select>
+
+<label for="enddayBox">End Day:</label>
+<select name="enddayBox">
+  <option value=""></option>
+  <option value ="2"> Monday  </option>
+  <option value ="3"> Tuesday </option>
+  <option value ="4"> Wednesday </option>
+  <option value ="5"> Thursday </option>
+  <option value ="6"> Friday </option>
+  <option value ="7"> Saturday </option>
+  <option value ="1"> Sunday </option>
+</select>
+
+<br>Check to select all Days: <input type="checkbox" name="allDaysCheckBox" value="Yes">
+
+<br> <br>
+<label for="starthourBox">Start hour:</label>
+<select  name="starthourBox">
+  <option value=""></option>
 <?php
   for ($i=0; $i <=23; $i++) {
     ?>
@@ -69,32 +112,58 @@ Hold down the Ctrl (Windows) or Command (Mac) button to select multiple options 
     <?php
   }
 ?>
-<option value ="all"> All </option>
 </select>
-<br>
-<label for="activityBox[]">Select an activity:</label>
-<select multiple = "multiple" name = "activityBox[]" required>
-  <option value = "Vehicle"> In Vehicle </option>
-  <option value = "Bicycle"> On Bicycle </option>
-  <option value = "Onfoot"> On foot </option>
-  <option value = "Running"> Running </option>
-  <option value = "Still"> Still </option>
-  <option value = "Tilting"> Tilting </option>
-  <option value = "Unknown"> Unknown </option>
-  <option value = "Walking"> Walking </option>
-  <option value ="all"> All </option>
+
+<label for="endhourBox">End hour:</label>
+<select  name="endhourBox">
+<option value=""></option>
+<?php
+  for ($i=0; $i <=23; $i++) {
+    ?>
+      <option> <?=$i?> </option>
+    <?php
+  }
+?>
 </select>
+
+
+<br>Check to select all hours <input type="checkbox" name="allHoursCheckBox" value="Yes">
+
+<br><br>
+<label for="activityBox[]">Select one or more activities</label>
+<select multiple = "multiple" name = "activityBox[]" >
+  <option value = "IN_VEHICLE"> In Vehicle </option>
+  <option value = "ON_BICYCLE"> On Bicycle </option>
+  <option value = "ON_FOOT"> On foot </option>
+  <option value = "RUNNING"> Running </option>
+  <option value = "STILL"> Still </option>
+  <option value = "TILTING"> Tilting </option>
+  <option value = "UNKNOWN"> Unknown </option>
+  <option value = "WALKING"> Walking </option>
+  <option value = "IN_ROAD_VEHICLE"> In Road Vehicle </option>
+  <option value = "IN_RAIL_VEHICLE"> In Rail Vehicle </option>
+  <option value = "IN_FOUR_WHEELER_VEHICLE"> In Four-wheeler Vehicle</option>
+  <option value = "IN_CAR"> In Car </option>
+</select>
+
+<br>Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" value="Yes">
 
 <br> <br>
-<button type="submit" name = "heatmap_button">Submit</button>
+<button type="submit" name = "dates_button">Submit</button>
 </form>
 
-<form>
+
+<form action = "admin.php" method="post">
 <button type="submit" name="delete_button">Erase Database</button>
 </form>
 
+<?php // TODO: HANDLE THE BUTTON ?>
+<form action="admin.php" method="post">
+  <button type="submit" name="export_button" >Export Data</button>
+</form>
+
+<button type="button" name="button2" style="display:none">ERASE</button>
 
 
-
-  </body>
+</body>
 </html>

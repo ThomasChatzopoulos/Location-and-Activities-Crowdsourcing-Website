@@ -41,6 +41,11 @@ if (isset($_POST['dates_button'])) {  //submit button
     }else {
       $startmonth = $_POST['startmonthBox'];
       $endmonth = $_POST['endmonthBox'];
+
+      if ($startmonth > $endmonth) {
+        header("Location: adminPage.php?error=startmont>endmonth");
+      }
+
       echo ("Start month = $startmonth <br>");
       echo("End month = $endmonth <br>");
     }
@@ -57,6 +62,11 @@ if (isset($_POST['dates_button'])) {  //submit button
     }else {
       $startday = $_POST['startdayBox'];
       $endday = $_POST['enddayBox'];
+
+      if ($startday > $endday) {
+        header("Location: adminPage.php?error=startday>endday");
+      }
+
       echo ("Start day = $startday <br>");
       echo ("End day = $endday <br>");
     }
@@ -73,6 +83,11 @@ if (isset($_POST['dates_button'])) {  //submit button
     }else {
       $starthour = $_POST['starthourBox'];
       $endhour = $_POST['endhourBox'];
+
+      if ($startYear > $endYear) {
+        header("Location: adminPage.php?error=starthour>endhour");
+      }
+
       echo("Start Hour = $starthour <br>");
       echo("End Hour = $endhour <br>");
     }
@@ -108,45 +123,52 @@ for ($i=0; $i < $nactivities ; $i++) {
 
 $currentyear = $startYear;
 $datetimes = array();
-while($currentyear <= $endYear){
+while($currentyear <= $endYear){ // για κάθε χρόνο στο range
   $currentmonth = $startmonth;
-  while($currentmonth <= $endmonth){
-    $starttemp = "$currentyear-$currentmonth-01";
-    $sql = "select dayofweek('$starttemp') as Day";
-    $dayofweek = mysqli_query($conn,$sql);
-    if(!$dayofweek){
-      echo "hello";
-      exit();
-    }
-    $difference = 0;
-    while($row = mysqli_fetch_assoc($dayofweek)){ //to get day of the week 1st day of the start month
-      $difference = $startday - $row['Day'];
-    }
+  while($currentmonth <= $endmonth){ //για κάθε μήνα στο range
+    $currentday = $startday;
+    while($currentday <= $endday)
+    {
 
-    if($difference < 0 ){
-      $difference += 7;
-    }
-
-    $totalmonthdays = 0;
-    if($currentmonth == '01' || $currentmonth=='03' || $currentmonth=='05' || $currentmonth=='07' || $currentmonth=='08' || $currentmonth=='10' || $currentmonth=='12'){
-      $totalmonthdays = 31;
-    }elseif($currentmonth == '02'){ //February
-      if($currentyear%4 == 0){ //disekto etos
-        $totalmonthdays = 29;
-      }else {
-        $totalmonthdays = 28;
+      $starttemp = "$currentyear-$currentmonth-01";
+      $sql = "select dayofweek('$starttemp') as Day";
+      $dayofweek = mysqli_query($conn,$sql);
+      if(!$dayofweek){
+        echo "hello";
+        exit();
       }
-    }else {
-      $totalmonthdays = 30;
-    }
+      $difference = 0;
+      while($row = mysqli_fetch_assoc($dayofweek)){ //βρες μέρα της βδομάδας για την 1η μέρα του τρέχοντα μήνα
+        $difference = $currentday - $row['Day'];
+      }
 
-    for($i=1+$difference; $i<=$totalmonthdays; $i+=7){ //pare oles tis trites tou mina px an exw epileksei triti
-      array_push($datetimes, "$currentyear-$currentmonth-$i $starthour:00");
-      array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:00");
+      if($difference < 0 ){ //
+        $difference += 7;
+      }
+
+      //βρες συνολικές μέρες του τρέχοντα μήνα
+      $totalmonthdays = 0;
+      if($currentmonth == '01' || $currentmonth=='03' || $currentmonth=='05' || $currentmonth=='07' || $currentmonth=='08' || $currentmonth=='10' || $currentmonth=='12'){
+        $totalmonthdays = 31;
+      }elseif($currentmonth == '02'){ //February
+        if($currentyear%4 == 0){ //δισεκτο ετος
+          $totalmonthdays = 29;
+        }else {
+          $totalmonthdays = 28;
+        }
+      }else {
+        $totalmonthdays = 30;
+      }
+
+      //προσθέτω το difference έτσι ώστε να βρω την πρώτη τρίτη του μήνα (αν εχω επιλέξει τρίτη κλπ) και μετά με βήμα 7 θα βρει όλες τις τρίτες του μήνα
+      for($i=1+$difference; $i<=$totalmonthdays; $i+=7){
+        array_push($datetimes, "$currentyear-$currentmonth-$i $starthour:00:00"); //αποθηκεύω στο array ανα 2 για τα timesamps
+        array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:00:00");
+      }
+      $currentday++;
     }
     $currentmonth++;
   }
-
   $currentyear++;
 }
 

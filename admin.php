@@ -210,15 +210,13 @@ for($i=1+$difference; $i<=$totalmonthdays; $i+=7){ //pare oles tis trites tou mi
 echo("start month has $k $day s<br>");
 echo("dates of $day : <br>");
 for($i=0; $i<count($startdates); $i++){
-  echo("$startYear-$startmonth-$startdates[$i] <br>");
+  echo("$startYear-$startmonth-$startdates[$i] $starthour:00 - $endhour:00 <br>");
 }
-for ($i=0; $i < count($startdates) ; $i++) {
-  array_push($startdatetimes ,"$startYear-$startmonth-$startdates[$i] $starthour:00");
-}
-echo("start datetime for selected days: <br>");
 for($i=0; $i<count($startdates); $i++){
-  echo("$startdatetimes[$i] <br>");
+  array_push($startdatetimes, "$startYear-$startmonth-$startdates[$i] $starthour:00");
+  array_push($startdatetimes, "$startYear-$startmonth-$startdates[$i] $endhour:00");
 }
+
 
 echo("<br><br>");
 
@@ -324,15 +322,22 @@ for($i=1+$difference; $i<=$totalmonthdays; $i+=7){ //pare oles tis trites tou mi
 echo("end month has $k $day s<br>");
 echo("dates of $day : <br>");
 for($i=0; $i<count($enddates); $i++){
-  echo("$endYear-$endmonth-$enddates[$i] <br>");
+  echo("$endYear-$endmonth-$enddates[$i] $starthour:00 - $endhour:00<br>");
 }
-for ($i=0; $i < count($enddates); $i++) {
-  array_push($enddatetimes ,"$endYear-$endmonth-$enddates[$i] $endhour:00");
+for($i=0; $i<count($enddates); $i++){
+  array_push($enddatetimes, "$endYear-$endmonth-$enddates[$i] $starthour:00");
+  array_push($enddatetimes, "$endYear-$endmonth-$enddates[$i] $endhour:00");
 }
-echo("end datetime for selected days: <br>");
-for ($i=0; $i < count($enddatetimes) ; $i++) {
+
+echo("<br><br>");
+for($i=0; $i<count($startdatetimes); $i++){
+  echo("$startdatetimes[$i] <br>");
+}
+echo("<br>");
+for($i=0; $i<count($enddatetimes); $i++){
   echo("$enddatetimes[$i] <br>");
 }
+
 
 // TODO: convert date me wra se timestamp (exei etoimes entoles i MYSQL)
 // TODO: na valw ta select stin MYSQL gia na pairnei ta swsta timestamps (8a einai tosa timesamps oses kai oi trites tou mina px an exw epileksei triti)

@@ -16,7 +16,7 @@
 <?php
   for ($i=1980; $i <=2020; $i++) {
     ?>
-      <option value = "<?=$i?>"> <?=$i?> </option>
+      <option value = <?=$i?>> <?=$i?> </option>
     <?php
   }
 ?>
@@ -29,7 +29,7 @@
 <?php
   for ($i=1980; $i <=2020; $i++) {
     ?>
-      <option value = "<?=$i?>"> <?=$i?> </option>
+      <option value = <?=$i?>> <?=$i?> </option>
     <?php
   }
 ?>

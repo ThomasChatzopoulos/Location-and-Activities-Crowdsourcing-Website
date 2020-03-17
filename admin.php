@@ -105,239 +105,55 @@ echo("<br> $startYear - $endYear / $startmonth - $endmonth / $startday - $endday
 for ($i=0; $i < $nactivities ; $i++) {
   echo(" $activities[$i] ,");
 }
-echo "<br><br>";
 
+$currentyear = $startYear;
+$datetimes = array();
+while($currentyear <= $endYear){
+  $currentmonth = $startmonth;
+  while($currentmonth <= $endmonth){
+    $starttemp = "$currentyear-$currentmonth-01";
+    $sql = "select dayofweek('$starttemp') as Day";
+    $dayofweek = mysqli_query($conn,$sql);
+    if(!$dayofweek){
+      echo "hello";
+      exit();
+    }
+    $difference = 0;
+    while($row = mysqli_fetch_assoc($dayofweek)){ //to get day of the week 1st day of the start month
+      $difference = $startday - $row['Day'];
+    }
 
-echo("first day of start month : $startYear-$startmonth-01<br><br>");
+    if($difference < 0 ){
+      $difference += 7;
+    }
 
-$starttemp = "$startYear-$startmonth-01";
-$sql = "select dayofweek('$starttemp') as Day";
-$dayofweek = mysqli_query($conn,$sql);
-if(!$dayofweek){
-  echo "hello";
-  exit();
-}
-$day ="";
-$difference = 0;
-while($row = mysqli_fetch_assoc($dayofweek)){ //to get day of the week 1st day of the start month
-  switch ("$row[Day]") {
-    case 1:
-      $day = "Sunday";
-      break;
-    case 2:
-      $day = "Monday";
-      break;
-    case 3:
-      $day = "Tuesday";
-      break;
-    case 4:
-      $day = "Wednesday";
-      break;
-    case 5:
-      $day = "Thursday";
-      break;
-    case 6:
-      $day = "Friday";
-      break;
-    case 7:
-      $day = "Saturday";
-      break;
-    default:
-      echo "failed";
-      break;
-  }
-  echo("day of the week at $starttemp is : $day<br>");
-  $difference = $startday - $row['Day'];
-}
-switch ($startday) {
-  case '1':
-    $day = "Sunday";
-    break;
-  case '2':
-    $day = "Monday";
-    break;
-  case '3':
-    $day = "Tuesday";
-    break;
-  case '4':
-    $day = "Wednesday";
-    break;
-  case '5':
-    $day = "Thursday";
-    break;
-  case '6':
-    $day = "Friday";
-    break;
-  case '7':
-    $day = "Saturday";
-    break;
-  default:
-    echo "failed";
-    break;
+    $totalmonthdays = 0;
+    if($currentmonth == '01' || $currentmonth=='03' || $currentmonth=='05' || $currentmonth=='07' || $currentmonth=='08' || $currentmonth=='10' || $currentmonth=='12'){
+      $totalmonthdays = 31;
+    }elseif($currentmonth == '02'){ //February
+      if($currentyear%4 == 0){ //disekto etos
+        $totalmonthdays = 29;
+      }else {
+        $totalmonthdays = 28;
+      }
+    }else {
+      $totalmonthdays = 30;
+    }
+
+    for($i=1+$difference; $i<=$totalmonthdays; $i+=7){ //pare oles tis trites tou mina px an exw epileksei triti
+      array_push($datetimes, "$currentyear-$currentmonth-$i $starthour:00");
+      array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:00");
+    }
+    $currentmonth++;
   }
 
-echo("your day is: $day<br>");
-if($difference < 0 ){
-  $difference += 7;
-}
-
-echo("You need to add $difference day(s) to get to the start day you selected <br>");
-
-$totalmonthdays = 0;
-if($startmonth == '01' || $startmonth=='03' || $startmonth=='05' || $startmonth=='07' || $startmonth=='08' || $startmonth=='10' || $startmonth=='12'){
-  echo("start month has 31 days <br>");
-  $totalmonthdays = 31;
-}elseif($startmonth == '02'){ //February
-  if($startYear%4 == 0){ //disekto etos
-    echo("Start month has 29 days <br>");
-    $totalmonthdays = 29;
-  }else {
-    echo("start month has 28 days <br>");
-    $totalmonthdays = 28;
-  }
-}else {
-  echo("start month has 30 days <br>");
-  $totalmonthdays = 30;
-}
-
-$k =0;
-$startdates = array();
-$startdatetimes = array();
-for($i=1+$difference; $i<=$totalmonthdays; $i+=7){ //pare oles tis trites tou mina px an exw epileksei triti
-  $k++;
-  array_push($startdates, $i);
-}
-echo("start month has $k $day s<br>");
-echo("dates of $day : <br>");
-for($i=0; $i<count($startdates); $i++){
-  echo("$startYear-$startmonth-$startdates[$i] $starthour:00 - $endhour:00 <br>");
-}
-for($i=0; $i<count($startdates); $i++){
-  array_push($startdatetimes, "$startYear-$startmonth-$startdates[$i] $starthour:00");
-  array_push($startdatetimes, "$startYear-$startmonth-$startdates[$i] $endhour:00");
-}
-
-
-echo("<br><br>");
-
-echo("first day of end month : $endYear-$endmonth-01<br><br>");
-
-$endtemp = "$endYear-$endmonth-01";
-$sql = "select dayofweek('$endtemp') as Day";
-$dayofweek = mysqli_query($conn,$sql);
-if(!$dayofweek){
-  echo "hello";
-  exit();
-}
-$day ="";
-$difference = 0;
-while($row = mysqli_fetch_assoc($dayofweek)){ //to get day of the week 1st day of the start month
-  switch ("$row[Day]") {
-    case 1:
-      $day = "Sunday";
-      break;
-    case 2:
-      $day = "Monday";
-      break;
-    case 3:
-      $day = "Tuesday";
-      break;
-    case 4:
-      $day = "Wednesday";
-      break;
-    case 5:
-      $day = "Thursday";
-      break;
-    case 6:
-      $day = "Friday";
-      break;
-    case 7:
-      $day = "Saturday";
-      break;
-    default:
-      echo "failed";
-      break;
-  }
-  echo("day of the week at $endtemp is : $day<br>");
-  $difference = $endday - $row['Day'];
-}
-switch ($endday) {
-  case '1':
-    $day = "Sunday";
-    break;
-  case '2':
-    $day = "Monday";
-    break;
-  case '3':
-    $day = "Tuesday";
-    break;
-  case '4':
-    $day = "Wednesday";
-    break;
-  case '5':
-    $day = "Thursday";
-    break;
-  case '6':
-    $day = "Friday";
-    break;
-  case '7':
-    $day = "Saturday";
-    break;
-  default:
-    echo "failed";
-    break;
-  }
-
-echo("your day is: $day<br>");
-if($difference < 0 ){
-  $difference += 7;
-}
-
-echo("You need to add $difference day(s) to get to the end day you selected <br>");
-
-$totalmonthdays = 0;
-if($endmonth == '01' || $endmonth=='03' || $endmonth=='05' || $endmonth=='07' || $endmonth=='08' || $endmonth=='10' || $endmonth=='12'){
-  echo("end month has 31 days <br>");
-  $totalmonthdays = 31;
-}elseif($endmonth == '02'){ //February
-  if($endYear%4 == 0){ //disekto etos
-    echo("end month has 29 days <br>");
-    $totalmonthdays = 29;
-  }else {
-    echo("end month has 28 days <br>");
-    $totalmonthdays = 28;
-  }
-}else {
-  echo("end month has 30 days <br>");
-  $totalmonthdays = 30;
-}
-
-$k =0;
-$enddates = array();
-$enddatetimes = array();
-for($i=1+$difference; $i<=$totalmonthdays; $i+=7){ //pare oles tis trites tou mina px an exw epileksei triti
-  $k++;
-  array_push($enddates, $i);
-}
-echo("end month has $k $day s<br>");
-echo("dates of $day : <br>");
-for($i=0; $i<count($enddates); $i++){
-  echo("$endYear-$endmonth-$enddates[$i] $starthour:00 - $endhour:00<br>");
-}
-for($i=0; $i<count($enddates); $i++){
-  array_push($enddatetimes, "$endYear-$endmonth-$enddates[$i] $starthour:00");
-  array_push($enddatetimes, "$endYear-$endmonth-$enddates[$i] $endhour:00");
+  $currentyear++;
 }
 
 echo("<br><br>");
-for($i=0; $i<count($startdatetimes); $i++){
-  echo("$startdatetimes[$i] <br>");
+for($i=0; $i<count($datetimes); $i++){
+  echo("$datetimes[$i] <br>");
 }
-echo("<br>");
-for($i=0; $i<count($enddatetimes); $i++){
-  echo("$enddatetimes[$i] <br>");
-}
-
 
 // TODO: convert date me wra se timestamp (exei etoimes entoles i MYSQL)
 // TODO: na valw ta select stin MYSQL gia na pairnei ta swsta timestamps (8a einai tosa timesamps oses kai oi trites tou mina px an exw epileksei triti)

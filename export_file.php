@@ -35,9 +35,6 @@ switch ($export_type) {
     fclose($fp);
     break;
   case 'xml':
-    // array_flip($export_array);
-    // $xml = new SimpleXMLElement('<root/>');
-    // array_walk_recursive($export_array, array ($xml, 'addChild'));
     $xml = arrayToXml($export_array);
     print $xml->asXML('xml_data.xml');
     break;

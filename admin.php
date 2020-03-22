@@ -113,13 +113,8 @@ if (isset($_POST['dates_button'])) {  //submit button
       }
     }
   }
-  //now all variables are set we begin SQL
-$connected_user_id ="W2Pk6MvmP+hYj7xsiWawek9xS3d2N3lnZzdva29wRVZidWlGOVdPbEtOejN6S0tlVkttTFZEQ1d5ZUU9"; //user in my database
 
-echo("<br> $startYear - $endYear / $startmonth - $endmonth / $startday - $endday / $starthour - $endhour : " );
-for ($i=0; $i < $nactivities ; $i++) {
-  echo(" $activities[$i] ,");
-}
+$connected_user_id ="W2Pk6MvmP+hYj7xsiWawek9xS3d2N3lnZzdva29wRVZidWlGOVdPbEtOejN6S0tlVkttTFZEQ1d5ZUU9"; //user in my database
 
 $currentyear = $startYear;
 $datetimes = array();
@@ -163,7 +158,7 @@ while($currentyear <= $endYear){ // για κάθε χρόνο στο range
       //προσθέτω το difference έτσι ώστε να βρω την πρώτη τρίτη του μήνα (αν εχω επιλέξει τρίτη κλπ) και μετά με βήμα 7 θα βρει όλες τις τρίτες του μήνα
       for($i=1+$difference; $i<=$totalmonthdays; $i+=7){
         array_push($datetimes, "$currentyear-$currentmonth-$i $starthour:00:00"); //αποθηκεύω στο array ανα 2 για τα timesamps
-        array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:00:00");
+        array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:59:59");
       }
       $currentday++;
     }
@@ -172,14 +167,44 @@ while($currentyear <= $endYear){ // για κάθε χρόνο στο range
   $currentyear++;
 }
 
-echo("<br><br>");
+//datetime to timestampms conversion
+$timestamps = array();
 for($i=0; $i<count($datetimes); $i++){
-  echo("$datetimes[$i] <br>");
+  $sql = "select unix_timestamp('$datetimes[$i]') as timestamp";
+  $timestamp_result = mysqli_query($conn,$sql);
+
+  if(!$timestamp_result){
+    echo "hello";
+    exit();
+  }
+
+  while ($row = mysqli_fetch_assoc($timestamp_result)) {
+      array_push($timestamps,( $row['timestamp'] * 1000 ) ); //*1000 για να είναι σε ms
+  }
 }
 
-// TODO: convert date me wra se timestamp (exei etoimes entoles i MYSQL)
-// TODO: na valw ta select stin MYSQL gia na pairnei ta swsta timestamps (8a einai tosa timesamps oses kai oi trites tou mina px an exw epileksei triti)
+//Mysql selection from usermapdata
+$finaltimestamps = array();
+for($i=0; $i<count($timestamps); $i+=2){
+  $ts1 = $timestamps[$i];
+  $ts2 = $timestamps[$i+1];
+  $sql = "select userMapData_timestampMs as time from user_activity where userMapData_timestampMs > $ts1 and userMapData_timestampMs  < $ts2";
+  $select_result = mysqli_query($conn,$sql);
 
+  if(!$select_result){
+    echo "hello";
+    exit();
+  }
+
+  while($row = mysqli_fetch_assoc($select_result)){
+    array_push($finaltimestamps,$row['time']);
+  }
+}
+
+echo("<br><br>");
+for($i=0; $i<count($finaltimestamps); $i++){
+  echo ("$finaltimestamps[$i] <br> ");
+}
 
 
 }elseif (isset($_POST['delete_button'])) { //delete database button
@@ -190,8 +215,10 @@ for($i=0; $i<count($datetimes); $i++){
       <button type="submit" name="no_button">NO</button>
     </form>
   <?php
-} // TODO: leipei to export koumpi
-else {
+} elseif (isset($_POST['export_button'])) { //export data button
+  $datatype = $_POST['exportselectBox'];
+  // TODO: δεν ξέρω αν χρειάζεται κάτι άλλο
+}else {
   header("Location: adminPage.php?patates");
 }
 

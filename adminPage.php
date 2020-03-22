@@ -152,17 +152,23 @@
 <button type="submit" name = "dates_button">Submit</button>
 </form>
 
-
+<br><br>
 <form action = "admin.php" method="post">
 <button type="submit" name="delete_button">Erase Database</button>
 </form>
 
-<?php // TODO: HANDLE THE BUTTON ?>
+<br><br>
 <form action="admin.php" method="post">
+  <label for="exportselectBox">What type do you want the data to be?</label>
+  <select name="exportselectBox" required>
+    <option value=""></option>
+    <option value="json">json</option>
+    <option value="xml">xml</option>
+    <option value="csv">csv</option>
+  </select>
+
   <button type="submit" name="export_button" >Export Data</button>
 </form>
-
-<button type="button" name="button2" style="display:none">ERASE</button>
 
 
 </body>

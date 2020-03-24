@@ -1,14 +1,15 @@
 <?php
 require 'dbconnect.php';
 require_once("vendor/autoload.php");
-
+set_time_limit(0);
+ini_set('memory_limit', '-1');
 $lat1=38.230462;
 $lng1=21.753150;
 $distance = 10;
 $mysql_timestamp = date ("Y-m-d H:i:s");
 //file name from starting page
-$filename = "data.json";
-$userId = "WmdUlzEQH197+N7AWPy4VmlsOUVTaHBvdTVpbGNxVXZUdG9XS3c9PQ==";
+$filename = "data2.json";
+$userId = "Wb/Y04bN5gQkKeaPzCB8KklsQzFpTEJLMWZiU2I0amxEbXhQRXc9PQ==";
 $query = sprintf("INSERT INTO `uploaded_by_user` (jsonFIleName, uploadTime, userId) VALUES ('%s', '%s', '%s')",
 mysqli_real_escape_string($conn, $filename), mysqli_real_escape_string($conn, $mysql_timestamp), mysqli_real_escape_string($conn, $userId));
 

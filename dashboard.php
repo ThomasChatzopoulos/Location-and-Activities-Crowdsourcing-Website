@@ -45,7 +45,15 @@ foreach ($activity_type as $key_1 => $value_1) {
   }
   $counter_u = 0;
   while ($row = mysqli_fetch_assoc($users_records_result)) {
-    $record_per_user[$row['userId']] = $row['COUNT(userId)'];
+    $query = sprintf("SELECT `username` FROM `user` WHERE userId = '%s'",
+    mysqli_real_escape_string($conn, $row['userId']));
+
+    $result = mysqli_query($conn, $query);
+
+    while ($row_2 = mysqli_fetch_assoc($result)) {
+      $username = $row_2['username'];
+    }
+    $record_per_user[$username] = $row['COUNT(userId)'];
     $counter_u += $row['COUNT(userId)'];
   }
 
@@ -86,7 +94,7 @@ $years_counter = 0;
     foreach ($timestamps as $key => $value) {
       $hour=date("G",$value);
       $day=date("l", $value);
-      $month=date("n", $value);
+      $month=date("F", $value);
       $year=date("Y", $value);
 
 //compute distr for days

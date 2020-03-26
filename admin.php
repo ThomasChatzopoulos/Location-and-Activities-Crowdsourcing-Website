@@ -41,6 +41,11 @@ if (isset($_POST['dates_button'])) {  //submit button
     }else {
       $startmonth = $_POST['startmonthBox'];
       $endmonth = $_POST['endmonthBox'];
+
+      if ($startmonth > $endmonth) {
+        header("Location: adminPage.php?error=startmont>endmonth");
+      }
+
       echo ("Start month = $startmonth <br>");
       echo("End month = $endmonth <br>");
     }
@@ -57,6 +62,11 @@ if (isset($_POST['dates_button'])) {  //submit button
     }else {
       $startday = $_POST['startdayBox'];
       $endday = $_POST['enddayBox'];
+
+      if ($startday > $endday) {
+        header("Location: adminPage.php?error=startday>endday");
+      }
+
       echo ("Start day = $startday <br>");
       echo ("End day = $endday <br>");
     }
@@ -73,6 +83,11 @@ if (isset($_POST['dates_button'])) {  //submit button
     }else {
       $starthour = $_POST['starthourBox'];
       $endhour = $_POST['endhourBox'];
+
+      if ($startYear > $endYear) {
+        header("Location: adminPage.php?error=starthour>endhour");
+      }
+
       echo("Start Hour = $starthour <br>");
       echo("End Hour = $endhour <br>");
     }
@@ -98,66 +113,98 @@ if (isset($_POST['dates_button'])) {  //submit button
       }
     }
   }
-  //now all variables are set we begin SQL
-$connected_user_id ="W2Pk6MvmP+hYj7xsiWawek9xS3d2N3lnZzdva29wRVZidWlGOVdPbEtOejN6S0tlVkttTFZEQ1d5ZUU9"; //user in my database
 
-echo("<br> $startYear - $endYear / $startmonth - $endmonth / $startday - $endday / $starthour - $endhour : " );
-for ($i=0; $i < $nactivities ; $i++) {
-  echo(" $activities[$i] ,");
-}
+$connected_user_id ="W2Pk6MvmP+hYj7xsiWawek9xS3d2N3lnZzdva29wRVZidWlGOVdPbEtOejN6S0tlVkttTFZEQ1d5ZUU9"; //user in my database
 
 $currentyear = $startYear;
 $datetimes = array();
-while($currentyear <= $endYear){
+while($currentyear <= $endYear){ // για κάθε χρόνο στο range
   $currentmonth = $startmonth;
-  while($currentmonth <= $endmonth){
-    $starttemp = "$currentyear-$currentmonth-01";
-    $sql = "select dayofweek('$starttemp') as Day";
-    $dayofweek = mysqli_query($conn,$sql);
-    if(!$dayofweek){
-      echo "hello";
-      exit();
-    }
-    $difference = 0;
-    while($row = mysqli_fetch_assoc($dayofweek)){ //to get day of the week 1st day of the start month
-      $difference = $startday - $row['Day'];
-    }
+  while($currentmonth <= $endmonth){ //για κάθε μήνα στο range
+    $currentday = $startday;
+    while($currentday <= $endday)
+    {
 
-    if($difference < 0 ){
-      $difference += 7;
-    }
-
-    $totalmonthdays = 0;
-    if($currentmonth == '01' || $currentmonth=='03' || $currentmonth=='05' || $currentmonth=='07' || $currentmonth=='08' || $currentmonth=='10' || $currentmonth=='12'){
-      $totalmonthdays = 31;
-    }elseif($currentmonth == '02'){ //February
-      if($currentyear%4 == 0){ //disekto etos
-        $totalmonthdays = 29;
-      }else {
-        $totalmonthdays = 28;
+      $starttemp = "$currentyear-$currentmonth-01";
+      $sql = "select dayofweek('$starttemp') as Day";
+      $dayofweek = mysqli_query($conn,$sql);
+      if(!$dayofweek){
+        echo "hello";
+        exit();
       }
-    }else {
-      $totalmonthdays = 30;
-    }
+      $difference = 0;
+      while($row = mysqli_fetch_assoc($dayofweek)){ //βρες μέρα της βδομάδας για την 1η μέρα του τρέχοντα μήνα
+        $difference = $currentday - $row['Day'];
+      }
 
-    for($i=1+$difference; $i<=$totalmonthdays; $i+=7){ //pare oles tis trites tou mina px an exw epileksei triti
-      array_push($datetimes, "$currentyear-$currentmonth-$i $starthour:00");
-      array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:00");
+      if($difference < 0 ){ //
+        $difference += 7;
+      }
+
+      //βρες συνολικές μέρες του τρέχοντα μήνα
+      $totalmonthdays = 0;
+      if($currentmonth == '01' || $currentmonth=='03' || $currentmonth=='05' || $currentmonth=='07' || $currentmonth=='08' || $currentmonth=='10' || $currentmonth=='12'){
+        $totalmonthdays = 31;
+      }elseif($currentmonth == '02'){ //February
+        if($currentyear%4 == 0){ //δισεκτο ετος
+          $totalmonthdays = 29;
+        }else {
+          $totalmonthdays = 28;
+        }
+      }else {
+        $totalmonthdays = 30;
+      }
+
+      //προσθέτω το difference έτσι ώστε να βρω την πρώτη τρίτη του μήνα (αν εχω επιλέξει τρίτη κλπ) και μετά με βήμα 7 θα βρει όλες τις τρίτες του μήνα
+      for($i=1+$difference; $i<=$totalmonthdays; $i+=7){
+        array_push($datetimes, "$currentyear-$currentmonth-$i $starthour:00:00"); //αποθηκεύω στο array ανα 2 για τα timesamps
+        array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:59:59");
+      }
+      $currentday++;
     }
     $currentmonth++;
   }
-
   $currentyear++;
 }
 
-echo("<br><br>");
+//datetime to timestampms conversion
+$timestamps = array();
 for($i=0; $i<count($datetimes); $i++){
-  echo("$datetimes[$i] <br>");
+  $sql = "select unix_timestamp('$datetimes[$i]') as timestamp";
+  $timestamp_result = mysqli_query($conn,$sql);
+
+  if(!$timestamp_result){
+    echo "hello";
+    exit();
+  }
+
+  while ($row = mysqli_fetch_assoc($timestamp_result)) {
+      array_push($timestamps,( $row['timestamp'] * 1000 ) ); //*1000 για να είναι σε ms
+  }
 }
 
-// TODO: convert date me wra se timestamp (exei etoimes entoles i MYSQL)
-// TODO: na valw ta select stin MYSQL gia na pairnei ta swsta timestamps (8a einai tosa timesamps oses kai oi trites tou mina px an exw epileksei triti)
+//Mysql selection from usermapdata
+$finaltimestamps = array();
+for($i=0; $i<count($timestamps); $i+=2){
+  $ts1 = $timestamps[$i];
+  $ts2 = $timestamps[$i+1];
+  $sql = "select userMapData_timestampMs as time from user_activity where userMapData_timestampMs > $ts1 and userMapData_timestampMs  < $ts2";
+  $select_result = mysqli_query($conn,$sql);
 
+  if(!$select_result){
+    echo "hello";
+    exit();
+  }
+
+  while($row = mysqli_fetch_assoc($select_result)){
+    array_push($finaltimestamps,$row['time']);
+  }
+}
+
+echo("<br><br>");
+for($i=0; $i<count($finaltimestamps); $i++){
+  echo ("$finaltimestamps[$i] <br> ");
+}
 
 
 }elseif (isset($_POST['delete_button'])) { //delete database button
@@ -168,8 +215,10 @@ for($i=0; $i<count($datetimes); $i++){
       <button type="submit" name="no_button">NO</button>
     </form>
   <?php
-} // TODO: leipei to export koumpi
-else {
+} elseif (isset($_POST['export_button'])) { //export data button
+  $datatype = $_POST['exportselectBox'];
+  // TODO: δεν ξέρω αν χρειάζεται κάτι άλλο
+}else {
   header("Location: adminPage.php?patates");
 }
 

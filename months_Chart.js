@@ -1,4 +1,4 @@
-var myChart = document.getElementById('myChart4').getContext('2d');
+var myChart = document.getElementById('months_chart').getContext('2d');
 
 var types = Object.keys(months_obj);
 var values = Object.values(months_obj);
@@ -28,7 +28,7 @@ var barChart = new Chart(myChart, {
   options: {
     title:{
       display:true,
-      text:"potato123",
+      text:"Months Distribution",
       fontSize:25
     },
     legend:{

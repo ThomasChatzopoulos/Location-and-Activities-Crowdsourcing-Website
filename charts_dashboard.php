@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,13 +13,14 @@
   <title>My chart </title>
 </head>
 <body>
+  <input type="button" value="Click Me" style="float: left;">
   <div class="container">
-    <canvas id="myChart"> </canvas>
-    <canvas id="myChart2"> </canvas>
-    <canvas id="myChart3"> </canvas>
-    <canvas id="myChart4"> </canvas>
-    <canvas id="myChart5"> </canvas>
-    <canvas id="myChart6"> </canvas>
+    <canvas id="activity_chart"> </canvas>
+    <canvas id="files_per_user"> </canvas>
+    <canvas id="days_chart"> </canvas>
+    <canvas id="months_chart"> </canvas>
+    <canvas id="hours_chart"> </canvas>
+    <canvas id="years_chart"> </canvas>
   </div>
   <?php require 'dashboard.php' ?>
   <script>

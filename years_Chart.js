@@ -1,4 +1,4 @@
-var myChart = document.getElementById('myChart6').getContext('2d');
+var myChart = document.getElementById('years_chart').getContext('2d');
 
 var types = Object.keys(years_obj);
 var values = Object.values(years_obj);
@@ -28,7 +28,7 @@ var barChart = new Chart(myChart, {
   options: {
     title:{
       display:true,
-      text:"Years",
+      text:"Years distribution",
       fontSize:25
     },
     legend:{

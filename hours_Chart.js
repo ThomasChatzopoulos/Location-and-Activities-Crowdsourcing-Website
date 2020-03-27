@@ -1,4 +1,4 @@
-var myChart = document.getElementById('myChart5').getContext('2d');
+var myChart = document.getElementById('hours_chart').getContext('2d');
 
 var types = Object.keys(hours_obj);
 var values = Object.values(hours_obj);
@@ -30,7 +30,7 @@ var DonChart = new Chart(myChart, {
     rotation: -Math.PI,
     title:{
       display:true,
-      text:"hours",
+      text:"Hours Distribution",
       fontSize:25
     },
     legend:{

@@ -28,6 +28,8 @@ foreach ($activity_type as $key => $value) {
     $counter += $row[0];
   }
 }
+//table
+$activity_type_table = $activity_type;
 //distr of all activity types
 foreach ($activity_type as $key_1 => $value_1) {
   $activity_type[$key_1] = round(($activity_type[$key_1]/$counter)*100,3);
@@ -56,6 +58,7 @@ foreach ($activity_type as $key_1 => $value_1) {
     $record_per_user[$username] = $row['COUNT(userId)'];
     $counter_u += $row['COUNT(userId)'];
   }
+$record_per_user_table = $record_per_user;
 
 foreach ($record_per_user as $key => $value) {
   $record_per_user[$key] = round(($record_per_user[$key]/$counter_u)*100,3);
@@ -145,6 +148,10 @@ $years_counter = 0;
 // print_r($months);
 // echo "<br>";
 // print_r($years);
+$days_table = $days;
+$hours_table = $hours;
+$months_table = $months;
+$years_table = $years;
 
 foreach ($days as $key => $value) {
   $days[$key] = round(($days[$key]/$days_counter)*100,3);

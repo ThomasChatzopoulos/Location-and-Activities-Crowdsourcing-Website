@@ -1,4 +1,4 @@
-var myChart = document.getElementById('myChart').getContext('2d');
+var myChart = document.getElementById('activity_chart').getContext('2d');
 
 var types = Object.keys(activities_obj);
 var values = Object.values(activities_obj);
@@ -34,7 +34,7 @@ var barChart = new Chart(myChart, {
   options: {
     title:{
       display:true,
-      text:"potato123",
+      text:"Type of activities",
       fontSize:25
     },
     legend:{

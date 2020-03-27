@@ -1,4 +1,4 @@
-var myChart = document.getElementById('myChart3').getContext('2d');
+var myChart = document.getElementById('days_chart').getContext('2d');
 
 var types = Object.keys(records_obj);
 var values = Object.values(records_obj);
@@ -28,7 +28,7 @@ var barChart = new Chart(myChart, {
   options: {
     title:{
       display:true,
-      text:"potato123",
+      text:"Days distribution",
       fontSize:25
     },
     legend:{

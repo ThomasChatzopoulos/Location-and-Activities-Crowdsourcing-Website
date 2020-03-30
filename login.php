@@ -37,7 +37,7 @@ if(isset($_POST['login_button'])){
     session_start();
     $_SESSION['usrname'] = $username;
     //TODO maybe more session variables name-surname-email
-    header("Location: modulepage.php?login=success");
+    header("Location: admin_page.php?login=success");
     exit();
   }
 }

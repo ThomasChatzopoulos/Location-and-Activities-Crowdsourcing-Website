@@ -1,7 +1,6 @@
 <?php
   require 'dbconnect.php';
 
-
 //---------------------------------------------------Query 1a ---------------------------------------------------
   $user_activity_table_columns_query = "SHOW COLUMNS FROM user_activity";
 
@@ -30,12 +29,14 @@ foreach ($activity_type as $key => $value) {
 }
 //table
 $activity_type_table = $activity_type;
+arsort($activity_type_table);
 //distr of all activity types
 foreach ($activity_type as $key_1 => $value_1) {
   $activity_type[$key_1] = round(($activity_type[$key_1]/$counter)*100,3);
 }
+arsort($activity_type);
 //print_r($activity_type);
-
+$colours_act = set_Chart_colours($activity_type);
 
 
 // ---------------------------------------------------Query 1b ---------------------------------------------------
@@ -63,7 +64,10 @@ $record_per_user_table = $record_per_user;
 foreach ($record_per_user as $key => $value) {
   $record_per_user[$key] = round(($record_per_user[$key]/$counter_u)*100,3);
 }
-//print_r($record_per_user);
+arsort($record_per_user);
+arsort($record_per_user_table);
+//colours for chart
+$colours_rec = set_Chart_colours($record_per_user);
 
 
 // ---------------------------------------------------Query 1c & 1d & 1e & 1f---------------------------------------------------
@@ -76,18 +80,6 @@ foreach ($record_per_user as $key => $value) {
   while ($row = mysqli_fetch_assoc($timestamps_user_result)) {
     $timestamps[] = ($row['timestampMs'])/1000;
   }
-// IF WE DECIDE TO INCLUDE DATA FROM ACTIVITY TAB
-  // $timestamps_activity_query = "SELECT userMapData_timestampMs FROM user_activity";
-  // $timestamps_activity_result = mysqli_query($conn, $timestamps_activity_query);
-  //
-  // if(!$timestamps_activity_result){
-  //   exit();
-  // }
-  // while ($row = mysqli_fetch_assoc($timestamps_activity_result)) {
-  //   $timestamps[] = ($row['userMapData_timestampMs'])/1000;
-  // }
-
-  //print_r($timestamps);
 
 $days_counter = 0;
 $hours_counter = 0;
@@ -165,12 +157,46 @@ foreach ($months as $key => $value) {
 foreach ($years as $key => $value) {
   $years[$key] = round(($years[$key]/$years_counter)*100,3);
 }
-// echo "<br>";
-// print_r($days);
-// echo "<br>";
-// print_r($hours);
-// echo "<br>";
-// print_r($months);
-// echo "<br>";
-// print_r($years);
+
+arsort($days);
+arsort($hours);
+arsort($months);
+arsort($years);
+arsort($days_table);
+arsort($hours_table);
+arsort($months_table);
+arsort($years_table);
+
+$colours_hours = set_Chart_colours($hours);
+$colours_months = set_Chart_colours($months);
+$colours_days = set_Chart_colours($days);
+$colours_years = set_Chart_colours($years);
+
+
+function set_Chart_colours($distinct_keys)
+{
+  $colours_vec = ['slateblue', 'darkred', 'violet', 'orange', 'olivedrab', 'sienna', 'grey', 'yellow', 'royalblue', 'indigo', 'cyan', 'red'] ;
+  $colours = array();
+  if (sizeof($colours_vec) > sizeof($distinct_keys)) {
+    for ($j=0; $j < sizeof($distinct_keys); $j++) {
+      $colours[$j] = $colours_vec[$j];
+    }
+  }
+  elseif (sizeof($colours) < sizeof($distinct_keys)) {
+    $colours = $colours_vec;
+    for ($i= sizeof($colours); $i < sizeof($distinct_keys) ; $i++) {
+      $r= rand(0, 255);
+      $g= rand(0, 255);
+      $b= rand(0, 255);
+      $colour_rand = "rgb($r, $g, $b)";
+      array_push($colours, $colour_rand);
+    }
+  }
+  else {
+    $colours = $colours_act;
+  }
+  return $colours;
+}
+
+
  ?>

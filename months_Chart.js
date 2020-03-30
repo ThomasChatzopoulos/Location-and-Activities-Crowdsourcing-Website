@@ -4,16 +4,7 @@ var types = Object.keys(months_obj);
 var values = Object.values(months_obj);
 //replace underscores with whitespace
 
-var colours = [];
-colours.length = types.length;
-for (i = 0; i < colours.length; i++)
-{
-  var r = Math.floor(Math.random() * 255);
-  var g = Math.floor(Math.random() * 255);
-  var b = Math.floor(Math.random() * 255);
-  colours[i] = "rgb(" + r + "," + g + "," + b + ")";
-}
-
+var colours = colours_obj_months;
 
 var barChart = new Chart(myChart, {
   type: 'pie',
@@ -22,17 +13,15 @@ var barChart = new Chart(myChart, {
     datasets:[{
       label:'Percentage',
       data:values,
-      backgroundColor: colours
+      fill: false,
+      backgroundColor: colours,
+      cubicInterpolationMode: "monotone",
+      borderColor: "rgba(0,0,0,0)"
     }]
   },
   options: {
-    title:{
-      display:true,
-      text:"Months Distribution",
-      fontSize:25
-    },
     legend:{
-      position: 'right'
+      display: false
     }
   }
 });

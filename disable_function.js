@@ -1,7 +1,18 @@
 
+function disable(select1, select2) {
+  if (document.getElementById(select1).disabled == false) {
+    document.getElementById(select1).disabled = true;
+    document.getElementById(select2).disabled = true;
+  }else {
+    document.getElementById(select1).disabled = false;
+    document.getElementById(select2).disabled = false;
+  }
+}
 
-function disable(select_1, select_2) {
-  document.getElementById(select_1).disabled=true;
-  document.getElementById(select_2).disabled=true;
-
+function disableall(select) {
+  for (var i = 0; i < jArray.length; i++) {
+    alert(jArray[i]);
+  }
+  
+  document.getElementById(select).disabled = true;
 }

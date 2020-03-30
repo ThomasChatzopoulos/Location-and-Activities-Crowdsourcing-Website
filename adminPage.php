@@ -12,7 +12,7 @@
 
 <form action="admin.php" method="POST">
 <label for="startyearBox">Start year:</label>
-<select id="startyearBox" required>
+<select id="startyearBox" name="startyearBox" required>
 <option value=""></option>
 <?php
   for ($i=1980; $i <=2020; $i++) {
@@ -24,7 +24,7 @@
 </select>
 
 <label for="endyearBox">End year:</label>
-<select id="endyearBox" required>
+<select id="endyearBox" name="endyearBox" required>
 <option value=""></option>
 <?php
   for ($i=1980; $i <=2020; $i++) {
@@ -35,11 +35,11 @@
 ?>
 </select>
 
-<br>Check to select All years: <input type="checkbox" id="allYearsCheckBox" value="Yes" onclick="disable('startyearBox', 'endyearBox')">
+<br>Check to select All years: <input type="checkbox" name="allYearsCheckBox" value="Yes" onclick="disable('startyearBox', 'endyearBox')">
 
 <br> <br>
 <label for="startmonthBox">Start month:</label>
-<select id = "startmonthBox" >
+<select id = "startmonthBox" name = "startmonthBox" >
   <option value=""></option>
   <option value = "01"> January</option>
   <option value = "02"> February</option>
@@ -56,7 +56,7 @@
 </select>
 
 <label for="endmonthBox">End month:</label>
-<select id = "endmonthBox" enddayBox>
+<select id = "endmonthBox" name= "endmonthBox" required>
   <option value=""></option>
   <option value = "01"> January</option>
   <option value = "02"> February</option>
@@ -76,7 +76,7 @@
 
 <br> <br>
 <label for="startdayBox">Start Day:</label>
-<select id="startdayBox" required>
+<select id="startdayBox" name ="startdayBox" required>
   <option value=""></option>
   <option value ="2"> Monday  </option>
   <option value ="3"> Tuesday </option>
@@ -88,7 +88,7 @@
 </select>
 
 <label for="enddayBox">End Day:</label>
-<select id="enddayBox" required>
+<select id="enddayBox" name = "enddayBox" required>
   <option value=""></option>
   <option value ="2"> Monday  </option>
   <option value ="3"> Tuesday </option>
@@ -103,7 +103,7 @@
 
 <br> <br>
 <label for="starthourBox">Start hour:</label>
-<select  id="starthourBox">
+<select  id="starthourBox" name = "starthourBox" required>
   <option value=""></option>
 <?php
   for ($i=0; $i <=23; $i++) {
@@ -115,7 +115,7 @@
 </select>
 
 <label for="endhourBox">End hour:</label>
-<select  id="endhourBox">
+<select  id="endhourBox" name = "endhourBox" required>
 <option value=""></option>
 <?php
   for ($i=0; $i <=23; $i++) {
@@ -130,23 +130,33 @@
 <br>Check to select all hours <input type="checkbox" name="allHoursCheckBox" value="Yes" onclick="disable('starthourBox', 'endhourBox')">
 
 <br><br>
-<label for="activityBox[]">Select one or more activities</label>
-<select multiple = "multiple" name = "activityBox[]" >
-  <option value = "IN_VEHICLE"> In Vehicle </option>
-  <option value = "ON_BICYCLE"> On Bicycle </option>
-  <option value = "ON_FOOT"> On foot </option>
-  <option value = "RUNNING"> Running </option>
-  <option value = "STILL"> Still </option>
-  <option value = "TILTING"> Tilting </option>
-  <option value = "UNKNOWN"> Unknown </option>
-  <option value = "WALKING"> Walking </option>
-  <option value = "IN_ROAD_VEHICLE"> In Road Vehicle </option>
-  <option value = "IN_RAIL_VEHICLE"> In Rail Vehicle </option>
-  <option value = "IN_FOUR_WHEELER_VEHICLE"> In Four-wheeler Vehicle</option>
-  <option value = "IN_CAR"> In Car </option>
-</select>
+Select one or more activities <br>
+<?php
+  require 'dbconnect.php';
+  $sql = "describe user_activity";
+  $activity = mysqli_query($conn,$sql);
 
-<br>Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" value="Yes">
+  if(!$activity){
+    echo "hello";
+    exit();
+  }
+  $actarray = array();
+  $k=0;
+  while($row = mysqli_fetch_assoc($activity)){
+    if($row['Field'] != 'userMapData_userId' && $row['Field'] != 'userMapData_timestampMs' && $row['Field'] != 'activity_timestamp' && $row['Field'] != 'eco'){
+      echo ($row['Field']); // row field εχει το activity
+      array_push($actarray, $row['Field']);
+      ?>
+        <input type="checkbox" name = <?php echo $actarray[$k]?> id = <?php echo $actarray[$k]?> value="Yes"> <br>
+      <?php
+      $k++;
+    }
+  }
+
+?>
+<br>
+
+<br>Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" value="Yes" onclick = "disable('IN_VEHICLE','ON_BICYCLE'); disable('ON_FOOT','RUNNING'); disable('STILL', 'TILTING'); disable('UNKNOWN', 'WALKING'); disable('IN_ROAD_VEHICLE', 'IN_RAIL_VEHICLE'); disable('IN_FOUR_WHEELER_VEHICLE', 'IN_CAR')">
 
 <br> <br>
 <button type="submit" name = "dates_button">Submit</button>

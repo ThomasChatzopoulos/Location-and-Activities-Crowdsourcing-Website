@@ -6,114 +6,107 @@ session_start();
 if (isset($_POST['dates_button'])) {  //submit button
   require 'dbconnect.php';
 
-  if( !isset($_POST['allYearsCheckBox']) && ( $_POST['startyearBox'] == '' || $_POST['endyearBox'] == '' ) ) //if no year has been picked and checkbox is not used
-  {
-    header("Location: adminPage.php?error=noYearpicked");
+  if(isset($_POST['allYearsCheckBox']) && $_POST['allYearsCheckBox'] == 'Yes') { //all years selected
+    $startYear = "1980";
+    $endYear = "2020";
+    echo("Start year = $startYear <br>" );
+    echo("End year = $endYear <br>");
   }else {
-    if(isset($_POST['allYearsCheckBox']) && $_POST['allYearsCheckBox'] == 'Yes'){ //selected all years
-      $startYear = 1980;
-      $endYear = 2020;
-      echo ("Start year = $startYear <br>" );
-      echo ("End year = $endYear <br>");
-    }else{
-      $startYear = $_POST['startyearBox'];
-      $endYear = $_POST['endyearBox'];
+    $startYear = $_POST['startyearBox'];
+    $endYear = $_POST['endyearBox'];
 
-      if ($startYear > $endYear) {
-        header("Location: adminPage.php?error=startyear>endyear");
-      }
+    if ($startYear > $endYear) {
+      header("Location: adminPage.php?error=startmonth>endmonth");
+    }
 
-      echo ("Start year = $startYear <br>");
-      echo ("End year = $endYear <br>");
+    echo("Start year = $startYear <br>" );
+    echo("End year = $endYear <br>");
+  }
+
+  if(isset($_POST['allMonthsCheckBox']) && $_POST['allMonthsCheckBox'] == 'Yes') {
+    $startmonth = "01";
+    $endmonth = "12";
+    echo("Start month = $startmonth <br>" );
+    echo("End month = $endmonth <br>");
+  }else {
+    $startmonth = $_POST['startmonthBox'];
+    $endmonth = $_POST['endmonthBox'];
+
+    if ($startmonth > $endmonth) {
+      header("Location: adminPage.php?error=startmonth>endmonth");
+    }
+    echo"TROLL";
+    echo("Start month = $startmonth <br>" );
+    echo("End month = $endmonth <br>");
+  }
+
+  if(isset($_POST['allDaysCheckBox']) && $_POST['allDaysCheckBox'] == 'Yes') {
+    $startday = "1";
+    $endday = "7";
+    echo ("Start day = $startday <br>");
+    echo ("End day = $endday <br>");
+  }else {
+    $startday = $_POST['startdayBox'];
+    $endday = $_POST['enddayBox'];
+
+    if ($startday > $endday) {
+      header("Location: adminPage.php?error=startday>endday");
+    }
+
+    echo ("Start day = $startday <br>");
+    echo ("End day = $endday <br>");
+  }
+
+  if(isset($_POST['allHoursCheckBox']) && $_POST['allHoursCheckBox'] == 'Yes') {
+    $starthour = "00";
+    $endhour = "23";
+    echo("Start Hour = $starthour <br>");
+    echo("End Hour = $endhour <br>");
+  }else {
+    $starthour = $_POST['starthourBox'];
+    $endhour = $_POST['endhourBox'];
+
+    if ($startYear > $endYear) {
+      header("Location: adminPage.php?error=starthour>endhour");
+    }
+
+    echo("Start Hour = $starthour <br>");
+    echo("End Hour = $endhour <br>");
+  }
+
+  $sql = "describe user_activity";
+  $activity = mysqli_query($conn,$sql);
+
+  if(!$activity){
+    echo "hello";
+    exit();
+  }
+  $actarray = array();
+  $k=0;
+  while($row = mysqli_fetch_assoc($activity)){
+    if($row['Field'] != 'userMapData_userId' && $row['Field'] != 'userMapData_timestampMs' && $row['Field'] != 'activity_timestamp' && $row['Field'] != 'eco'){
+      array_push($actarray, $row['Field']);
+      $k++;
     }
   }
 
-
-  if( !isset($_POST['allMonthsCheckBox']) && ( $_POST['startmonthBox'] == '' || $_POST['endmonthBox'] == '' ) )
-  {
-    header("Location: adminPage.php?error=noMonthpicked");
-  }else {
-    if(isset($_POST['allMonthsCheckBox']) && $_POST['allMonthsCheckBox'] == 'Yes'){ //selected all months
-      $startmonth = "01";
-      $endmonth = "12";
-      echo("Start month = $startmonth <br>" );
-      echo("End month = $endmonth <br>");
-    }else {
-      $startmonth = $_POST['startmonthBox'];
-      $endmonth = $_POST['endmonthBox'];
-
-      if ($startmonth > $endmonth) {
-        header("Location: adminPage.php?error=startmont>endmonth");
-      }
-
-      echo ("Start month = $startmonth <br>");
-      echo("End month = $endmonth <br>");
+  $activities = array();
+  if(isset($_POST['allActivitiesCheckBox']) && $_POST['allActivitiesCheckBox'] == 'Yes'){ //all activities selected
+    echo("All activities selected <br>");
+    for ($i=0; $i < count($actarray) ; $i++) {
+      array_push($activities,$actarray[$i]);
+      echo(" $activities[$i] ,");
     }
-  }
-
-  if(!isset($_POST['allDaysCheckBox']) && ( $_POST['startdayBox'] == '' || $_POST['enddayBox'] == '' ) ){
-    header("Location: adminPage.php?error=noDaypicked");
   }else {
-    if(isset($_POST['allDaysCheckBox']) && $_POST['allDaysCheckBox'] == 'Yes'){ //selected all days
-      $startday = "1";
-      $endday = "7";
-      echo ("Start day = $startday <br>");
-      echo ("End day = $endday <br>");
-    }else {
-      $startday = $_POST['startdayBox'];
-      $endday = $_POST['enddayBox'];
-
-      if ($startday > $endday) {
-        header("Location: adminPage.php?error=startday>endday");
-      }
-
-      echo ("Start day = $startday <br>");
-      echo ("End day = $endday <br>");
-    }
-  }
-
-  if(!isset($_POST['allHoursCheckBox']) && ( $_POST['starthourBox'] == '' || $_POST['endhourBox'] == '' ) ){
-    header("Location: adminPage.php?error=noHourpicked");
-  }else {
-    if(isset($_POST['allHoursCheckBox']) && $_POST['allHoursCheckBox'] == 'Yes'){ //selected all hours
-      $starthour = "00";
-      $endhour = "23";
-      echo("Start Hour = $starthour <br>");
-      echo("End Hour = $endhour <br>");
-    }else {
-      $starthour = $_POST['starthourBox'];
-      $endhour = $_POST['endhourBox'];
-
-      if ($startYear > $endYear) {
-        header("Location: adminPage.php?error=starthour>endhour");
-      }
-
-      echo("Start Hour = $starthour <br>");
-      echo("End Hour = $endhour <br>");
-    }
-  }
-
-  if(!isset($_POST['allActivitiesCheckBox']) && !isset($_POST['activityBox']) ){
-    header("Location: adminPage.php?error=noActivitypicked");
-  }else {
-    if(isset($_POST['allActivitiesCheckBox']) && $_POST['allActivitiesCheckBox'] == 'Yes'){ // selected all activities
-      echo("All activities selected <br>");
-      $activities = array( "IN_VEHICLE", "ON_BICYCLE", "ON_FOOT", "RUNNING", "STILL", "TILTING", "UNKNOWN", "WALKING" , "IN_ROAD_VEHICLE" ,"IN_RAIL_VEHICLE" , "IN_FOUR_WHEELER_VEHICLE" , "IN_CAR"  );
-      $nactivities = count($activities);
-      echo("selected $nactivities activities :");
-      for ($i=0; $i < $nactivities ; $i++) {
-        echo(" $activities[$i] ,");
-      }
-    }else {
-      $activities = $_POST['activityBox'];
-      $nactivities = count($activities);
-      echo("selected $nactivities activities :");
-      for ($i=0; $i < $nactivities ; $i++) {
-        echo(" $activities[$i] ,");
+    for ($i = 0; $i < count($actarray); $i++) {
+      if(isset($_POST[$actarray[$i]]) && $_POST[$actarray[$i]] == 'Yes') {
+        array_push($activities,$actarray[$i]);
+        echo("$actarray[$i] ,");
       }
     }
-  }
 
+
+  }
 $connected_user_id ="W2Pk6MvmP+hYj7xsiWawek9xS3d2N3lnZzdva29wRVZidWlGOVdPbEtOejN6S0tlVkttTFZEQ1d5ZUU9"; //user in my database
 
 $currentyear = $startYear;

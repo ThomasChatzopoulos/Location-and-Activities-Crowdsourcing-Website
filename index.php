@@ -5,24 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>LoginPage</title>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+  />
+  <!-- https://fonts.google.com/specimen/Open+Sans -->
+  <link rel="stylesheet" href="css/fontawesome.min.css" />
+  <!-- https://fontawesome.com/ -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <!-- https://getbootstrap.com/ -->
+  <link rel="stylesheet" href="css/templatemo-style.css">
 </head>
+
 <body>
-  <h1>Patras, the smartest of all cities</h1>
-  <h2>Login</h2>
-  <style>
-  body {
-    background-image: url('img_girl.jpg');
-  }
-  </style>
-
-  <form action="login.php" method = "POST">
-    Username: <input type="text" name="username" placeholder="username"><br>
-    Password: <input type="password" name="psw", placeholder="password"><br>
-    <button type="submit" name = "login_button">Log in</button> or
-  </form>
-    <a href="SignUpPage.php" title = "Click here to sign up">Sign Up</a>
-
-<h3>Smart is not just a word... it's an attitude!</h3>
-<h4>Be smart. Became a contributor to make our city smarter!</h4>
+  <div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-12 mx-auto tm-login-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="tm-block-title mb-4">Welcome to Dashboard</h2>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <form action="login.php" method = "POST" class="tm-login-form">
+                <div class="form-group">
+                <label for="username">Username</label>
+                <input name="username" type="text" class="form-control validate" id="username_" required />
+              </div>
+              <div class="form-group mt-3">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control validate" id="password_" required />
+                </div>
+                <div class="form-group mt-4">
+                  <button type="submit" name = "login_button" class="btn btn-primary btn-block text-uppercase" id="submit-but">Log in</button>
+                </div>
+                <button class="mt-5 btn btn-primary btn-block text-uppercase">
+                  Sign Up
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="ajax_login.js"></script>
 </body>
 </html>

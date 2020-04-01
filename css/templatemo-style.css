@@ -39,6 +39,10 @@ button:focus {
   font-weight: 700;
   color: #fff;
 }
+
+.input-error {
+  box-shadow: 0 0 5px red;
+}
 .navbar {
   height: 100px;
   background-color: #567086;

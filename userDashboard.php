@@ -135,7 +135,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Files</h2>
-                        <table class="table">                          
+                        <table class="table">
                             <tbody>
                                 <?php
                                   echo "<tr>";
@@ -201,59 +201,7 @@
                     </div>
                 </div>
               </div>
-
-              <!-- <h4 style='color:white; text-align:center;'> First record: <i> <?php echo $first_record?></i></h4>
-              <h4 style='color:white; text-align:center;'> Last record: <i> <?php echo $last_record?> </i></h4>
-              <h4 style='color:white; text-align:center;'> Last upload: <i> <?php echo $last_upload_date?></i> </h4> -->
-
-              <!-- <div class="row tm-content-row">
-                <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 tm-block-col" align="center">
-                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll" align="center">
-                        <h2 class="tm-block-title">Top 3 user and you</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th style='text-align:center;' scope="col">Rank</th>
-                                    <th style='text-align:center;' scope="col">User</th>
-                                    <th style='text-align:center;' scope="col">Eco percent</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                  // $user_names_query = sprintf("SELECT name, surname FROM user WHERE userId = '%s'", mysqli_real_escape_string($conn,$connected_user_id));
-                                  // $user_names_result = mysqli_query($conn, $user_names_query);
-                                  // if(!$user_names_result){
-                                  //   echo "SQL error <br>";
-                                  //   exit();
-                                  // }
-                                  // while ($row = mysqli_fetch_assoc($user_names_result)) {
-                                  //   $user_name = sprintf($row['name']." ". substr($row['surname'],0,1));
-                                  // }
-                                  // $counter = 1;
-                                  // foreach ($top_users as $key => $value) {
-                                  //   if($key != $user_name){
-                                  //     echo "<tr>";
-                                  //     echo "<th style='text-align:center;'><b>{$counter}</b></th>";
-                                  //     echo "<th scope='row'; style='text-align:center;'><b>{$key}</b></th>";
-                                  //     echo "<td style='text-align:center;'><b>{$value}%</b></td>";
-                                  //     echo "</tr>";
-                                  //   }
-                                  //   else{
-                                  //     echo "<tr>";
-                                  //     echo "<th bgcolor='#51A77E'; style='text-align:center;'><b>{$counter}</b></th>";
-                                  //     echo "<th bgcolor='#51A77E'; scope='row'; style='text-align:center;'><b>{$key}</b></th>";
-                                  //     echo "<td bgcolor='#51A77E'; style='text-align:center;'><b>{$value}%</b></td>";
-                                  //     echo "</tr>";
-                                  //   }
-                                  //   $counter += 1;
-                                  // }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-              </div> -->
-
+              
       <script src="user_months_Chart.js"></script>
 
 

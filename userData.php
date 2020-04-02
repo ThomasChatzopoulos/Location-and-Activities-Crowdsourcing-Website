@@ -4,12 +4,12 @@
   //------------------------------------------------ 1st query - eco user ------------------------------------------------
   // $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['usrname'];
   // $connected_user_id = mysqli_query($conn, $user_id_query);
-  $connected_user_id="2BX+nKZ0gnZUDpMJfK66pzR6anRXMi9uWU1EQ2FWMnBuMTlSeEE9PQ==";
+  $connected_user_id="9/TTPft2JDhUoxeoggc7xkx4am1zMG52dFUwL3cxVy9Na3huYmc9PQ==";
 
   $nowtime = intval(sprintf('%d000',time()));
 
   // $previus_months_sec = time() - strtotime("1-".(date("m",time())+1)."-".(date("Y",time())-1)); //sec for (11 months + this month days) before today
-  $previus_months_sec =15768000*10; // 6 months
+  $previus_months_sec =1576800000; // 6 months
 
   $all_user_activities_query = sprintf("SELECT activity_timestamp FROM user_activity WHERE userMapData_userId = '%s'
   AND ($nowtime - activity_timestamp)/1000 < $previus_months_sec", mysqli_real_escape_string($conn,$connected_user_id));
@@ -57,9 +57,6 @@
     }
   }
 
-  arsort($months);
-  arsort($eco_months);
-
   foreach ($months as $key => $value) {
     $user_score[$key]=round(($eco_months[$key]/$months[$key])*100,2);
   }
@@ -69,8 +66,9 @@
   else{
     $this_month_score = 0;
   }
-  echo "<br>";
-  print_r($user_score);
+  arsort($user_score);
+  // echo "<br>";
+  // print_r($user_score);
   $colours_months = set_Chart_colours($user_score);
 //------------------------------------------------ 2nd query - record range ------------------------------------------------
   $min_map = sprintf("SELECT MIN(timestampMs) FROM userMapData WHERE userId = '%s'",
@@ -98,8 +96,8 @@
     $last_record = date("d-m-Y h:i:s", ($row['MAX(timestampMs)'])/1000);
   }
 
-  echo "<br>First record: " , $first_record ,"<br>";
-  echo "Last record: " , $last_record ,"<br>";
+  // echo "<br>First record: " , $first_record ,"<br>";
+  // echo "Last record: " , $last_record ,"<br>";
 
 //------------------------------------------------ 3rd query - last upload ------------------------------------------------
   $last_upload_date_query = sprintf("SELECT MAX(uploadTime) FROM uploaded_by_user WHERE userId = '%s'", mysqli_real_escape_string($conn, $connected_user_id));
@@ -111,7 +109,7 @@
   while ($row = mysqli_fetch_assoc($last_upload_date_result)) {
     $last_upload_date=date("d-m-Y h:i:s", strtotime($row['MAX(uploadTime)']));
   }
-  echo "Last upload:",$last_upload_date ,"<br>" ;
+  // echo "Last upload:",$last_upload_date ,"<br>" ;
 
 //------------------------------------------------ 4th query - top 3 for last month ------------------------------------------------
   //$this_months_sec = time() - strtotime("1-".(date("m-Y",time()))); //sec for (11 months + this month days) before today

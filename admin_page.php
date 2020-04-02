@@ -66,21 +66,6 @@
                                 Accounts
                             </a>
                         </li>
-                        <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-cog"></i>
-                                <span>
-                                    Settings <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Profile</a>
-                                <a class="dropdown-item" href="#">Billing</a>
-                                <a class="dropdown-item" href="#">Customize</a>
-                            </div>
-                        </li>
-                    </ul> -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link d-block" href="login.html">
@@ -106,17 +91,10 @@
                         <canvas id="activity_chart"></canvas>
                     </div>
                 </div>
-                <?php require 'dashboard.php' ?>
-                <script>
-                var colours_act = '<?php echo json_encode($colours_act) ?>';
-                colours_obj_act = JSON.parse(colours_act);
-                 var activities = '<?php echo json_encode($activity_type) ?>';
-                 activities_obj = JSON.parse(activities);
-                </script>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Activity type distribution</h2>
-                        <table class="table">
+                        <table class="table" id="act_table">
                             <thead>
                                 <tr>
                                     <th scope="col">ACTIVITY TYPE</th>
@@ -124,19 +102,6 @@
                                     <th scope="col">RECORDS NO.</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $counter =0 ;
-                                foreach ($activity_type_table as $key => $value) {
-                                  echo "<tr>";
-                                  echo "<th scope='row'><b>{$key}</b></th>";
-                                  echo "<td style='background-color:$colours_act[$counter]'></td>";
-                                  echo "<td><b>{$value}</b></td>";
-                                  echo "</tr>";
-                                  $counter += 1;
-                                }
-                                 ?>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -146,16 +111,10 @@
                         <canvas id="files_per_user"></canvas>
                     </div>
                 </div>
-                <script>
-                var colours_rec = '<?php echo json_encode($colours_rec) ?>';
-                colours_obj_rec = JSON.parse(colours_rec);
-                var records = '<?php echo json_encode($record_per_user) ?>';
-                records_obj = JSON.parse(records);
-                </script>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Files per User</h2>
-                        <table class="table">
+                        <table class="table" id="files_table">
                             <thead>
                                 <tr>
                                     <th scope="col">USERNAME</th>
@@ -163,19 +122,6 @@
                                     <th scope="col">RECORDS NO.</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $counter =0 ;
-                                foreach ($record_per_user_table as $key => $value) {
-                                  echo "<tr>";
-                                  echo "<th scope='row'><b>{$key}</b></th>";
-                                  echo "<td style='background-color:$colours_rec[$counter]'></td>";
-                                  echo "<td><b>{$value}</b></td>";
-                                  echo "</tr>";
-                                  $counter += 1;
-                                }
-                                 ?>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -185,16 +131,10 @@
                         <canvas id="hours_chart"></canvas>
                     </div>
                 </div>
-                <script>
-                var colours_hours = '<?php echo json_encode($colours_hours) ?>';
-                colours_obj_hours = JSON.parse(colours_hours);
-                var hours = '<?php echo json_encode($hours) ?>';
-                hours_obj = JSON.parse(hours);
-                </script>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Records per Hour</h2>
-                        <table class="table">
+                        <table class="table" id="hours_table">
                             <thead>
                                 <tr>
                                     <th scope="col">HOUR</th>
@@ -202,38 +142,19 @@
                                     <th scope="col">RECORDS NO.</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $counter =0 ;
-                                foreach ($hours_table as $key => $value) {
-                                  echo "<tr>";
-                                  echo "<th scope='row'><b>{$key}</b></th>";
-                                  echo "<td style='background-color:$colours_hours[$counter]'></td>";
-                                  echo "<td><b>{$value}</b></td>";
-                                  echo "</tr>";
-                                  $counter += 1;
-                                }
-                                 ?>
-                            </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Hour Distribution Chart</h2>
+                        <h2 class="tm-block-title">Month Distribution Chart</h2>
                         <canvas id="months_chart"></canvas>
                     </div>
                 </div>
-                <script>
-                var colours_months = '<?php echo json_encode($colours_months) ?>';
-                colours_obj_months = JSON.parse(colours_months);
-                var months = '<?php echo json_encode($months) ?>';
-                months_obj = JSON.parse(months);
-                </script>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Records per Month</h2>
-                        <table class="table">
+                        <table class="table" id="months_table">
                             <thead>
                                 <tr>
                                     <th scope="col">MONTH</th>
@@ -241,19 +162,6 @@
                                     <th scope="col">RECORDS NO.</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $counter =0 ;
-                                foreach ($months_table as $key => $value) {
-                                  echo "<tr>";
-                                  echo "<th scope='row'><b>{$key}</b></th>";
-                                  echo "<td style='background-color:$colours_months[$counter]'></td>";
-                                  echo "<td><b>{$value}</b></td>";
-                                  echo "</tr>";
-                                  $counter += 1;
-                                }
-                                 ?>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -263,16 +171,10 @@
                         <canvas id="years_chart"></canvas>
                     </div>
                 </div>
-                <script>
-                var colours_years = '<?php echo json_encode($colours_years) ?>';
-                colours_obj_years = JSON.parse(colours_years);
-                var years = '<?php echo json_encode($years) ?>';
-                years_obj = JSON.parse(years);
-                </script>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Records per Year</h2>
-                        <table class="table">
+                        <table class="table" id="years_table">
                             <thead>
                                 <tr>
                                     <th scope="col">YEAR</th>
@@ -280,19 +182,6 @@
                                     <th scope="col">RECORDS NO.</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $counter =0 ;
-                                foreach ($years_table as $key => $value) {
-                                  echo "<tr>";
-                                  echo "<th scope='row'><b>{$key}</b></th>";
-                                  echo "<td style='background-color:$colours_years[$counter]'></td>";
-                                  echo "<td><b>{$value}</b></td>";
-                                  echo "</tr>";
-                                  $counter += 1;
-                                }
-                                 ?>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -302,16 +191,10 @@
                         <canvas id="days_chart"></canvas>
                     </div>
                 </div>
-                <script>
-                var colours_days = '<?php echo json_encode($colours_days) ?>';
-                colours_obj_days = JSON.parse(colours_days);
-                var days = '<?php echo json_encode($days) ?>';
-                days_obj = JSON.parse(days);
-                </script>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                         <h2 class="tm-block-title">Records per Day</h2>
-                        <table class="table">
+                        <table class="table" id="days_table">
                             <thead>
                                 <tr>
                                     <th scope="col">DAY</th>
@@ -319,24 +202,14 @@
                                     <th scope="col">RECORDS NO.</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                $counter =0 ;
-                                foreach ($days_table as $key => $value) {
-                                  echo "<tr>";
-                                  echo "<th scope='row'><b>{$key}</b></th>";
-                                  echo "<td style='background-color:$colours_days[$counter]'></td>";
-                                  echo "<td><b>{$value}</b></td>";
-                                  echo "</tr>";
-                                  $counter += 1;
-                                }
-                                 ?>
-                            </tbody>
                         </table>
                     </div>
                 </div>
     </div>
 
+    <script>
+      Chart.defaults.global.defaultFontColor = 'white';
+    </script>
     <script src="activity_type_dChart.js"></script>
     <script src="user_files_Chart.js"></script>
     <script src="hours_Chart.js"></script>
@@ -348,8 +221,6 @@
     <!-- https://jquery.com/download/ -->
     <script src="js/moment.min.js"></script>
     <!-- https://momentjs.com/ -->
-    <!-- <script src="js/Chart.min.js"></script> -->
-    <!-- http://www.chartjs.org/docs/latest/ -->
     <script src="js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
 

@@ -1,33 +1,31 @@
 <?php
-session_start();
-?>
-
-<?php
-if(isset($_POST['signup_button'])){
+$errU = false;
+if(isset($_POST['submit_'])){
   require 'dbconnect.php';
 
   $username = $_POST['username'];
-  $password = $_POST['psw'];
-  $Rpassword = $_POST['psw_repeat'];
+  $password = $_POST['password'];
+  $Rpassword = $_POST['rpassword'];
   $fname = $_POST['fname'];
   $lname = $_POST['lname'];
   $email = $_POST['email'];
   $pattern ="/^.*(?=.{8,})(?=.*\d)(?=.*[a-zA-Z])(?=.*[#$*&@!]+).*$/" ;
 
+$error_rep_pass = false;
+$error_inv_pass = false;
+$error_username_taken = false;
+
 if($password != $Rpassword){
-  header("Location: SignUpPage.php?error_password&username =".$username."&email=".$email);
-  exit();
+  $error_rep_pass = true;
 }
-elseif (!preg_match($pattern,$password)) {
-  header("Location: SignUpPage.php?".$password."error_password=not_valid");
-  exit();
+if (!preg_match($pattern,$password)) {
+  $error_inv_pass = true;
 }
-else{
+if (!$error_rep_pass && !$error_inv_pass){
   $sql = "SELECT userId from `user` where userId =?";   //Admin$1aaaa
   $stmt = mysqli_stmt_init($conn);
   if(!mysqli_stmt_prepare($stmt, $sql)){
-    header("Location: SignUpPage.php?error=sqlerror");
-    exit();
+    $errU = true;
   }
   else{
     mysqli_stmt_bind_param($stmt, "s", $username);
@@ -35,15 +33,13 @@ else{
     mysqli_stmt_store_result($stmt);
     $resultCheck = mysqli_stmt_num_rows($stmt);
     if($resultCheck > 0){
-      header("Location: SignUpPage.php?error=usertaken&email=".$email);
-      exit();
+      $error_username_taken = false;
     }
     else{
       $sql = "INSERT INTO `user` (userId, name, surname, username, password, email) values (?, ?, ?, ?, ?, ?)";
       $stmt = mysqli_stmt_init($conn);
       if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("Location: SignUpPage.php?error=sqlerror");
-        exit();
+        $errU = true;
       }
       else{
         mysqli_stmt_prepare($stmt, $sql);
@@ -63,16 +59,17 @@ else{
         if(!mysqli_stmt_execute($stmt)){
             die(mysqli_error($conn));
         }
-        header("Location: SignUpPage.php?signup=success");
-        exit();
+        session_start();
+        $_SESSION['username'] = $username;
       }
+      mysqli_stmt_close($stmt);
+      mysqli_close($conn);
     }
 }
-mysqli_stmt_close($stmt);
-mysqli_stmt_close($conn);
 }
 }
 else{
-  header("Location: SignUpPage.php?patates");
+  $errU = true;
 }
+echo json_encode(array($errU, $error_rep_pass, $error_inv_pass, $error_username_taken));
 ?>

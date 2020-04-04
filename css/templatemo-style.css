@@ -39,7 +39,12 @@ button:focus {
   font-weight: 700;
   color: #fff;
 }
-
+.form-message {
+  font-family: arial;
+  font-size: 17px;
+  font-weight: 400;
+  color: maroon;
+}
 .input-error {
   box-shadow: 0 0 5px red;
 }

@@ -5,7 +5,7 @@ $(document).ready(function() {
     var password = $("#password_").val();
     var submit = $("#submit-but").val();
 
-    jQuery.ajax({
+    $.ajax({
                 type: 'POST',
                 url: "login.php",
                 data: {

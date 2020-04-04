@@ -1,26 +1,71 @@
-<?php
-session_start();
-?>
-
-<!DOCTYPE hmtl>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>SignUpPage</title>
+  <title>Sign Up</title>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+  />
+  <!-- https://fonts.google.com/specimen/Open+Sans -->
+  <link rel="stylesheet" href="css/fontawesome.min.css" />
+  <!-- https://fontawesome.com/ -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <!-- https://getbootstrap.com/ -->
+  <link rel="stylesheet" href="css/templatemo-style.css">
 </head>
+
 <body>
-  <h2>Sign Up</h2>
-  <p>Please fill in this form to create an account.</p>
-  <form action="signUp.php" method = "POST">
-    Username: <input type="text" name="username" placeholder="Enter username" required><br>
-    Password: <input type="password" name="psw" placeholder="Enter Password" required><br>
-    Repeat Password: <input type="password" name="psw_repeat" placeholder="Repeat Password" required><br>
-    First Name: <input type="text" name="fname" placeholder="Enter First Name" required><br>
-    Last Name: <input type="text" name="lname" placeholder="Enter Last Name" required><br>
-    Email: <input type="email" name="email" placeholder="Enter your email" required><br>
-    <button type="submit" name = "signup_button">Sign Up</button>
-  </form>
+  <div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-12 mx-auto tm-login-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="tm-block-title mb-4">Sign Up to Heat</h2>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <form action="signUp.php" method = "POST" class="tm-login-form">
+                <div class="form-group">
+                <label for="username">Username</label>
+                <input name="username" type="text" class="form-control validate" id="_username_" required />
+              </div>
+              <div class="form-group mt-3">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control validate" id="_password_" required />
+              </div>
+              <div class="form-group mt-3">
+                <label for="password2">Repeat Password</label>
+                <input name="password2" type="password" class="form-control validate" id="_Rpassword_" required />
+              </div>
+              <div class="form-group mt-3">
+                <label for="fname">First Name</label>
+                <input name="fname" type="text" class="form-control validate" id="_fname_" required />
+              </div>
+              <div class="form-group mt-3">
+                <label for="lname">Last Name</label>
+                <input name="lname" type="text" class="form-control validate" id="_lname_" required />
+              </div>
+              <div class="form-group mt-3">
+                <label for="email">Email</label>
+                <input name="email" type="email" class="form-control validate" id="_email_" required />
+              </div>
+                <div class="form-group mt-4">
+                  <button type="submit" name = "sign_button" class="btn btn-primary btn-block text-uppercase" id="_sign-but_">Sign Up</button>
+                </div>
+                <p class="form-message"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="ajax_signup.js"></script>
 </body>
 </html>

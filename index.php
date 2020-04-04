@@ -41,9 +41,7 @@
                 <div class="form-group mt-4">
                   <button type="submit" name = "login_button" class="btn btn-primary btn-block text-uppercase" id="submit-but">Log in</button>
                 </div>
-                <button class="mt-5 btn btn-primary btn-block text-uppercase">
-                  Sign Up
-                </button>
+                <a href="signUpPage.php" class="mt-5 btn btn-primary btn-block text-uppercase">sign up</a>
               </form>
             </div>
           </div>

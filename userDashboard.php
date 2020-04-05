@@ -31,7 +31,7 @@
       <nav class="navbar navbar-expand-xl">
         <div class="container h-100">
           <a class="navbar-brand" href="userDashboard.php">
-            <h1 class="tm-site-title mb-0">User</h1>
+            <h1 class="tm-site-title mb-0" id = 'user_name'></h1>
           </a>
           <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,30 +48,30 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="products.html">
-                    <i class="fas fa-shopping-cart"></i>
-                    Report
+                  <a class="nav-link" href="data.php">
+                    <i class="far fa-chart-bar"></i>
+                    Data analysis
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="products.html">
-                    <i class="fas fa-shopping-cart"></i>
-                    Products
+                  <a class="nav-link" href="file_upload_page.php">
+                    <i class="fas fa-upload"></i>
+                    File upload
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="accounts.html">
+                  <a class="nav-link" href="accounts.php">
                     <i class="far fa-user"></i>
-                    Accounts
+                    Account
                   </a>
                 </li>
               </ul>
               <ul class="navbar-nav">
                 <li class="nav-item">
                   <a class="nav-link d-block" href="login.html">
-                    User, <b>Logout</b>
+                    <b>Logout</b>
                   </a>
                 </li>
               </ul>
@@ -80,13 +80,10 @@
         </nav>
 
         <div class="container">
-          <div class="row">
-            <div class="col">
-              <p class="text-white mt-5 mb-5">Welcome back, <b>User</b></p>
-            </div>
-          </div>
 
+          <br /><br />
           <h1 style='color:white; text-align:center;'  id = 'user_score'></h1>
+          <br /><br />
 
           <div class="row tm-content-row">
 
@@ -120,7 +117,7 @@
 
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
           <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-          <h2 class="tm-block-title">Top 3 user and you</h2>
+          <h2 class="tm-block-title">Top 3 user and you for the current month</h2>
             <table class="table" id ="top_users_table">
               <thead>
                 <tr>
@@ -143,6 +140,7 @@
   <script src="js/top_3_users.js"></script>
   <script src="js/user_file_data.js"></script>
   <script src="js/user_score.js"></script>
+  <script src="js/connected_user_name.js"></script>
 
   <script src="js/jquery-3.3.1.min.js"></script>
   <!-- https://jquery.com/download/ -->

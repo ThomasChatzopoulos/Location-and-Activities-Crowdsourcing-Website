@@ -11,12 +11,13 @@ $(document).ready(function() {
                 data: {
                   username: username,
                   password: password,
-                  submit: submit
+                  submit: submit,
                 },
                 dataType: 'json',
                 success: function(data) {
                   if(data[0] == false && data[1] == false) {
-                    window.location = "dashboard.php";
+                    alert(data);
+                    window.location = "admin_page.php";
                   }
                   if(data[0] == true) {
                     $("#username_").addClass("input-error");

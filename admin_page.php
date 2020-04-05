@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Page</title>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
     <!-- https://fonts.google.com/specimen/Roboto -->
     <link rel="stylesheet" href="css/fontawesome.min.css">
@@ -25,7 +24,6 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
 </head>
-
 <body id="reportsPage">
     <div class="" id="home">
         <nav class="navbar navbar-expand-xl">
@@ -37,7 +35,6 @@
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars tm-nav-icon"></i>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto h-100">
                         <li class="nav-item">
@@ -54,12 +51,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="products.html">
+                            <a class="nav-link" href="adminpage.php">
                                 <i class="fas fa-shopping-cart"></i>
                                 Products
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="accounts.html">
                                 <i class="far fa-user"></i>
@@ -75,7 +71,6 @@
                     </ul>
                 </div>
             </div>
-
         </nav>
         <div class="container">
             <div class="row">
@@ -206,7 +201,6 @@
                     </div>
                 </div>
     </div>
-
     <script>
       Chart.defaults.global.defaultFontColor = 'white';
     </script>
@@ -216,14 +210,11 @@
     <script src="months_Chart.js"></script>
     <script src="years_Chart.js"></script>
     <script src="days_Chart.js"></script>
-
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
     <script src="js/moment.min.js"></script>
     <!-- https://momentjs.com/ -->
     <script src="js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
-
 </body>
-
 </html>

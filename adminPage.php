@@ -246,9 +246,9 @@
         <script src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="disable_function.js"></script>
         <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="activities_from_db.js"></script>
-        <script src="admin_years_loop"></script>
-        <script src="admin_hours_loop"></script>
-        <script src="ajax_admin.js"></script>
+        <script src="js/activities_from_db.js"></script>
+        <script src="js/admin_years_loop.js"></script>
+        <script src="js/admin_hours_loop.js"></script>
+        <script src="js/ajax_admin.js"></script>
   </body>
 </html>

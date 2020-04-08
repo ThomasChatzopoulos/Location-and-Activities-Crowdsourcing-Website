@@ -1,9 +1,10 @@
 <?php
   require 'dbconnect.php';
+  session_start();
 
-  // $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['usrname'];
-  // $connected_user_id = mysqli_query($conn, $user_id_query);
-  $connected_user_id="9/TTPft2JDhUoxeoggc7xkx4am1zMG52dFUwL3cxVy9Na3huYmc9PQ==";
+  $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['username'];
+  $connected_user_id = mysqli_query($conn, $user_id_query);
+  // $connected_user_id="X9CxPW5LDR+CJ5bRD2N+0Hl4TkErMStGamlJNnZTUjBGQ0sxcUE9PQ==";
 
   $connected_user_name_query = sprintf("SELECT name, surname FROM user WHERE userId = '%s'", mysqli_real_escape_string($conn,$connected_user_id));
   $connected_user_name_result = mysqli_query($conn, $connected_user_name_query);

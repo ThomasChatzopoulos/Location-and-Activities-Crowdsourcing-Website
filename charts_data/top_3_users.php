@@ -1,14 +1,15 @@
 <?php
   require '../dbconnect.php';
+  session_start();
 
-  // $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['usrname'];
-  // $connected_user_id = mysqli_query($conn, $user_id_query);
-  $connected_user_id="9/TTPft2JDhUoxeoggc7xkx4am1zMG52dFUwL3cxVy9Na3huYmc9PQ==";
+  $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['username'];
+  $connected_user_id = mysqli_query($conn, $user_id_query);
+  // $connected_user_id="X9CxPW5LDR+CJ5bRD2N+0Hl4TkErMStGamlJNnZTUjBGQ0sxcUE9PQ==";
 
   $nowtime = intval(sprintf('%d000',time()));
 
-  //$this_months_sec = time() - strtotime("1-".(date("m-Y",time())));
-  $this_months_sec =1576800000;
+  $this_months_sec = time() - strtotime("1-".(date("m-Y",time())));
+  // $this_months_sec =1576800000;
 
   $all_user_activities_query = sprintf("SELECT  count(activity_timestamp) FROM user_activity WHERE userMapData_userId = '%s'
   AND ($nowtime - activity_timestamp)/1000 < $this_months_sec", mysqli_real_escape_string($conn,$connected_user_id));
@@ -73,12 +74,18 @@
 
   arsort($temp_top_users);
 
-  $counter=1;
-  foreach ($temp_top_users as $key => $value) { // check if user is in top 3
-    if($key==$connected_user_id){
-        $connected_user_rank = $counter;
+  if($connected_user_score !=0){
+    $counter=1;
+    foreach ($temp_top_users as $key => $value) { // check if user is in top 3
+      if($key==$connected_user_id){
+          $connected_user_rank = $counter;
+      }
+      $counter++;
     }
-    $counter++;
+
+  }
+  else{
+    $connected_user_rank = count($temp_top_users)+1;
   }
 
   if($connected_user_rank<=3){
@@ -109,9 +116,15 @@
     echo "SQL error <br>";
     exit();
   }
+
+  echo $connected_user_id,"<br>";
+  echo $connected_user_name_result,"<br>";
+
   while ($row = mysqli_fetch_assoc($connected_user_name_result)) {
     $connected_user_name = sprintf($row['name']." ".substr($row['surname'],0,1));
   }
+  print_r($connected_user_name);
+  echo '<br>';
 
   $counter=0;
   foreach ($top_rank_users as $key => $value) {
@@ -128,5 +141,4 @@
   }
 
   echo json_encode(array($top_users_table,$users_rank_table));
-
 ?>

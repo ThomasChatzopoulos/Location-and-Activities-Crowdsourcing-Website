@@ -30,10 +30,9 @@ if(isset($_POST['submit'])){
   if($PassCheck == false){
     $errorP = true;
   }
-
   else{
     session_start();
-    $_SESSION['usrname'] = $username;
+    $_SESSION['username'] = $username;
   }
 }
 echo json_encode(array($errorU, $errorP));

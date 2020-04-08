@@ -10,8 +10,14 @@ $(document).ready(function() {
       var file_table = data[0];
 
       $.each(file_table, function (key, val) {
-        if(key == 'Last file upload'){
-          $('#last_upload').append("Your last upload date: " + val);
+        if(key == "Last file upload"){
+          if(val== 'You have not uploaded any file yet'){
+            $('#last_upload').append(val);
+          }
+          else{
+            $('#last_upload').append("Your last upload date: " + val);
+          }
+
         }
       });
     }

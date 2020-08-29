@@ -1,32 +1,24 @@
-
 <?php
-// TODO: για κάποιο λ΄΄ογο με το ajax αρχείο δεν μπαίνει σωστά σε αυτή την if..
-$erroryear = false;
-$errormonth = false;
-$errorday = false;
-$errorhour = false;
-$erroractivity = false;
-$errorerase = false;
-$errorexport = false;
-$errordate = false;
 
-if (isset($_POST['dates_button'])) {  //submit button
-  require 'dbconnect.php';
+if (isset($_POST['submit'])) {  //submit button
   $erroryear = false;
   $errormonth = false;
   $errorday = false;
   $errorhour = false;
   $erroractivity = false;
-  $errorerase = false;
-  $errorexport = false;
-  $errordate = false;
+  // $errorerase = false;
+  // $errorexport = false;
+  // $errordate = false;
+
+
+  require 'dbconnect.php';
 
   if(isset($_POST['allYearsCheckBox']) && $_POST['allYearsCheckBox'] == 'Yes') { //all years selected
     $startYear = "1980";
     $endYear = "2020";
   }else {
-    $startYear = $_POST['startyearBox'];
-    $endYear = $_POST['endyearBox'];
+    $startYear = $_POST['startyear'];
+    $endYear = $_POST['endyear'];
     if ($startYear > $endYear) {
       $erroryear = true;
     }
@@ -36,8 +28,8 @@ if (isset($_POST['dates_button'])) {  //submit button
     $startmonth = "01";
     $endmonth = "12";
   }else {
-    $startmonth = $_POST['startmonthBox'];
-    $endmonth = $_POST['endmonthBox'];
+    $startmonth = $_POST['startmonth'];
+    $endmonth = $_POST['endmonth'];
     if ($startmonth > $endmonth) {
       $errormonth = true;
     }
@@ -47,8 +39,8 @@ if (isset($_POST['dates_button'])) {  //submit button
     $startday = "1";
     $endday = "7";
   }else {
-    $startday = $_POST['startdayBox'];
-    $endday = $_POST['enddayBox'];
+    $startday = $_POST['startday'];
+    $endday = $_POST['endday'];
     if ($startday > $endday) {
       $errorday = true;
     }
@@ -58,8 +50,8 @@ if (isset($_POST['dates_button'])) {  //submit button
     $starthour = "00";
     $endhour = "23";
   }else {
-    $starthour = $_POST['starthourBox'];
-    $endhour = $_POST['endhourBox'];
+    $starthour = $_POST['starthour'];
+    $endhour = $_POST['endhour'];
     if ($starthour > $endhour) {
       $errorhour = true;
     }
@@ -162,51 +154,23 @@ for($i=0; $i<count($datetimes); $i++){
 }
 
 //Mysql selection from usermapdata
-$finaltimestamps = array();
-for($i=0; $i<count($timestamps); $i+=2){
-  $ts1 = $timestamps[$i];
-  $ts2 = $timestamps[$i+1];
-  $sql = "select userMapData_timestampMs as time from user_activity where userMapData_timestampMs > $ts1 and userMapData_timestampMs  < $ts2";
-  $select_result = mysqli_query($conn,$sql);
+  $finaltimestamps = array();
+  for($i=0; $i<count($timestamps); $i+=2){
+    $ts1 = $timestamps[$i];
+    $ts2 = $timestamps[$i+1];
+    $sql = "select userMapData_timestampMs as time from user_activity where userMapData_timestampMs > $ts1 and userMapData_timestampMs  < $ts2";
+    $select_result = mysqli_query($conn,$sql);
 
-  if(!$select_result){
-    exit();
-  }
+    if(!$select_result){
+      exit();
+    }
 
-  while($row = mysqli_fetch_assoc($select_result)){ //$finaltimestamps εχει τα entries στην βαση που είναι στο range
-    array_push($finaltimestamps,$row['time']);
+    while($row = mysqli_fetch_assoc($select_result)){ //$finaltimestamps εχει τα entries στην βαση που είναι στο range
+      array_push($finaltimestamps,$row['time']);
+    }
   }
 }
 
-}elseif (isset($_POST['delete_button'])) { //delete database button
-  $erroryear = true;
-  $errormonth = true;
-  $errorday = true;
-  $errorhour = true;
-  $erroractivity = true;
-  $errorerase = false;
-  $errorexport = true;
-  $errordate = true;
-  ?>
-    <h1>Are you sure you want to erase the entire database?</h1>
-    <form class="" action="erase.php" method="post">
-      <button type="submit" name="yes_button">YES</button>
-      <button type="submit" name="no_button">NO</button>
-    </form>
-  <?php
-} elseif (isset($_POST['export_button'])) { //export data button
-  $datatype = $_POST['exportselectBox'];
-  // TODO: δεν ξέρω αν χρειάζεται κάτι άλλο
-  $erroryear = true;
-  $errormonth = true;
-  $errorday = true;
-  $errorhour = true;
-  $erroractivity = true;
-  $errorerase = true;
-  $errorexport = false;
-  $errordate = true;
-}
-
-echo json_encode(array($erroryear, $errormonth, $errorday));
+echo json_encode(array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity));
 
 ?>

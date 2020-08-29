@@ -48,7 +48,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="data.php">
+                  <a class="nav-link" href="adminPage.php">
                     <i class="far fa-chart-bar"></i>
                     Data analysis
                   </a>

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $(this).submit(function(event) {
+  $("form").submit(function(event) {
     event.preventDefault();
     var startyear = $("#startyearBox").val();
     var endyear = $("#endyearBox").val();
@@ -9,16 +9,27 @@ $(document).ready(function() {
     var endday = $("#enddayBox").val();
     var starthour = $("#starthourBox").val();
     var endhour = $("#endhourBox").val();
+    var submit = $("#dates_button").val();
 
     $.ajax({
               type: 'POST',
               url: "admin.php",
+              data: {
+                startyear: startyear,
+                endyear: endyear,
+                startmonth: startmonth,
+                endmonth: endmonth,
+                startday: startday,
+                endday: endday,
+                starthour: starthour,
+                endhour: endhour,
+                submit: submit
+              },
               datatype: 'json',
               success: function(data) { // TODO: για κάποιο λόγο το data δεν περνιέται σωστά (αντί για πίνακα περνιέται σαν string)
                 alert(data);
-                if (data[0] == false && data[1] == false && data[2] == false && data[3] == false) {
-                  alert('success');
-                  window.location = "admin.php";
+                if (data[0] == true && data[1] == true && data[2] == true && data[3] == true && data[4] == true) {
+                  alert('failed');
                 }
 
                 if (data[0] == true) {

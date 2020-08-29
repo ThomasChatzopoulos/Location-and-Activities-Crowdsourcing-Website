@@ -90,14 +90,26 @@
                       <label for="startyearBox">Start year:</label>
                         <select class="custom-select" id="startyearBox" name="startyearBox"  required>
                           <option value=""></option>
+                          <?php for ($i = 0; $i <= 20; $i++)
+                          {
+                              $date = date("Y") - $i;
+                              echo "<option value='$date'>" . $date . "</option>";
+                          }
+                          ?>
                         </select>
                         <label for="endyearBox">End year:</label>
                         <select class="custom-select" id="endyearBox" name="endyearBox" required>
-                          <option value=""></option>                              ?>
+                          <option value=""></option>
+                          <?php for ($i = 0; $i <= 20; $i++)
+                          {
+                              $date = date("Y") - $i;
+                              echo "<option value='$date'>" . $date . "</option>";
+                          }
+                          ?>
                         </select>
-
-                        <br><br> <label for="allYearsCheckBox"> Check to select all years:</label>
-                        <input type="checkbox" name="allYearsCheckBox" value="Yes" onclick="disable('startyearBox', 'endyearBox')">
+                        <br><br>
+                        <label for="allYearsCheckBox"><label>Check to select all years</label>
+                        <input type="checkbox" name="allYearsCheckBox" id="allYearsCheckBox" value="Yes" onclick="disableFunction('allYearsCheckBox', 'startyearBox', 'endyearBox')"/>
                       </div>
                     </div>
                 </div>
@@ -139,7 +151,7 @@
                           <option value = "12"> December</option>
                         </select>
                         <br><br> <label for="allMonthsCheckBox"> Check to select all months:</label>
-                          <input type="checkbox" name="allMonthsCheckBox" value="Yes" onclick="disable('startmonthBox', 'endmonthBox')">
+                          <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" value="Yes" onclick="disableFunction('allMonthsCheckBox', 'startmonthBox', 'endmonthBox')">
                       </div>
                     </div>
                 </div>
@@ -147,7 +159,7 @@
                 <div class="tm-block-col tm-col-small">
                   <div class="tm-bg-primary-dark tm-block">
                     <div class="text-center">
-                      <h2 class="tm-block-title">Year Selection</h2>
+                      <h2 class="tm-block-title">Day Selection</h2>
                         <label for="startdayBox">Start day:</label>
                         <select class="custom-select" id="startdayBox" name ="startdayBox" required>
                           <option value=""></option>
@@ -173,7 +185,7 @@
                         </select>
 
                         <br><br> <label for="allYearsCheckBox"> Check to select all days:</label>
-                        <input type="checkbox" name="allDaysCheckBox" value="Yes" onclick="disable('startdayBox', 'enddayBox')">
+                        <input type="checkbox" name="allDaysCheckBox" id="allDaysCheckBox" value="Yes" onclick="disableFunction('allDaysCheckBox', 'startdayBox', 'enddayBox')">
                       </div>
                     </div>
                 </div>
@@ -185,13 +197,23 @@
                       <label for="starthourBox">Start hour:</label>
                       <select class="custom-select" id="starthourBox" name = "starthourBox" required>
                         <option value=""></option>
+                        <?php for ($i = 0; $i <= 23; $i++)
+                        {
+                          echo "<option value='$i'>" . sprintf("%02d", $i) . "</option>";
+                        }
+                        ?>
                       </select>
                       <label for="endhourBox">End hour:</label>
                       <select class="custom-select" id="endhourBox" name = "endhourBox" required>
                         <option value=""></option>
+                        <?php for ($i = 0; $i <= 23; $i++)
+                        {
+                          echo "<option value='$i'>" . sprintf("%02d", $i) . "</option>";
+                        }
+                        ?>
                       </select>
                       <br><br> <label for="allHoursCheckBox"> Check to select all hours:</label>
-                      <input type="checkbox" name="allHoursCheckBox" value="Yes" onclick="disable('starthourBox', 'endhourBox')">
+                      <input type="checkbox" name="allHoursCheckBox" id="allHoursCheckBox" value="Yes" onclick="disableFunction('allHoursCheckBox', 'starthourBox', 'endhourBox')">
                     </div>
                   </div>
                 </div>
@@ -201,7 +223,8 @@
                     <div class="text-center">
                       <h2 class="tm-block-title">Activity Selection</h2>
                       <table class="table" id="act_table">  </table>
-                      <br>  Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" value="Yes" onclick = "disable('IN_VEHICLE','ON_BICYCLE'); disable('ON_FOOT','RUNNING'); disable('STILL', 'TILTING'); disable('UNKNOWN', 'WALKING'); disable('IN_ROAD_VEHICLE', 'IN_RAIL_VEHICLE'); disable('IN_FOUR_WHEELER_VEHICLE', 'IN_CAR')">
+                      <br>  Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" id="allActivitiesCheckBox"
+                      value="Yes" onclick = "disableActivities('allActivitiesCheckBox')">
                     </div>
                   </div>
                 </div>
@@ -244,11 +267,11 @@
           </div>
         </div>
         <script src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="disable_function.js"></script>
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/activities_from_db.js"></script>
-        <script src="js/admin_years_loop.js"></script>
-        <script src="js/admin_hours_loop.js"></script>
+        <script src="js/disable_function.js"></script>
+        <!-- <script src="js/admin_years_loop.js"></script>
+        <script src="js/admin_hours_loop.js"></script> -->
         <script src="js/ajax_admin.js"></script>
   </body>
 </html>

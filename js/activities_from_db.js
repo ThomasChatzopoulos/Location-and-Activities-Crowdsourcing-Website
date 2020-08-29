@@ -9,7 +9,7 @@ $(document).ready(function() {
     success: function(data) {
       var act_table = data[0];
       $.each(act_table, function (key, val) {
-        $("<tr><th scope='row'></th><td scope='col'><input type='checkbox' value = 'Yes' id = '" + val + "' name = '" + val +  "'/><b>" + "            " + val + "</b></td></tr>").appendTo("#act_table");
+        $("<tr><th scope='row'></th><td scope='col'><input class='act_checkboxes' type='checkbox' value = 'Yes' id = '" + val + "' name = '" + val +  "'/><b>" + "            " + val + "</b></td></tr>").appendTo("#act_table");
       });
     }
   });

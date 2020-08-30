@@ -1,15 +1,10 @@
 <?php
-
-if (isset($_POST['submit'])) {  //submit button
+if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   $erroryear = false;
   $errormonth = false;
   $errorday = false;
   $errorhour = false;
   $erroractivity = false;
-  // $errorerase = false;
-  // $errorexport = false;
-  // $errordate = false;
-
 
   require 'dbconnect.php';
 
@@ -107,7 +102,6 @@ while($currentyear <= $endYear){ // για κάθε χρόνο στο range
       while($row = mysqli_fetch_assoc($dayofweek)){ //βρες μέρα της βδομάδας για την 1η μέρα του τρέχοντα μήνα
         $difference = $currentday - $row['Day'];
       }
-
       if($difference < 0 ){ //
         $difference += 7;
       }
@@ -153,24 +147,34 @@ for($i=0; $i<count($datetimes); $i++){
   }
 }
 
-//Mysql selection from usermapdata
-  $finaltimestamps = array();
-  for($i=0; $i<count($timestamps); $i+=2){
-    $ts1 = $timestamps[$i];
-    $ts2 = $timestamps[$i+1];
-    $sql = "select userMapData_timestampMs as time from user_activity where userMapData_timestampMs > $ts1 and userMapData_timestampMs  < $ts2";
-    $select_result = mysqli_query($conn,$sql);
-
-    if(!$select_result){
-      exit();
-    }
-
-    while($row = mysqli_fetch_assoc($select_result)){ //$finaltimestamps εχει τα entries στην βαση που είναι στο range
-      array_push($finaltimestamps,$row['time']);
-    }
+  if($_POST['submit'] == 'true') {      // TODO: CHECK FOR EASIER WAY
+    echo("potato");
   }
+  elseif ($_POST['exp_submit'] == 'true') {
+    include 'export_file.php';
+    $export_array = array();
+    for($i=0; $i<count($timestamps); $i+=2){
+      $ts1 = $timestamps[$i];
+      $ts2 = $timestamps[$i+1];
+      $sql = "SELECT heading, velocity, accuracy, longitude, latitude, altitude, timestampMs, userId FROM `usermapdata` WHERE timestampMs BETWEEN $ts1 AND $ts2";
+      $select_result = mysqli_query($conn,$sql);
+
+      if(!$select_result){
+        exit();
+      }
+      else {
+        while ($row = mysqli_fetch_assoc($select_result)) {
+          $userId = $row['userId'];
+          unset($row['userId']);
+          $row = add_activity_info($row, $conn);
+          $row['userId'] = $userId;
+          array_push($export_array, $row);
+        }
+      }
+    }
+    echo($_POST['exp_type']);
+    echo(export_data($export_array, $_POST['exp_type']));
+  }
+  echo json_encode(array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity));
 }
-
-echo json_encode(array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity));
-
 ?>

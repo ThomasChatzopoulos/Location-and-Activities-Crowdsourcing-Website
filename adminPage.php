@@ -81,7 +81,6 @@
                     <p class="text-white mt-5 mb-5 text-center">Welcome back, <b>Admin</b></p>
                 </div>
             </div>
-          <form action="admin.php" method="POST">
             <div class="row tm-content-row">
                 <div class="tm-block-col tm-col-small">
                   <div class="tm-bg-primary-dark tm-block">
@@ -229,26 +228,22 @@
                   </div>
                 </div>
                 <p align = "center">
-                  <button class="btn-primary" type="submit" id = "dates_button" name="dates_button">Submit date range</button>
+                  <button class="btn-primary" type="submit" id = "dates_button" name="dates_button" onclick="date_ranges('true', 'false')">Submit date range</button>
                 </p>
-          </form>
 
             <div class="row tm-content-row">
               <div class="tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
                   <div class="text-center">
                     <h2 class="tm-block-title"> Export Data </h2>
-                    <form action="admin.php" method="post">
                       <label for="exportselectBox">What type do you want the data to be?</label>
-                      <br> <select class ="custom-select" name="exportselectBox" required>
-                        <option value=""></option>
+                      <br> <select class ="custom-select" name="exportselectBox" id="exportselectBox" required>
                         <option value="json">json</option>
                         <option value="xml">xml</option>
                         <option value="csv">csv</option>
                       </select>
-                      <br><br> <button class="btn-primary" type="submit" name="export_button" >Export Data</button>
+                      <br><br> <button class="btn-primary" type="submit" name="export_button" id="export_button" onclick="date_ranges('false', 'true')">Export Data</button>
                     </div>
-                  </form>
                 </div>
               </div>
 
@@ -259,7 +254,7 @@
                     <form action = "admin.php" method="post">
                       <p align ="center">
                         If you press this button you will erase the database <br><br>
-                        <button class="btn-primary" type="submit" name="delete_button">Erase Database</button>
+                        <button class="btn-primary" type="submit" onclick="return confirm('Are you sure to delete?')" id = "erase_database" name="delete_button">Erase Database</button>
                       </p>
                     </form>
                 </div>
@@ -269,6 +264,7 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/activities_from_db.js"></script>
+        <script src="js/erase_database.js"></script>
         <script src="js/disable_function.js"></script>
         <!-- <script src="js/admin_years_loop.js"></script>
         <script src="js/admin_hours_loop.js"></script> -->

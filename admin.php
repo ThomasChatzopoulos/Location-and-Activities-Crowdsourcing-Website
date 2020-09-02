@@ -7,8 +7,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   $erroractivity = false;
 
   require 'dbconnect.php';
-
-  if(isset($_POST['allYearsCheckBox']) && $_POST['allYearsCheckBox'] == 'Yes') { //all years selected
+  if(isset($_POST['select_allyears'])) { //all years selected
     $startYear = "1980";
     $endYear = "2020";
   }else {
@@ -18,8 +17,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
       $erroryear = true;
     }
   }
-
-  if(isset($_POST['allMonthsCheckBox']) && $_POST['allMonthsCheckBox'] == 'Yes') {
+  if(isset($_POST['select_allmonths'])) {
     $startmonth = "01";
     $endmonth = "12";
   }else {
@@ -30,7 +28,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     }
   }
 
-  if(isset($_POST['allDaysCheckBox']) && $_POST['allDaysCheckBox'] == 'Yes') {
+  if(isset($_POST['select_alldays'])) {
     $startday = "1";
     $endday = "7";
   }else {
@@ -41,7 +39,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     }
   }
 
-  if(isset($_POST['allHoursCheckBox']) && $_POST['allHoursCheckBox'] == 'Yes') {
+  if(isset($_POST['select_allhours'])) {
     $starthour = "00";
     $endhour = "23";
   }else {
@@ -68,20 +66,18 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   }
   //actarray εχει τις δραστηριότητες που επέλεξε ο χρήστης
   $activities = array();
-  if(isset($_POST['allActivitiesCheckBox']) && $_POST['allActivitiesCheckBox'] == 'Yes'){ //all activities selected
+  if(isset($_POST['select_all_activities'])) { //all activities selected
     for ($i=0; $i < count($actarray) ; $i++) {
       array_push($activities,$actarray[$i]);
     }
-  }else {
+  }
+  else {
     for ($i = 0; $i < count($actarray); $i++) {
       if(isset($_POST[$actarray[$i]]) && $_POST[$actarray[$i]] == 'Yes') {
         array_push($activities,$actarray[$i]);
       }
     }
-
-
   }
-$connected_user_id ="W2Pk6MvmP+hYj7xsiWawek9xS3d2N3lnZzdva29wRVZidWlGOVdPbEtOejN6S0tlVkttTFZEQ1d5ZUU9"; //user in my database
 
 $currentyear = $startYear;
 $datetimes = array();
@@ -146,35 +142,40 @@ for($i=0; $i<count($datetimes); $i++){
       array_push($timestamps,( $row['timestamp'] * 1000 ) ); //*1000 για να είναι σε ms
   }
 }
+  if(!$erroryear && !$errormonth && !$errorday && !$errorhour && !$erroractivity)
+  {
+    if($_POST['submit'] == 'true') {      // TODO: CHECK FOR EASIER WAY
+      include 'heatmap_data.php';
+      $datapoints = heatmapdata($timestamps);
+      echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>$datapoints));
+    }
+    elseif ($_POST['exp_submit'] == 'true') {
+      include 'export_file.php';
+      $export_array = array();
+      for($i=0; $i<count($timestamps); $i+=2){
+        $ts1 = $timestamps[$i];
+        $ts2 = $timestamps[$i+1];
+        $sql = "SELECT heading, velocity, accuracy, longitude, latitude, altitude, timestampMs, userId FROM `usermapdata` WHERE timestampMs BETWEEN $ts1 AND $ts2";
+        $select_result = mysqli_query($conn,$sql);
 
-  if($_POST['submit'] == 'true') {      // TODO: CHECK FOR EASIER WAY
-    echo("potato");
-  }
-  elseif ($_POST['exp_submit'] == 'true') {
-    include 'export_file.php';
-    $export_array = array();
-    for($i=0; $i<count($timestamps); $i+=2){
-      $ts1 = $timestamps[$i];
-      $ts2 = $timestamps[$i+1];
-      $sql = "SELECT heading, velocity, accuracy, longitude, latitude, altitude, timestampMs, userId FROM `usermapdata` WHERE timestampMs BETWEEN $ts1 AND $ts2";
-      $select_result = mysqli_query($conn,$sql);
-
-      if(!$select_result){
-        exit();
-      }
-      else {
-        while ($row = mysqli_fetch_assoc($select_result)) {
-          $userId = $row['userId'];
-          unset($row['userId']);
-          $row = add_activity_info($row, $conn);
-          $row['userId'] = $userId;
-          array_push($export_array, $row);
+        if(!$select_result){
+          exit();
+        }
+        else {
+          while ($row = mysqli_fetch_assoc($select_result)) {
+            $userId = $row['userId'];
+            unset($row['userId']);
+            $row = add_activity_info($row, $conn);
+            $row['userId'] = $userId;
+            array_push($export_array, $row);
+          }
         }
       }
+      echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>array(export_data($export_array, $_POST['exp_type']))));
     }
-    echo($_POST['exp_type']);
-    echo(export_data($export_array, $_POST['exp_type']));
   }
-  echo json_encode(array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity));
+  else {
+    echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>null));
+  }
 }
 ?>

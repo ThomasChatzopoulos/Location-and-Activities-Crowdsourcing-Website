@@ -21,8 +21,8 @@ var map = new L.Map('mapid', {
   layers: [baseLayer, heatmapLayer]
 });
 
-var polygon = L.polygon([[38.246501, 21.734122],[38.246960, 21.734781],[38.245999, 21.736074],[38.245490, 21.735425]]).addTo(map);
+// var polygon = L.polygon([[38.246501, 21.734122],[38.246960, 21.734781],[38.245999, 21.736074],[38.245490, 21.735425]]).addTo(map);
 
-heatmapLayer.setData(data_object);
-
-layer = heatmapLayer;
+// heatmapLayer.setData(data_object);
+//
+// layer = heatmapLayer;

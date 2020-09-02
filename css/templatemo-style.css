@@ -60,7 +60,7 @@ button:focus {
   font-size: 1.5em;
 }
 .tm-mt-big {
-  margin-top: 57px;
+  margin-top: 1px;
 }
 .tm-mb-big {
   margin-bottom: 60px;
@@ -71,6 +71,9 @@ button:focus {
 .tm-block-col {
   margin-bottom: 30px;
 }
+.martop {
+  margin-top: 30px;
+}
 .tm-block {
   padding: 10px;
   -webkit-box-shadow: 1px 1px 5px 0 #455c71;
@@ -80,9 +83,33 @@ button:focus {
   height: 100%;
   max-height: 450px;
 }
+
+.cust-tm-block {
+  padding: 5px;
+  -webkit-box-shadow: 1px 1px 5px 0 #455c71;
+  -moz-box-shadow: 1px 1px 5px 0 #455c71;
+  box-shadow: 1px 1px 5px 0 #455c71;
+  min-height: 300px;
+  height: 80%;
+  max-height: 450px;
+}
+.cust2-tm-block {
+  padding: 5px;
+  -webkit-box-shadow: 1px 1px 5px 0 #455c71;
+  -moz-box-shadow: 1px 1px 5px 0 #455c71;
+  box-shadow: 1px 1px 5px 0 #455c71;
+  min-height: 300px;
+  height: 100%;
+  max-height: 900px;
+}
 .tm-block-avatar,
 .tm-block-settings {
   max-height: none;
+}
+.mapstyle {
+  width: 1000px;
+  height: 866px;
+  position: relative;
 }
 .tm-block-avatar {
   height: auto;
@@ -169,6 +196,15 @@ button:focus {
   margin-left: -120px;
   margin-right: -120px;
 }
+/* .row {
+  display:-ms-flexbox;
+  display:flex;
+  -ms-flex-wrap:wrap;
+  flex-wrap:wrap;
+  margin-right:-15px;
+  margin-left:-15px
+} */
+
 .tm-col {
   margin-bottom: 50px;
 }
@@ -176,7 +212,10 @@ button:focus {
   width: 39%;
 }
 .tm-col-small {
-  width: 21.95%;
+  width: 20%;
+}
+.tm-col-small-selec {
+  width: 24%;
 }
 .tm-gray-circle {
   width: 80px;

@@ -16,7 +16,15 @@
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
 	-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"> </script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-heatmap@1.0.0/leaflet-heatmap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"> </script> <?php // TODO: MAYBE DELETE ?>
   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
   <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -75,15 +83,10 @@
                     </div>
                 </div>
             </nav>
-        <div class="container tm-mt-big tm-mb-big">
-            <div class="row">
-                <div class="col">
-                    <p class="text-white mt-5 mb-5 text-center">Welcome back, <b>Admin</b></p>
-                </div>
-            </div>
+        <div class="container tm-mt-big tm-mb-big martop">
             <div class="row tm-content-row">
-                <div class="tm-block-col tm-col-small">
-                  <div class="tm-bg-primary-dark tm-block">
+                <div class="tm-block-col tm-col-small-selec">
+                  <div class="tm-bg-primary-dark cust-tm-block">
                     <div class="text-center">
                       <h2 class="tm-block-title">Year Selection</h2>
                       <label for="startyearBox">Start year:</label>
@@ -113,8 +116,8 @@
                     </div>
                 </div>
 
-                <div class="tm-block-col tm-col-small">
-                  <div class="tm-bg-primary-dark tm-block">
+                <div class="tm-block-col tm-col-small-selec">
+                  <div class="tm-bg-primary-dark cust-tm-block">
                     <div class="text-center">
                       <h2 class="tm-block-title">Month Selection</h2>
                         <label for="startmonthBox">Start month:</label>
@@ -155,32 +158,32 @@
                     </div>
                 </div>
 
-                <div class="tm-block-col tm-col-small">
-                  <div class="tm-bg-primary-dark tm-block">
+                <div class="tm-block-col tm-col-small-selec">
+                  <div class="tm-bg-primary-dark cust-tm-block">
                     <div class="text-center">
                       <h2 class="tm-block-title">Day Selection</h2>
                         <label for="startdayBox">Start day:</label>
                         <select class="custom-select" id="startdayBox" name ="startdayBox" required>
                           <option value=""></option>
-                          <option value ="2"> Monday  </option>
+                          <option value ="1"> Sunday  </option>
+                          <option value ="2"> Monday </option>
                           <option value ="3"> Tuesday </option>
                           <option value ="4"> Wednesday </option>
                           <option value ="5"> Thursday </option>
                           <option value ="6"> Friday </option>
                           <option value ="7"> Saturday </option>
-                          <option value ="1"> Sunday </option>
                         </select>
 
                         <label for="enddayBox">End day:</label>
                         <select class="custom-select" id="enddayBox" name = "enddayBox" required>
                           <option value=""></option>
-                          <option value ="2"> Monday  </option>
+                          <option value ="1"> Sunday  </option>
+                          <option value ="2"> Monday </option>
                           <option value ="3"> Tuesday </option>
                           <option value ="4"> Wednesday </option>
                           <option value ="5"> Thursday </option>
                           <option value ="6"> Friday </option>
                           <option value ="7"> Saturday </option>
-                          <option value ="1"> Sunday </option>
                         </select>
 
                         <br><br> <label for="allYearsCheckBox"> Check to select all days:</label>
@@ -189,8 +192,8 @@
                     </div>
                 </div>
 
-                <div class="tm-block-col tm-col-small">
-                  <div class="tm-bg-primary-dark tm-block">
+                <div class="tm-block-col tm-col-small-selec">
+                  <div class="tm-bg-primary-dark cust-tm-block">
                     <div class="text-center">
                       <h2 class="tm-block-title">Hour Selection</h2>
                       <label for="starthourBox">Start hour:</label>
@@ -217,8 +220,9 @@
                   </div>
                 </div>
               </div>
+              <div class="row tm-content-row">
                 <div class="tm-block-col">
-                  <div class="tm-bg-primary-dark tm-block tm-block-scroll">
+                  <div class="tm-bg-primary-dark cust2-tm-block tm-block-scroll">
                     <div class="text-center">
                       <h2 class="tm-block-title">Activity Selection</h2>
                       <table class="table" id="act_table">  </table>
@@ -227,10 +231,16 @@
                     </div>
                   </div>
                 </div>
+                <div class="tm-block-col">
+                  <div class="mapstyle" id="mapid"></div>
+                </div>
+                 <script src="heatmap.js"></script>
+              </div>
+              <div class="row tm-content-row">
                 <p align = "center">
                   <button class="btn-primary" type="submit" id = "dates_button" name="dates_button" onclick="date_ranges('true', 'false')">Submit date range</button>
                 </p>
-
+              </div>
             <div class="row tm-content-row">
               <div class="tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-h-auto">

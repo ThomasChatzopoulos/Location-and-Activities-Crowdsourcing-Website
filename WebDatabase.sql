@@ -18,7 +18,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `uploaded_by_user` (
   `userId` VARCHAR(255) NOT NULL,
   `uploadTime` DATETIME NOT NULL,
-  `jsonFIleName` VARCHAR(45) NOT NULL,
+  `jsonFIleName` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`userId`, `uploadTime`),
   CONSTRAINT `fk_uploaded_by_user_user`
     FOREIGN KEY (`userId`)
@@ -80,9 +80,6 @@ BEGIN
 
 	IF NEW.ON_BICYCLE > 0 THEN
 		SET @eco_score=@eco_score+NEW.ON_BICYCLE;
-  END IF;
-	IF NEW.ON_FOOT > 0 THEN
-		SET @eco_score=@eco_score+NEW.ON_FOOT;
   END IF;
 	IF NEW.RUNNING > 0 THEN
 		SET @eco_score=@eco_score+NEW.RUNNING;

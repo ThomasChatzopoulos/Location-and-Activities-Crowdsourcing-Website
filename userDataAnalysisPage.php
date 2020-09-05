@@ -148,8 +148,8 @@
                     <option value = "11"> November</option>
                     <option value = "12"> December</option>
                   </select>
-                  <br><br> <label for="allMonthsCheckBox"> Check to select all years:</label>
-                  <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" value="Yes" onclick="disableFunction('allMonthsCheckBox','startyearBox', 'endyearBox')">
+                  <br><br> <label for="allMonthsCheckBox"> Check to select all months:</label>
+                  <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" value="Yes" onclick="disableFunction('allMonthsCheckBox','startmonthBox', 'endmonthBox')">
                 </div>
               </div>
             </div>
@@ -176,9 +176,9 @@
                 <table class="table" id="act_table">
                   <thead>
                     <tr>
-                      <th scope="col">ACTIVITY TYPE</th>
-                      <th scope="col">COLOR</th>
-                      <th scope="col">RECORDS NO.</th>
+                      <th style='text-align:center;' scope="col">ACTIVITY TYPE</th>
+                      <th style='text-align:center;' scope="col">COLOR</th>
+                      <th style='text-align:center;' scope="col">RECORDS NO.</th>
                     </tr>
                   </thead>
                 </table>

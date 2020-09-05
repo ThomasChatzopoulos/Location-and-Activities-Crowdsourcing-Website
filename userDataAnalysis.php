@@ -8,7 +8,7 @@
 
     require "dbconnect.php";
 
-    if(isset($_POST['allYearsCheckBox']) && $_POST['allYearsCheckBox'] == 'Yes') {
+    if(isset($_POST['select_allyears'])) {
       $startYear = "1980";
       $endYear = "2020";
     }else{
@@ -19,7 +19,7 @@
       }
     }
 
-    if(isset($_POST['allMonthsCheckBox']) && $_POST['allMonthsCheckBox'] == 'Yes') {
+    if(isset($_POST['select_allmonths'])) {
       $startmonth = "01";
       $endmonth = "12";
     }else{
@@ -38,7 +38,6 @@
       if($i%2==1){
         $month = date('F', mktime(0, 0, 0, $startmonth, 10));
         array_push($timestamps, strtotime("$month $year")*1000);
-        // echo strtotime("$month $year")*1000, "\n";
         $counter++;
       }
       elseif($i%2==0) {
@@ -65,14 +64,14 @@
     include 'charts_data/user_activities_distribution.php';
     $persentage_results = analyzeActivitiesPersentage($timestamps);
 
-    // include 'best_hour_per_activity.php';
-    // $hour_results=findBestHour($timestamps);
-    // include 'best_day_per_activity.php';
-    // $day_results=findBestDay($timestamps);
+    include 'charts_data/best_hour_per_activity.php';
+    $hour_results=findBestHour($timestamps);
 
-    echo json_encode(array('result1'=>array($erroryear, $errormonth),'result2'=>$persentage_results));
+    include 'charts_data/best_day_per_activity.php';
+    $day_results=findBestDay($timestamps);
 
-    // echo json_encode(array('result1'=>array($erroryear, $errormonth),'result2'=>$persentage_results,'result3'=> $hour_results, 'result4'=>$day_results));
+    // echo json_encode(array('result1'=>array($erroryear, $errormonth),'result2'=>$persentage_results,'result3'=> $hour_results));
 
+    echo json_encode(array('result1'=>array($erroryear, $errormonth),'result2'=>$persentage_results,'result3'=> $hour_results, 'result4'=>$day_results));
   }
 ?>

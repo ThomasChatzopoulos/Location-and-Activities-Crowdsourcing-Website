@@ -92,14 +92,12 @@
 
           <center>
             <p id="msg"></p>
-            <input style='color:white;' type="file" id="file" name="file" />
-            <button id="upload">Upload</button>
+            <form id="file_form" enctype="multipart/form-data">
+              <input style='color:white;' type="file" id="file" name="file" />
+              <button id="upload">Upload</button>
+            </form>
           </center>
         </div>
-
-    <script>
-      Chart.defaults.global.defaultFontColor = 'white';
-    </script>
 
   <script src="js/file_upload.js"></script>
   <script src="js/connected_user_name.js"></script>

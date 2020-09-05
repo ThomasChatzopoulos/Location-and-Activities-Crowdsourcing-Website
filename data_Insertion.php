@@ -3,13 +3,15 @@
   require_once("vendor/autoload.php");
   set_time_limit(0);
   ini_set('memory_limit', '-1');
+
+  $duplicate_data = false;
+
   $lat1=38.230462;
   $lng1=21.753150;
   $distance = 10;
   $mysql_timestamp = date ("Y-m-d H:i:s");
-  session_start();
-  $filename = "files_for_upload/".$_SESSION['last_uploaded_file_name'];
-  $userId = "r0LgsbEbzRN0x75a7flU0GNIb0pTMXorZEhhb1Zsa2FNT1VsQVE9PQ==";
+  $filename = "files_for_upload/".$_POST['last_uploaded_file_name'];
+  $userId = "4gFGW5B7A9shNptHyeQFoW1rajI2a2kvL3ZVS004N2tNYVRwZkE9PQ==";
   $query = sprintf("INSERT INTO `uploaded_by_user` (jsonFIleName, uploadTime, userId) VALUES ('%s', '%s', '%s')",
   mysqli_real_escape_string($conn, $filename), mysqli_real_escape_string($conn, $mysql_timestamp), mysqli_real_escape_string($conn, $userId));
 
@@ -52,7 +54,7 @@
         if(array_key_exists("verticalAccuracy",$value2)){
           $vertical_accuracy = $value2["verticalAccuracy"];
         }
-        insert_location($userId, $timestampMS, $lat2, $lng2, $accuracy, $velocity, $heading, $altitude, $vertical_accuracy, $conn);
+        insert_location($userId, $timestampMS, $lat2, $lng2, $accuracy, $velocity, $heading, $altitude, $vertical_accuracy, $conn, $duplicate_data);
 
         if(array_key_exists("activity",$value2)){  //check if there is an activity specified
           $activity_type_string = '';
@@ -72,31 +74,35 @@
                 $activity_confidence_string = $activity_confidence_string . ", ". $confidence;
               }
             }
-                insert_activity($userId, $activity_type_string, $timestampMS, $activity_timestamp, $activity_confidence_string, $conn);
+                insert_activity($userId, $activity_type_string, $timestampMS, $activity_timestamp, $activity_confidence_string, $conn, $duplicate_data);
                 $activity_type_string = '';
                 $activity_confidence_string = '';
             }
           }
         }
-          }
-        }
-  unlink($filename);
+      }
+    }
+    echo json_encode($duplicate_data);
+    unset($json_obj);
+    unlink($filename);
 
       //print_r($json_obj[$key1][$key2]);
 
-  function insert_location($userId, $timestampMS, $latitude, $longtitude, $accuracy, $velocity, $heading, $altitude, $vertical_accuracy, $conn){
+  function insert_location($userId, $timestampMS, $latitude, $longtitude, $accuracy, $velocity, $heading, $altitude, $vertical_accuracy, $conn, $duplicate_data){
     $query_il = sprintf("INSERT INTO `usermapdata` (userId, timestampMs, latitude, longitude, accuracy, velocity, heading, altitude, verticalAccuracy)
     VALUES ('%s', '%s', '%s', '%s', '%s', %s, %s, %s, %s)",
     mysqli_real_escape_string($conn, $userId),mysqli_real_escape_string($conn, $timestampMS), mysqli_real_escape_string($conn, $latitude), mysqli_real_escape_string($conn, $longtitude),
     mysqli_real_escape_string($conn, $accuracy),mysqli_real_escape_string($conn, $velocity), mysqli_real_escape_string($conn, $heading), mysqli_real_escape_string($conn, $altitude),
     mysqli_real_escape_string($conn, $vertical_accuracy));
     //echo "<br>";
-    $result_i = mysqli_query($conn, $query_il)or die(mysqli_error($conn));
-
+    $result_i = mysqli_query($conn, $query_il);  //or die(mysqli_error($conn));
+    if(!$result_i && !$duplicate_data) {
+      $duplicate_data = true;
+    }
   }
 
   // inseret activity in the user_activity table
-  function insert_activity($userId, $activity_type_string, $timestampMS, $activity_timestamp, $activity_confidence_string, $conn) {
+  function insert_activity($userId, $activity_type_string, $timestampMS, $activity_timestamp, $activity_confidence_string, $conn, $duplicate_data) {
     $activity_array = preg_split("/\, /", $activity_type_string);
     foreach ($activity_array as $activity_type) {
       $check_if_column_exists = mysqli_query($conn, "SHOW COLUMNS FROM user_activity LIKE '$activity_type'"); //if column exists => $check_if_column_exists=1
@@ -105,7 +111,11 @@
         $alter_query = "ALTER TABLE `user_activity` ADD `$activity_type` INT(11) NULL DEFAULT NULL";
         //echo $alter_query;
         //echo "<br>";
-        $result = mysqli_query($conn, $alter_query) or die(mysqli_error($conn));
+        $result = mysqli_query($conn, $alter_query);   //or die(mysqli_error($conn));
+
+        if(!$result && !$duplicate_data) {
+          $duplicate_data = true;
+        }
       }
     }
     $query_i = sprintf("INSERT INTO `user_activity` (userMapData_userId, userMapData_timestampMs, activity_timestamp, %s) VALUES ('%s', '%s', '%s', %s)",
@@ -114,7 +124,11 @@
     //echo $query_i;
     //echo "<br>";
     //echo "<br>";
-    $result_i = mysqli_query($conn, $query_i)or die(mysqli_error($conn));
+    $result_i = mysqli_query($conn, $query_i);  //or die(mysqli_error($conn));
+
+    if(!$result_i && !$duplicate_data) {
+      $duplicate_data = true;
+    }
   }
 
   function distance($lat1, $lng1, $lat2, $lng2) {
@@ -132,5 +146,4 @@
       // earth's radius in km = ~6371
       return 6371 * $distance;
   }
-
 ?>

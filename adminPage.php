@@ -49,28 +49,22 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mx-auto h-100">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">
+                                <a class="nav-link" href="#">
                                     <i class="fas fa-tachometer-alt"></i>
                                     Dashboard
-                                    <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="products.html">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    Report
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="products.html">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    Products
-                                </a>
+                              <a class="nav-link active"  href="admin_page.php">
+                                <i class="far fa-chart-bar"></i>
+                                Data analysis
+                                <span class="sr-only">(current)</span>
+                              </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="accounts.html">
                                     <i class="far fa-user"></i>
-                                    Accounts
+                                    Account
                                 </a>
                             </li>
                         <ul class="navbar-nav">
@@ -80,7 +74,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div>>
                 </div>
             </nav>
         <div class="container tm-mt-big tm-mb-big martop">
@@ -92,7 +86,7 @@
                       <label for="startyearBox">Start year:</label>
                         <select class="custom-select" id="startyearBox" name="startyearBox"  required>
                           <option value=""></option>
-                          <?php for ($i = 0; $i <= 20; $i++)
+                          <?php for ($i = 20; $i >=0 ; $i--)
                           {
                               $date = date("Y") - $i;
                               echo "<option value='$date'>" . $date . "</option>";
@@ -102,7 +96,7 @@
                         <label for="endyearBox">End year:</label>
                         <select class="custom-select" id="endyearBox" name="endyearBox" required>
                           <option value=""></option>
-                          <?php for ($i = 0; $i <= 20; $i++)
+                          <?php for ($i = 20; $i >=0 ; $i--)
                           {
                               $date = date("Y") - $i;
                               echo "<option value='$date'>" . $date . "</option>";
@@ -111,7 +105,7 @@
                         </select>
                         <br><br>
                         <label for="allYearsCheckBox"><label>Check to select all years</label>
-                        <input type="checkbox" name="allYearsCheckBox" id="allYearsCheckBox" value="Yes" onclick="disableFunction('allYearsCheckBox', 'startyearBox', 'endyearBox')"/>
+                        <input type="checkbox" name="allYearsCheckBox" id="allYearsCheckBox" onclick="disableFunction('allYearsCheckBox', 'startyearBox', 'endyearBox')"/>
                       </div>
                     </div>
                 </div>
@@ -123,37 +117,25 @@
                         <label for="startmonthBox">Start month:</label>
                         <select class="custom-select "id = "startmonthBox" name = "startmonthBox" required>
                           <option value=""></option>
-                          <option value = "01"> January</option>
-                          <option value = "02"> February</option>
-                          <option value = "03"> March</option>
-                          <option value = "04"> April</option>
-                          <option value = "05"> May</option>
-                          <option value = "06"> June</option>
-                          <option value = "07"> July</option>
-                          <option value = "08"> August</option>
-                          <option value = "09"> September</option>
-                          <option value = "10"> October</option>
-                          <option value = "11"> November</option>
-                          <option value = "12"> December</option>
+                          <?php for ($i = 1; $i <=12 ; $i++)
+                          {
+                              $month = date('F', mktime(0, 0, 0, $i, 10));
+                              echo "<option value='$month'>" . $month . "</option>";
+                          }
+                          ?>
                         </select>
                         <label for="endmonthBox">End month:</label>
                         <select class="custom-select" id = "endmonthBox" name= "endmonthBox" required>
                           <option value=""></option>
-                          <option value = "01"> January</option>
-                          <option value = "02"> February</option>
-                          <option value = "03"> March</option>
-                          <option value = "04"> April</option>
-                          <option value = "05"> May</option>
-                          <option value = "06"> June</option>
-                          <option value = "07"> July</option>
-                          <option value = "08"> August</option>
-                          <option value = "09"> September</option>
-                          <option value = "10"> October</option>
-                          <option value = "11"> November</option>
-                          <option value = "12"> December</option>
+                          <?php for ($i = 1; $i <=12 ; $i++)
+                          {
+                              $month = date('F', mktime(0, 0, 0, $i, 10));
+                              echo "<option value='$month'>" . $month . "</option>";
+                          }
+                          ?>
                         </select>
                         <br><br> <label for="allMonthsCheckBox"> Check to select all months:</label>
-                          <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" value="Yes" onclick="disableFunction('allMonthsCheckBox', 'startmonthBox', 'endmonthBox')">
+                          <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" onclick="disableFunction('allMonthsCheckBox', 'startmonthBox', 'endmonthBox')">
                       </div>
                     </div>
                 </div>
@@ -165,29 +147,29 @@
                         <label for="startdayBox">Start day:</label>
                         <select class="custom-select" id="startdayBox" name ="startdayBox" required>
                           <option value=""></option>
-                          <option value ="1"> Sunday  </option>
-                          <option value ="2"> Monday </option>
-                          <option value ="3"> Tuesday </option>
-                          <option value ="4"> Wednesday </option>
-                          <option value ="5"> Thursday </option>
-                          <option value ="6"> Friday </option>
-                          <option value ="7"> Saturday </option>
+                          <option value ="Sunday"> Sunday  </option>
+                          <option value ="Monday"> Monday </option>
+                          <option value ="Tuesday"> Tuesday </option>
+                          <option value ="Wednesday"> Wednesday </option>
+                          <option value ="Thursday"> Thursday </option>
+                          <option value ="Friday"> Friday </option>
+                          <option value ="Saturday"> Saturday </option>
                         </select>
 
                         <label for="enddayBox">End day:</label>
                         <select class="custom-select" id="enddayBox" name = "enddayBox" required>
                           <option value=""></option>
-                          <option value ="1"> Sunday  </option>
-                          <option value ="2"> Monday </option>
-                          <option value ="3"> Tuesday </option>
-                          <option value ="4"> Wednesday </option>
-                          <option value ="5"> Thursday </option>
-                          <option value ="6"> Friday </option>
-                          <option value ="7"> Saturday </option>
+                          <option value ="Sunday"> Sunday  </option>
+                          <option value ="Monday"> Monday </option>
+                          <option value ="Tuesday"> Tuesday </option>
+                          <option value ="Wednesday"> Wednesday </option>
+                          <option value ="Thursday"> Thursday </option>
+                          <option value ="Friday"> Friday </option>
+                          <option value ="Saturday"> Saturday </option>
                         </select>
 
                         <br><br> <label for="allYearsCheckBox"> Check to select all days:</label>
-                        <input type="checkbox" name="allDaysCheckBox" id="allDaysCheckBox" value="Yes" onclick="disableFunction('allDaysCheckBox', 'startdayBox', 'enddayBox')">
+                        <input type="checkbox" name="allDaysCheckBox" id="allDaysCheckBox" onclick="disableFunction('allDaysCheckBox', 'startdayBox', 'enddayBox')">
                       </div>
                     </div>
                 </div>
@@ -215,7 +197,7 @@
                         ?>
                       </select>
                       <br><br> <label for="allHoursCheckBox"> Check to select all hours:</label>
-                      <input type="checkbox" name="allHoursCheckBox" id="allHoursCheckBox" value="Yes" onclick="disableFunction('allHoursCheckBox', 'starthourBox', 'endhourBox')">
+                      <input type="checkbox" name="allHoursCheckBox" id="allHoursCheckBox" onclick="disableFunction('allHoursCheckBox', 'starthourBox', 'endhourBox')">
                     </div>
                   </div>
                 </div>
@@ -227,7 +209,7 @@
                       <h2 class="tm-block-title">Activity Selection</h2>
                       <table class="table" id="act_table">  </table>
                       <br>  Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" id="allActivitiesCheckBox"
-                      value="Yes" onclick = "disableActivities('allActivitiesCheckBox')">
+                    onclick = "disableActivities('allActivitiesCheckBox')">
                     </div>
                   </div>
                 </div>

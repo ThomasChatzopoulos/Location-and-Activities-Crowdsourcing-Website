@@ -7,8 +7,9 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   $erroractivity = false;
 
   require 'dbconnect.php';
-  if(isset($_POST['select_allyears'])) { //all years selected
-    $startYear = "1980";
+
+  if($_POST['select_allyears']=='true') { //all years selected
+    $startYear = "2000";
     $endYear = "2020";
   }else {
     $startYear = $_POST['startyear'];
@@ -17,9 +18,9 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
       $erroryear = true;
     }
   }
-  if(isset($_POST['select_allmonths'])) {
-    $startmonth = "01";
-    $endmonth = "12";
+  if($_POST['select_allmonths']=='true') {
+    $startmonth = "January";
+    $endmonth = "December";
   }else {
     $startmonth = $_POST['startmonth'];
     $endmonth = $_POST['endmonth'];
@@ -28,9 +29,9 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     }
   }
 
-  if(isset($_POST['select_alldays'])) {
-    $startday = "1";
-    $endday = "7";
+  if($_POST['select_alldays']=='true') {
+    $startday = "Sunday";
+    $endday = "Saturday";
   }else {
     $startday = $_POST['startday'];
     $endday = $_POST['endday'];
@@ -39,7 +40,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     }
   }
 
-  if(isset($_POST['select_allhours'])) {
+  if($_POST['select_allhours']=='true') {
     $starthour = "00";
     $endhour = "23";
   }else {
@@ -66,7 +67,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   }
   //actarray εχει τις δραστηριότητες που επέλεξε ο χρήστης
   $activities = array();
-  if(isset($_POST['select_all_activities'])) { //all activities selected
+  if($_POST['select_all_activities']=='true') { //all activities selected
     for ($i=0; $i < count($actarray) ; $i++) {
       array_push($activities,$actarray[$i]);
     }
@@ -79,75 +80,49 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     }
   }
 
-$currentyear = $startYear;
-$datetimes = array();
-while($currentyear <= $endYear){ // για κάθε χρόνο στο range
-  $currentmonth = $startmonth;
-  while($currentmonth <= $endmonth){ //για κάθε μήνα στο range
-    $currentday = $startday;
-    while($currentday <= $endday)
-    {
+  $timestamps = array();
+  $year = $startYear;
+  $counter=0;
 
-      $starttemp = "$currentyear-$currentmonth-01";
-      $sql = "select dayofweek('$starttemp') as Day";
-      $dayofweek = mysqli_query($conn,$sql);
-      if(!$dayofweek){
-        exit();
+  for($i=1;$i<=($endYear-$startYear+1)*2;$i++){ //(διαφορά χρόνων+1)*(2μήνες)
+    if($i%2==1){//αν είναι ο μήνας εκκίνησης
+      for($day=strtotime("first $startday of $startmonth $year");$day<=strtotime("last $startday of $startmonth $year");$day+=604800){//κάθε μέρα εκκίνησης
+        $d=date('d',$day);
+        array_push($timestamps, strtotime("$starthour:00 $d $startmonth $year")*1000); //ώρα εκκίνησης
+        array_push($timestamps, strtotime("$endhour:59:59 $d $startmonth $year")*1000); //ώρα λήξης
       }
-      $difference = 0;
-      while($row = mysqli_fetch_assoc($dayofweek)){ //βρες μέρα της βδομάδας για την 1η μέρα του τρέχοντα μήνα
-        $difference = $currentday - $row['Day'];
+      for($day=strtotime("first $endday of $startmonth $year");$day<=strtotime("last $endday of $startmonth $year");$day+=604800){//κάθε μέρα λήξης
+        $d=date('d',$day);
+        array_push($timestamps, strtotime("$starthour:00 $d $startmonth $year")*1000); //ώρα εκκίνησης
+        array_push($timestamps, strtotime("$endhour:59:59 $d $startmonth $year")*1000); //ώρα λήξης
       }
-      if($difference < 0 ){ //
-        $difference += 7;
-      }
-
-      //βρες συνολικές μέρες του τρέχοντα μήνα
-      $totalmonthdays = 0;
-      if($currentmonth == '01' || $currentmonth=='03' || $currentmonth=='05' || $currentmonth=='07' || $currentmonth=='08' || $currentmonth=='10' || $currentmonth=='12'){
-        $totalmonthdays = 31;
-      }elseif($currentmonth == '02'){ //February
-        if($currentyear%4 == 0){ //δισεκτο ετος
-          $totalmonthdays = 29;
-        }else {
-          $totalmonthdays = 28;
-        }
-      }else {
-        $totalmonthdays = 30;
-      }
-
-      //προσθέτω το difference έτσι ώστε να βρω την πρώτη τρίτη του μήνα (αν εχω επιλέξει τρίτη κλπ) και μετά με βήμα 7 θα βρει όλες τις τρίτες του μήνα
-      for($i=1+$difference; $i<=$totalmonthdays; $i+=7){
-        array_push($datetimes, "$currentyear-$currentmonth-$i $starthour:00:00"); //αποθηκεύω στο array ανα 2 για τα timesamps
-        array_push($datetimes, "$currentyear-$currentmonth-$i $endhour:59:59");
-      }
-      $currentday++;
+      $counter++;
     }
-    $currentmonth++;
+    elseif($i%2==0) {//αν είναι ο μήνας λήξης
+      for($day=strtotime("first $startday of $endmonth $year");$day<=strtotime("last $startday of $endmonth $year");$day+=604800){//κάθε μέρα εκκίνησης
+        $d=date('d',$day);
+        array_push($timestamps, strtotime("$starthour:00 $d $endmonth $year")*1000); //ώρα εκκίνησης
+        array_push($timestamps, strtotime("$endhour:59:59 $d $endmonth $year")*1000); //ώρα λήξης
+      }
+      for($day=strtotime("first $endday of $endmonth $year");$day<=strtotime("last $endday of $endmonth $year");$day+=604800){//κάθε μέρα λήξης
+        $d=date('d',$day);
+        array_push($timestamps, strtotime("$starthour:00 $d $endmonth $year")*1000); //ώρα εκκίνησης
+        array_push($timestamps, strtotime("$endhour:59:59 $d $endmonth $year")*1000); //ώρα λήξης
+      }
+      $counter++;
+    }
+    if($counter==2){
+      $year++;
+      $counter=0;
+    }
   }
-  $currentyear++;
-}
 
-//datetime to timestampms conversion
-$timestamps = array();
-for($i=0; $i<count($datetimes); $i++){
-  $sql = "select unix_timestamp('$datetimes[$i]') as timestamp";
-  $timestamp_result = mysqli_query($conn,$sql);
-
-  if(!$timestamp_result){
-    exit();
-  }
-
-  while ($row = mysqli_fetch_assoc($timestamp_result)) {
-      array_push($timestamps,( $row['timestamp'] * 1000 ) ); //*1000 για να είναι σε ms
-  }
-}
   if(!$erroryear && !$errormonth && !$errorday && !$errorhour && !$erroractivity)
   {
     if($_POST['submit'] == 'true') {      // TODO: CHECK FOR EASIER WAY
       include 'heatmap_data.php';
       $datapoints = heatmapdata($timestamps);
-      echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>$datapoints));
+      echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>$datapoints, 'result3'=>null));
     }
     elseif ($_POST['exp_submit'] == 'true') {
       include 'export_file.php';
@@ -171,11 +146,12 @@ for($i=0; $i<count($datetimes); $i++){
           }
         }
       }
-      echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>array(export_data($export_array, $_POST['exp_type']))));
+      $export_results=array(export_data($export_array, $_POST['exp_type']));
+      echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>null,'result3'=>$export_results));
     }
   }
   else {
-    echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>null));
+    echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>null, 'result3'=>null));
   }
 }
 ?>

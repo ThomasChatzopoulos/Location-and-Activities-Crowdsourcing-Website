@@ -55,6 +55,13 @@
                 </li>
 
                 <li class="nav-item">
+                  <a class="nav-link" href="userDataAnalysisPage.php">
+                    <i class="far fa-chart-bar"></i>
+                    Data analysis
+                  </a>
+                </li>
+
+                <li class="nav-item">
                   <a class="nav-link" href="file_upload_page.php">
                     <i class="fas fa-upload"></i>
                     File upload

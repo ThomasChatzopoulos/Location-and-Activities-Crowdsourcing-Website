@@ -14,15 +14,18 @@ $('#file_form').submit(function(e) {
     success: function(data) {
       if (data[0] == false && data[1] == false && data[2] == false && data[3] == false) {
         var last_uploaded_file_name = data[5];
+        var coordinates_string = JSON.stringify(coordinates);
         $.ajax({
           type: 'POST',
           url: "data_Insertion.php",
           data: {
             last_uploaded_file_name: last_uploaded_file_name,
+            coordinates_string: coordinates_string,
           },
           dataType: 'json',
           success: function(data2) {
-            if (data2[0]) {
+            console.log(data2);
+            if (data2) {
               alert("Duplicate entries were detected!");
             } else {
               alert("File uploaded successfully!");

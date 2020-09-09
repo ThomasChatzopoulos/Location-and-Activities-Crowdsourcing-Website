@@ -111,6 +111,16 @@ button:focus {
   height: 866px;
   position: relative;
 }
+.mapstyle2 {
+  width: 1000px;
+  height: 500px;
+  position: relative;
+}
+.mapstyle3 {
+  width: 785px;
+  height: 350px;
+  /* position: relative; */
+}
 .tm-block-avatar {
   height: auto;
 }
@@ -422,6 +432,16 @@ thead {
 .tm-bg-primary-dark {
   background-color: #435c70;
 }
+.colored-box {
+  background-color: #2a9d8f;
+}
+.custom-block-color {
+  /* padding: 5px; */
+  -webkit-box-shadow: 1px 1px 5px 0 #455c71;
+  -moz-box-shadow: 1px 1px 5px 0 #455c71;
+  box-shadow: 1px 1px 5px 0 #455c71;
+  width: 60%;
+}
 .tm-bg-gray {
   background-color: rgba(0, 0, 0, 0.05);
 }
@@ -561,6 +581,13 @@ input[type="checkbox"]:focus {
 .tm-product-img-edit {
   max-width: 100%;
   position: relative;
+}
+.center {
+  margin: auto;
+  text-align: center;
+}
+.mar-top {
+  margin-top: 10px;
 }
 .tm-product-img-edit i {
   display: none;

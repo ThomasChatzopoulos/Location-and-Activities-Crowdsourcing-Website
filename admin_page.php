@@ -38,23 +38,17 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto h-100">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="admin_page.php">
                                 <i class="fas fa-tachometer-alt"></i>
                                 Dashboard
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="products.html">
-                                <i class="fas fa-shopping-cart"></i>
-                                Report
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="adminpage.php">
-                                <i class="fas fa-shopping-cart"></i>
-                                Products
-                            </a>
+                          <a class="nav-link" href="adminPage.php">
+                            <i class="far fa-chart-bar"></i>
+                            Data analysis
+                          </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="accounts.html">

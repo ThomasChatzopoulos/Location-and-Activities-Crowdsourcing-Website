@@ -1,10 +1,10 @@
 function chart_date_range(a) {
   var startyear = $("#startyearBox").val();
   var endyear = $("#endyearBox").val();
-  var select_allyears = $("#allYearsCheckBox").val();
+  var select_allyears = $('allYearsCheckBox').is(":checked");
   var startmonth = $("#startmonthBox").val();
   var endmonth = $("#endmonthBox").val();
-  var select_allmonths = $("#allMonthsCheckBox").val();
+  var select_allmonths = $('allMonthsCheckBox').is(":checked");
   var submit = a;
 
   $.ajax({
@@ -32,16 +32,18 @@ function chart_date_range(a) {
         alert("start month cannot be less than end month");
       }
       if(data.result2 != null) {
-        alert(data.result2[0],data.result2[1],data.result2[2]);
         user_activity_distribution(data.result2[0],data.result2[1],data.result2[2]);
       }
       if(data.result3 != null) {
-        alert(data.result3);
         user_best_hour_per_activity(data.result3);
       }
       if(data.result4 != null) {
-        alert(data.result4);
         user_best_day_per_activity(data.result4);
+      }
+      if(data.result5 != null) {
+        heatmapLayer.setData(data.result5);
+        layer = heatmapLayer;
+        alert("Success");
       }
     },
     error: function(xhr, status, error) {
@@ -93,7 +95,6 @@ function user_activity_distribution(activities_obj,colours_obj_act,act_table) {
 }
 
 function user_best_hour_per_activity(activities_per_hour) {
-  alert("Hello");
   $.each(activities_per_hour, function (key, val) {
     $("<tr><th style='text-align:center;' scope='row'><b>" + key + "</b></th><td style='text-align:center;'><b>" + val + "</b></td></tr>").appendTo("#activities_per_hour_table");
   });

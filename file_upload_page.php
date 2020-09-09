@@ -18,8 +18,14 @@
   	Product Admin CSS Template
   	https://templatemo.com/tm-524-product-admin
   	-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"> </script>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-heatmap@1.0.0/leaflet-heatmap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
     <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -43,12 +49,11 @@
                   <a class="nav-link" href="userDashboard.php">
                     <i class="fas fa-tachometer-alt"></i>
                     Dashboard
-                    <span class="sr-only">(current)</span>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="data.php">
+                  <a class="nav-link" href="adminPage.php">
                     <i class="far fa-chart-bar"></i>
                     Data analysis
                   </a>
@@ -81,22 +86,25 @@
         </nav>
 
         <div class="container">
-
-          <br /><br />
-          <h1 style='color:white; text-align:center;' id = 'last_upload'></h1>
-          <br /><br />
-
-          <h4 style='color:white; text-align:center;'>To upload a new file click the button "Choose File"</h4>
+          <div class="colored-box custom-block-color ">
+            <h4 style='color:white; text-align:left;'> Steps to upload file: </h4>
+            <h5 style='color:white; text-align:left;'> <i class="far fa-check-square"></i> Draw any rectangles in the map to hide places with sensitive data!</h5>
+            <h5 style='color:white; text-align:left;'> <i class="far fa-check-square"></i> To upload a new file click the button "Choose File"</h5>
+          </div>
           <br />
-
-
-          <center>
-            <p id="msg"></p>
-            <form id="file_form" enctype="multipart/form-data">
-              <input style='color:white;' type="file" id="file" name="file" />
-              <button id="upload">Upload</button>
-            </form>
-          </center>
+          <div class="row">
+            <div class="mapstyle2" id="mapid2"></div>
+          </div>
+          <script src="polygon.js"></script>
+          <div class="row tm-content-row">
+            <div class="center">
+              <p id="msg"></p>
+              <form id="file_form" enctype="multipart/form-data">
+                <input style='color:white;' type="file" id="file" name="file" />
+                <button class="btn-primary" id="upload">Upload</button>
+              </form>
+            </div>
+          </div>
         </div>
 
   <script src="js/file_upload.js"></script>

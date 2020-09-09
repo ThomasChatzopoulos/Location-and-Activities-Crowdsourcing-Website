@@ -1,6 +1,6 @@
 var coordinates = {};
 
-var map = L.map('mapid').setView([51.505, -0.09], 13);
+var map = L.map('mapid2').setView([38.2462420, 21.7350847], 13);
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
@@ -34,16 +34,16 @@ map.on(L.Draw.Event.CREATED, function (event){
   var type = event.layerType;
   console.info(event);
   if( type === "rectangle"){
-    coordinates[layer._leaflet_id] = layer.getLatLngs();
-    console.log(coordinates);
+    coordinates[layer._leaflet_id] = layer.getLatLngs()[0] ;
+    console.log(coordinates[layer._leaflet_id]);
   }
 });
 //update coordinates of edited layers
 map.on('draw:edited', function (e) {
   var layers = e.layers;
   layers.eachLayer(function (layer) {
-    coordinates[layer._leaflet_id] = layer.getLatLngs();
-    console.log(coordinates);
+    coordinates[layer._leaflet_id] = layer.getLatLngs()[0];
+    console.log(coordinates[layer._leaflet_id]);
          });
      });
 //remove coordinates of deleted layers

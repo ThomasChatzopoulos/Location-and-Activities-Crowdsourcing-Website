@@ -1,6 +1,6 @@
 <?php
   function analyzeActivitiesPersentage($timestamps){
-    require "C:/wamp64/www/web_project/Web-Project-Semester-8/dbconnect.php";
+    require (dirname(dirname(__FILE__)) . '/dbconnect.php');
     require 'set_colours.php';
 
     session_start();

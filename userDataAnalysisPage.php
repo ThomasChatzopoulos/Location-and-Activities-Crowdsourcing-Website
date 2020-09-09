@@ -18,6 +18,13 @@
   	Product Admin CSS Template
   	https://templatemo.com/tm-524-product-admin
   	-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-heatmap@1.0.0/leaflet-heatmap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"> </script>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
     <script
@@ -80,7 +87,7 @@
       </nav>
 
       <div class="container">
-        <div class="row tm-content-row">
+        <div class="row tm-content-row mar-top">
         <!-- <form action="userDataAnalysis.php" method="POST"> -->
         <div class="tm-block-col tm-col-small">
           <div class="tm-bg-primary-dark tm-block">
@@ -111,7 +118,10 @@
               </div>
             </div>
           </div>
-
+          <div class="tm-block-col mar-top">
+            <div class="mapstyle3" id="mapid"></div>
+          </div>
+          <script src="heatmap.js"></script>
           <div class="tm-block-col tm-col-small">
             <div class="tm-bg-primary-dark tm-block">
               <div class="text-center">
@@ -156,14 +166,12 @@
             <!-- </form> -->
           </div>
 
-          <div class="row tm-content-row">
-            <p align = "center">
-              <button class="btn-primary" type="submit" id = "dates_button" name="dates_button" onclick="chart_date_range('true')">Go!</button>
-            </p>
+          <div class="center">
+            <button class="btn-primary" type="submit" id = "dates_button" name="dates_button" onclick="chart_date_range('true')">Go!</button>
           </div>
 
 
-          <div class="row tm-content-row">
+          <div class="row tm-content-row mar-top">
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
               <div class="tm-bg-primary-dark tm-block">
                 <h2 class="tm-block-title">Activity types chart</h2>

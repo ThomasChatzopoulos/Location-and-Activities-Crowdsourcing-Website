@@ -1,3 +1,10 @@
+<?php  
+session_start();
+if(!isset($_SESSION['username'])) {
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,12 +24,12 @@
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
 	-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"> </script>
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
-  <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"> </script>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
 </head>
 <body id="reportsPage">
     <div class="" id="home">
@@ -45,10 +52,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="adminPage.php">
-                            <i class="far fa-chart-bar"></i>
-                            Data analysis
-                          </a>
+                            <a class="nav-link" href="adminPage.php">
+                                <i class="far fa-chart-bar"></i>
+                                Data analysis
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="accounts.html">
@@ -56,13 +63,12 @@
                                 Accounts
                             </a>
                         </li>
-                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link d-block" href="login.html">
-                                Admin, <b>Logout</b>
-                            </a>
-                        </li>
-                    </ul>
+                                <a class="nav-link" href="logout.php">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
+                                </a>
+                            </li>
                 </div>
             </div>
         </nav>

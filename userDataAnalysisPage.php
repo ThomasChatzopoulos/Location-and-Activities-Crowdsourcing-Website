@@ -1,3 +1,10 @@
+<?php  
+session_start();
+if(!isset($_SESSION['username'])) {
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -47,14 +54,14 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto h-100">
               <li class="nav-item">
-                <a class="nav-link active" href="userDashboard.php">
+                <a class="nav-link" href="userDashboard.php">
                   <i class="fas fa-tachometer-alt"></i>
                   Dashboard
                 </a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="userDataAnalysisPage.php">
+                <a class="nav-link active" href="userDataAnalysisPage.php">
                   <i class="far fa-chart-bar"></i>
                   Data analysis
                   <span class="sr-only">(current)</span>
@@ -74,14 +81,13 @@
                   Account
                 </a>
               </li>
-            </ul>
-            <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link d-block" href="login.html">
-                  <b>Logout</b>
-                </a>
-              </li>
-            </ul>
+                    <a class="nav-link" href="logout.php">
+                      <i class="fas fa-sign-out-alt"></i>
+                      Logout
+                    </a>
+                </li>
+              </ul>
           </div>
         </div>
       </nav>
@@ -96,7 +102,7 @@
               <label for="startyearBox">Start year:</label>
                 <select class="custom-select" id="startyearBox" name="startyearBox"  required>
                   <option value=""></option>
-                  <?php for ($i = 0; $i <= 20; $i++)
+                  <?php for ($i = 20; $i >=0 ; $i--)
                   {
                       $date = date("Y") - $i;
                       echo "<option value='$date'>" . $date . "</option>";
@@ -106,7 +112,7 @@
                 <label for="endyearBox">End year:</label>
                 <select class="custom-select" id="endyearBox" name="endyearBox" required>
                   <option value=""></option>
-                  <?php for ($i = 0; $i <= 20; $i++)
+                  <?php for ($i = 20; $i >=0 ; $i--)
                   {
                       $date = date("Y") - $i;
                       echo "<option value='$date'>" . $date . "</option>";
@@ -114,7 +120,7 @@
                   ?>
                 </select>
                 <br><br> <label for="allYearsCheckBox"> Check to select all years:</label>
-                <input type="checkbox" name="allYearsCheckBox" id="allYearsCheckBox" value="Yes" onclick="disableFunction('allYearsCheckBox','startyearBox', 'endyearBox')">
+                <input type="checkbox" name="allYearsCheckBox" id="allYearsCheckBox" onclick="disableFunction('allYearsCheckBox','startyearBox', 'endyearBox')">
               </div>
             </div>
           </div>
@@ -129,37 +135,25 @@
                   <label for="startmonthBox">Start month:</label>
                   <select class="custom-select "id = "startmonthBox" name = "startmonthBox" required>
                     <option value=""></option>
-                    <option value = "01"> January</option>
-                    <option value = "02"> February</option>
-                    <option value = "03"> March</option>
-                    <option value = "04"> April</option>
-                    <option value = "05"> May</option>
-                    <option value = "06"> June</option>
-                    <option value = "07"> July</option>
-                    <option value = "08"> August</option>
-                    <option value = "09"> September</option>
-                    <option value = "10"> October</option>
-                    <option value = "11"> November</option>
-                    <option value = "12"> December</option>
+                    <?php for ($i = 1; $i <=12 ; $i++)
+                    {
+                        $month = date('F', mktime(0, 0, 0, $i, 10));
+                        echo "<option value='$month'>" . $month . "</option>";
+                    }
+                    ?>
                   </select>
                   <label for="endmonthBox">End month:</label>
                   <select class="custom-select" id = "endmonthBox" name= "endmonthBox" required>
                     <option value=""></option>
-                    <option value = "01"> January</option>
-                    <option value = "02"> February</option>
-                    <option value = "03"> March</option>
-                    <option value = "04"> April</option>
-                    <option value = "05"> May</option>
-                    <option value = "06"> June</option>
-                    <option value = "07"> July</option>
-                    <option value = "08"> August</option>
-                    <option value = "09"> September</option>
-                    <option value = "10"> October</option>
-                    <option value = "11"> November</option>
-                    <option value = "12"> December</option>
+                    <?php for ($i = 1; $i <=12 ; $i++)
+                    {
+                        $month = date('F', mktime(0, 0, 0, $i, 10));
+                        echo "<option value='$month'>" . $month . "</option>";
+                    }
+                    ?>
                   </select>
                   <br><br> <label for="allMonthsCheckBox"> Check to select all months:</label>
-                  <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" value="Yes" onclick="disableFunction('allMonthsCheckBox','startmonthBox', 'endmonthBox')">
+                  <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" onclick="disableFunction('allMonthsCheckBox','startmonthBox', 'endmonthBox')">
                 </div>
               </div>
             </div>

@@ -16,8 +16,12 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(data) {
                   if(data[0] == false && data[1] == false) {
-                    alert(data);
-                    window.location = "admin_page.php";
+                    if(username == 'admin') {
+                      window.location = "admin_page.php";
+                    }
+                    else {
+                      window.location = "userDashboard.php";
+                    }
                   }
                   if(data[0] == true) {
                     $("#username_").addClass("input-error");

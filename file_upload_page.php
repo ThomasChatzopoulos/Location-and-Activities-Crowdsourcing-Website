@@ -1,3 +1,10 @@
+<?php  
+session_start();
+if(!isset($_SESSION['username'])) {
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -14,22 +21,20 @@
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <!-- https://getbootstrap.com/ -->
       <link rel="stylesheet" href="css/templatemo-style.css">
-      <!--
-  	Product Admin CSS Template
-  	https://templatemo.com/tm-524-product-admin
-  	-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-heatmap@1.0.0/leaflet-heatmap.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
 
-    <script
-    src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+      <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/leaflet-heatmap@1.0.0/leaflet-heatmap.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+      <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+      </script>
   </head>
 
   <body id="reportsPage">
@@ -73,12 +78,11 @@
                     Account
                   </a>
                 </li>
-              </ul>
-              <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link d-block" href="login.html">
-                    <b>Logout</b>
-                  </a>
+                    <a class="nav-link" href="logout.php">
+                      <i class="fas fa-sign-out-alt"></i>
+                      Logout
+                    </a>
                 </li>
               </ul>
             </div>

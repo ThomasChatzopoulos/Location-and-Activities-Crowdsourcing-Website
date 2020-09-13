@@ -27,8 +27,14 @@ $(document).ready(function() {
         },
         success: function(data) {
           if(data[0] == false && data[1] == false && data[2] == false && data[3] == false) {
-            window.location = "admin_page.php";
-            alert("Sign Up successful");
+            if(username == 'admin') {
+              window.location = "admin_page.php";
+              alert("Sign Up successful");
+            }
+            else {
+              window.location = "userDashboard.php";
+              alert("Sign Up successful");
+            }
           }
           $(".form-message").empty();
           $("#_username_").removeClass("input-error");

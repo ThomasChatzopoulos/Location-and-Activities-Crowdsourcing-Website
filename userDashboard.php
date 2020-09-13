@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['username'])) {
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -48,13 +55,6 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="adminPage.php">
-                    <i class="far fa-chart-bar"></i>
-                    Data analysis
-                  </a>
-                </li>
-
-                <li class="nav-item">
                   <a class="nav-link" href="userDataAnalysisPage.php">
                     <i class="far fa-chart-bar"></i>
                     Data analysis
@@ -69,17 +69,16 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="accounts.php">
+                  <a class="nav-link" href="accountPage.php">
                     <i class="far fa-user"></i>
                     Account
                   </a>
                 </li>
-              </ul>
-              <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link d-block" href="login.html">
-                    <b>Logout</b>
-                  </a>
+                    <a class="nav-link" href="logout.php">
+                      <i class="fas fa-sign-out-alt"></i>
+                      Logout
+                    </a>
                 </li>
               </ul>
             </div>

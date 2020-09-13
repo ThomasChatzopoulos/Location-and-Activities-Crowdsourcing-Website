@@ -8,7 +8,7 @@
 
     require "dbconnect.php";
 
-    if($_POST['select_allyears']=='true')) {
+    if($_POST['select_allyears']=='true') {
       $startYear = "2000";
       $endYear = "2020";
     }else{

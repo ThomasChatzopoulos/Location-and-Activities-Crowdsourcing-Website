@@ -4,10 +4,11 @@
   session_start();
 
   //------------------------------------------------ 1st query - eco user ------------------------------------------------
-  $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['username'];
-  $connected_user_id = mysqli_query($conn, $user_id_query);
-  // $connected_user_id="X9CxPW5LDR+CJ5bRD2N+0Hl4TkErMStGamlJNnZTUjBGQ0sxcUE9PQ==";
-
+  $user_id_query = "SELECT userID FROM user WHERE username = '". $_SESSION['username'] . "'";
+  $connected_user_id_result = mysqli_query($conn, $user_id_query);
+  while ($row = mysqli_fetch_assoc($connected_user_id_result)) {
+    $connected_user_id = sprintf($row['userID']);
+  }
   $nowtime = intval(sprintf('%d000',time()));
 
   $previus_months_sec = time() - strtotime("1-".(date("m",time())+1)."-".(date("Y",time())-1)); //sec for (11 months + this month days) before today
@@ -75,7 +76,7 @@
     $colours_months = set_Chart_colours($user_score);
   }else{
     $user_score[date("F",time())]=0;
-    $colours_months=set_Chart_colours($user_score);;
+    $colours_months=set_Chart_colours($user_score);
   }
 
   echo json_encode(array($user_score, $colours_months, $user_score));

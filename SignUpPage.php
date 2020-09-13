@@ -57,7 +57,7 @@
                 <div class="form-group mt-4">
                   <button type="submit" name = "sign_button" class="btn btn-primary btn-block text-uppercase" id="_sign-but_">Sign Up</button>
                 </div>
-                <p class="form-message"></p>
+                <p class="form-message center"></p>
               </form>
             </div>
           </div>

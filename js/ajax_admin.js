@@ -10,7 +10,7 @@ function date_ranges(a, b) {
   var select_alldays = $("#allDaysCheckBox").is(":checked");
   var starthour = $("#starthourBox").val();
   var endhour = $("#endhourBox").val();
-  var select_allhours = $("#allHoursCheckBox").val();
+  var select_allhours = $("#allHoursCheckBox").is(":checked");
   var select_all_activities = $("#allActivitiesCheckBox").is(":checked");
   var submit = a;
   var exp_type = $("#exportselectBox").val();
@@ -51,7 +51,6 @@ function date_ranges(a, b) {
         $("#endmonth").addClass("input-error");
         alert("start month cannot be less than end month");
       }
-
       if (data.result1[2] == true) {
         $("#startday").addClass("input-error");
         $("#endday").addClass("input-error");
@@ -69,31 +68,15 @@ function date_ranges(a, b) {
       }
       if(data.result3 != null) {
         alert(data.result3);
-          $.ajax({
-            url: 'export_files/'+data.result3,
-            method: 'GET',
-            xhrFields: {
-              responseType: 'blob'
-            },
-            success: function (data) {
-              alert("in");
-              var extension = data.result3.split('.').pop();
-              var a = document.createElement('a');
-              var url = window.URL.createObjectURL(data);
-              a.href = url;
-              a.download = 'mapData.'+extension;
-              document.body.append(a);
-              a.click();
-              a.remove();
-              window.URL.revokeObjectURL(url);
-            }
-          });
-
+        $.each(data.result3, function (key, val) {
+            document.getElementById("download").innerHTML = '<br><p><a href="export_files/'+data.result3+'" download>Download here</a></p>';
+        });
         alert("Success (export)!");
-        }
+      }
     },
     error: function(xhr, status, error) {
-      alert(xhr.responseText);
-    },
+      var err = eval("(" + xhr.responseText + ")");
+      alert(err.Message);
+    }
   });
 }

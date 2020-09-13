@@ -24,22 +24,20 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   }else {
     $startmonth = $_POST['startmonth'];
     $endmonth = $_POST['endmonth'];
-    if ($startmonth > $endmonth) {
-      $errormonth = true;
-    }
+    // if ($startmonth > $endmonth) {
+    //   $errormonth = true;
+    // }
   }
-
   if($_POST['select_alldays']=='true') {
     $startday = "Sunday";
     $endday = "Saturday";
   }else {
     $startday = $_POST['startday'];
     $endday = $_POST['endday'];
-    if ($startday > $endday) {
-      $errorday = true;
-    }
+    // if ($startday > $endday) {
+    //   $errorday = true;
+    // }
   }
-
   if($_POST['select_allhours']=='true') {
     $starthour = "00";
     $endhour = "23";
@@ -132,6 +130,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
         $ts2 = $timestamps[$i+1];
         $sql = "SELECT heading, velocity, accuracy, longitude, latitude, altitude, timestampMs, userId FROM `usermapdata` WHERE timestampMs BETWEEN $ts1 AND $ts2";
         $select_result = mysqli_query($conn,$sql);
+        // echo $sql,";\n";
 
         if(!$select_result){
           exit();
@@ -146,8 +145,10 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
           }
         }
       }
-      $export_results=array(export_data($export_array, $_POST['exp_type']));
+      $result_r=export_data($export_array, $_POST['exp_type']);
+      $export_results=array($result_r);
       echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>null,'result3'=>$export_results));
+      // $path=("export_files/$result_r");
     }
   }
   else {

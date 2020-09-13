@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['username'])) {
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -47,36 +54,38 @@
                         <i class="fas fa-bars tm-nav-icon"></i>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mx-auto h-100">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link active"  href="admin_page.php">
-                                <i class="far fa-chart-bar"></i>
-                                Data analysis
-                                <span class="sr-only">(current)</span>
+                      <ul class="navbar-nav mx-auto h-100">
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">
+                              <i class="fas fa-tachometer-alt"></i>
+                              Dashboard
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active"  href="admin_page.php">
+                            <i class="far fa-chart-bar"></i>
+                            Data analysis
+                            <span class="sr-only">(current)</span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="accountPage.php">
+                              <i class="far fa-user"></i>
+                              Account
+                          </a>
+                        </li>
+                      </ul>
+                      <ul class="navbar-nav">
+                          <li class="nav-item">
+                              <a class="nav-link d-block" href="login.html">
+                                  Admin, <b>Logout</b>
                               </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="accounts.html">
-                                    <i class="far fa-user"></i>
-                                    Account
-                                </a>
-                            </li>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link d-block" href="login.html">
-                                    Admin, <b>Logout</b>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>>
+                          </li>
+                      </ul>
+                    </div>
                 </div>
             </nav>
+          </div>
         <div class="container tm-mt-big tm-mb-big martop">
             <div class="row tm-content-row">
                 <div class="tm-block-col tm-col-small-selec">
@@ -235,6 +244,9 @@
                         <option value="csv">csv</option>
                       </select>
                       <br><br> <button class="btn-primary" type="submit" name="export_button" id="export_button" onclick="date_ranges('false', 'true')">Export Data</button>
+                      <div class="output">
+                        <h3 id="download" style="color:white;"></h3>
+                      </div>
                     </div>
                 </div>
               </div>

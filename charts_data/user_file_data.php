@@ -2,9 +2,11 @@
   require '../dbconnect.php';
   session_start();
 
-  $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['username'];
-  $connected_user_id = mysqli_query($conn, $user_id_query);
-  // $connected_user_id="X9CxPW5LDR+CJ5bRD2N+0Hl4TkErMStGamlJNnZTUjBGQ0sxcUE9PQ==";
+  $user_id_query = "SELECT userID FROM user WHERE username = '". $_SESSION['username'] . "'";
+  $connected_user_id_result = mysqli_query($conn, $user_id_query);
+  while ($row = mysqli_fetch_assoc($connected_user_id_result)) {
+    $connected_user_id = sprintf($row['userID']);
+  }
 //------------------------------------------------ 2nd query - record range ------------------------------------------------
   $min_map = sprintf("SELECT MIN(timestampMs) FROM userMapData WHERE userId = '%s'",
   mysqli_real_escape_string($conn, $connected_user_id));

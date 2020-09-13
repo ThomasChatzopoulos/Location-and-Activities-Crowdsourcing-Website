@@ -1,5 +1,8 @@
 <?php
 $errU = false;
+$error_rep_pass = false;
+$error_inv_pass = false;
+$error_username_taken = false;
 if(isset($_POST['submit_'])){
   require 'dbconnect.php';
 
@@ -11,9 +14,7 @@ if(isset($_POST['submit_'])){
   $email = $_POST['email'];
   $pattern ="/^.*(?=.{8,})(?=.*\d)(?=.*[a-zA-Z])(?=.*[#$*&@!]+).*$/" ;
 
-$error_rep_pass = false;
-$error_inv_pass = false;
-$error_username_taken = false;
+
 
 if($password != $Rpassword){
   $error_rep_pass = true;
@@ -22,7 +23,7 @@ if (!preg_match($pattern,$password)) {
   $error_inv_pass = true;
 }
 if (!$error_rep_pass && !$error_inv_pass){
-  $sql = "SELECT userId from `user` where userId =?";   //Admin$1aaaa
+  $sql = "SELECT username from `user` where username =?";   //Admin$1aaaa
   $stmt = mysqli_stmt_init($conn);
   if(!mysqli_stmt_prepare($stmt, $sql)){
     $errU = true;
@@ -33,7 +34,7 @@ if (!$error_rep_pass && !$error_inv_pass){
     mysqli_stmt_store_result($stmt);
     $resultCheck = mysqli_stmt_num_rows($stmt);
     if($resultCheck > 0){
-      $error_username_taken = false;
+      $error_username_taken = true;
     }
     else{
       $sql = "INSERT INTO `user` (userId, name, surname, username, password, email) values (?, ?, ?, ?, ?, ?)";

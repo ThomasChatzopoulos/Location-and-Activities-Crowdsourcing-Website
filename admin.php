@@ -61,7 +61,9 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     }
   }
   //actarray εχει τις δραστηριότητες που επέλεξε ο χρήστης
+ $actarray_test=json_decode($_POST['actarray']);
   $activities = array();
+  print_r($actarray_test);
   if($_POST['select_all_activities']=='true') { //all activities selected
     for ($i=0; $i < count($actarray) ; $i++) {
       array_push($activities,$actarray[$i]);
@@ -69,7 +71,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   }
   else {
     for ($i = 0; $i < count($actarray); $i++) {
-      if(isset($_POST[$actarray[$i]]) && $_POST[$actarray[$i]] == 'Yes') {
+      if(isset($_POST[$actarray[$i]])) {
         array_push($activities,$actarray[$i]);
       }
     }

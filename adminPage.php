@@ -91,7 +91,7 @@ if(!isset($_SESSION['username'])) {
                     <div class="text-center">
                       <h2 class="tm-block-title">Year Selection</h2>
                       <label for="startyearBox">Start year:</label>
-                        <select class="custom-select" id="startyearBox" name="startyearBox"  required>
+                        <select class="custom-select" id="startyearBox" name="startyearBox" required>
                           <option value=""></option>
                           <?php for ($i = 20; $i >=0 ; $i--)
                           {
@@ -175,7 +175,7 @@ if(!isset($_SESSION['username'])) {
                           <option value ="6"> Saturday </option>
                         </select>
 
-                        <br><br> <label for="allYearsCheckBox"> Check to select all days:</label>
+                        <br><br> <label for="allDaysCheckBox"> Check to select all days:</label>
                         <input type="checkbox" name="allDaysCheckBox" id="allDaysCheckBox" onclick="disableFunction('allDaysCheckBox', 'startdayBox', 'enddayBox')">
                       </div>
                     </div>
@@ -215,8 +215,7 @@ if(!isset($_SESSION['username'])) {
                     <div class="text-center">
                       <h2 class="tm-block-title">Activity Selection</h2>
                       <table class="table" id="act_table">  </table>
-                      <br>  Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" id="allActivitiesCheckBox"
-                    onclick = "disableActivities('allActivitiesCheckBox')">
+                      <br>  Check to select all Activities: <input type="checkbox" name="allActivitiesCheckBox" id="allActivitiesCheckBox" onclick = "disableActivities('allActivitiesCheckBox')">
                     </div>
                   </div>
                 </div>
@@ -243,7 +242,7 @@ if(!isset($_SESSION['username'])) {
                       </select>
                       <br><br> <button class="btn-primary" type="submit" name="export_button" id="export_button" onclick="date_ranges('false', 'true')">Export Data</button>
                       <div class="output">
-                        <h3 id="download" style="color:white;"></h3>
+                        <h3 id="download" hidden></h3>
                       </div>
                     </div>
                 </div>

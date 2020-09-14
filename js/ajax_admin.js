@@ -1,4 +1,24 @@
 function date_ranges(a, b) {
+  var activarray=new Array();
+  $.ajax({
+    type: 'POST',
+    url: "activities_from_db.php",
+    dataType: 'json',
+    error: function(xhr, status, error) {
+      alert(xhr.responseText);
+    },
+    success: function(data) {
+      var act_table = data[0];
+      $.each(act_table, function (key, val) {
+        if($('#'+val).is(":checked")){
+          activarray=actarray.push(val);
+        }
+      });
+    }
+  });
+
+  var actarray = JSON.stringify(activarray);
+
   var startyear = $("#startyearBox").val();
   var endyear = $("#endyearBox").val();
   var select_allyears = $("#allYearsCheckBox").is(":checked");
@@ -15,6 +35,23 @@ function date_ranges(a, b) {
   var submit = a;
   var exp_type = $("#exportselectBox").val();
   var exp_submit = b;
+
+//   if(startyear==null && endyear==null && select_allyears=false){
+//     return false;
+//   }
+//
+//   if(startmonth==null && endmonth==null && select_allmonths=false){
+// return false;
+//   }
+//
+//   if(startday==null && endday==null && select_alldays=false){
+// return false;
+//   }
+//
+//   if(starthour==null && endhour==null && select_allhours=false){
+// return false;
+//   }
+
   $.ajax({
     type: 'POST',
     url: "admin.php",
@@ -32,9 +69,11 @@ function date_ranges(a, b) {
       endhour: endhour,
       select_allhours: select_allhours,
       select_all_activities: select_all_activities,
+      actarray: actarray,
       submit: submit,
       exp_submit: exp_submit,
       exp_type: exp_type
+
     },
     dataType: 'json',
     success: function(data) {
@@ -67,16 +106,33 @@ function date_ranges(a, b) {
         alert("Success (heatmap)!");
       }
       if(data.result3 != null) {
-        alert(data.result3);
         $.each(data.result3, function (key, val) {
-            document.getElementById("download").innerHTML = '<br><p><a href="export_files/'+data.result3+'" download>Download here</a></p>';
+          var type = data.result3[0].split('.').pop();
+          var newFileName = "data_export."+type;
+          document.getElementById("download").innerHTML = '<br><p><a id = "link" href="export_files/'+data.result3+'" download="'+newFileName+'"></a></p>';
+          document.getElementById("link").click();
+        });
+        var filename = "export_files/"+data.result3[0];
+        $.ajax({
+          type: 'POST',
+          url: "delete_file.php",
+          data: {
+            filename: filename
+          },
+          dataType: 'json',
+          error: function(xhr, status, error) {
+            alert(xhr.responseText);
+          },
+          success: function(data) {
+          }
         });
         alert("Success (export)!");
       }
     },
     error: function(xhr, status, error) {
-      var err = eval("(" + xhr.responseText + ")");
-      alert(err.Message);
+      console.log(xhr);
+      console.log(error);
+      console.log(status);
     }
   });
 }

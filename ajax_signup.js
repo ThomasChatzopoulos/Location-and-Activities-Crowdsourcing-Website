@@ -41,16 +41,20 @@ $(document).ready(function() {
           $("#_password_, #_Rpassword_").removeClass("input-error");
           if(data[3] == true) {
             $("#_username_").addClass("input-error");
-            $(".form-message").append('Username already exists');
+            $(".form-message").append('<b>Username already exists</b>');
+            alert("Username already exists");
           }
           if(data[2] == true) {
             $("#_password_, #_Rpassword_").addClass("input-error");
-            $(".form-message").append('Invalid password. Password must have at least an Uppercase character, a number and a special symbol and must have at least 8 lenght');
+            $(".form-message").append('<b>Invalid password. Password must have at least an Uppercase character, a number and a special symbol and must have at least 8 lenght</b>');
+            alert("Invalid password. Password must have at least an Uppercase character, a number and a special symbol and must have at least 8 lenght");
           }
           if(data[1] == true) {
             $("#_password_, #_Rpassword_").addClass("input-error");
-            $(".form-message").append("Passwords don't match");
+            $(".form-message").append("<b>Passwords don't match</b>");
+            alert("Passwords don't match");
           }
+
           if(data[0] == true) {
             alert("Sql error");
           }

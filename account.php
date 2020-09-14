@@ -21,6 +21,7 @@
       $users_act_array[3]=$row['email'];
   }
 
+  $error=false;
   if(isset($_POST['save']) && $_POST['save']=='true'){
     if($_POST['new_name']!=$users_act_array[0] || $_POST['new_surname']!=$users_act_array[1] ||  $_POST['new_username']!=$users_act_array[2]){
       $user_id_query = "SELECT userID FROM user WHERE username = '". $_SESSION['username'] . "'";
@@ -34,8 +35,17 @@
 
       $_SESSION['username'] = $_POST['new_username'];
 
+      $error=0;//υπάρχει αλλαγή
+      echo json_encode(array('result1'=>null,'result2'=>array($error)));
     }
-  }
+    elseif ($_POST['new_name']==$users_act_array[0] && $_POST['new_surname']==$users_act_array[1] &&  $_POST['new_username']==$users_act_array[2]) {
+      $error=1;//δεν υπάρχει αλλαγή
+      echo json_encode(array('result1'=>null,'result2'=>array($error)));
+    }else{
+      $error=2;// πρόβλημα
+      echo json_encode(array('result1'=>null,'result2'=>array($error)));
+    }
 
-  echo json_encode($users_act_array);
+  }else{
+  echo json_encode(array('result1'=>$users_act_array,'result2'=>null));}
 ?>

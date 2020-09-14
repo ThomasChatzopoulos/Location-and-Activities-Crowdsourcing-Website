@@ -54,34 +54,32 @@ if(!isset($_SESSION['username'])) {
                         <i class="fas fa-bars tm-nav-icon"></i>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav mx-auto h-100">
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">
-                              <i class="fas fa-tachometer-alt"></i>
-                              Dashboard
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link active"  href="admin_page.php">
-                            <i class="far fa-chart-bar"></i>
-                            Data analysis
-                            <span class="sr-only">(current)</span>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="accountPage.php">
-                              <i class="far fa-user"></i>
-                              Account
-                          </a>
-                        </li>
-                      </ul>
-                      <ul class="navbar-nav">
-                          <li class="nav-item">
-                              <a class="nav-link d-block" href="login.html">
-                                  Admin, <b>Logout</b>
+                        <ul class="navbar-nav mx-auto h-100">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link active"  href="admin_page.php">
+                                <i class="far fa-chart-bar"></i>
+                                Data analysis
+                                <span class="sr-only">(current)</span>
                               </a>
-                          </li>
-                      </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="accounts.html">
+                                    <i class="far fa-user"></i>
+                                    Account
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="logout.php">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
+                                </a>
+                            </li>
                     </div>
                 </div>
             </nav>
@@ -129,7 +127,7 @@ if(!isset($_SESSION['username'])) {
                           <?php for ($i = 1; $i <=12 ; $i++)
                           {
                               $month = date('F', mktime(0, 0, 0, $i, 10));
-                              echo "<option value='$month'>" . $month . "</option>";
+                              echo "<option value='$i'>" . $month . "</option>";
                           }
                           ?>
                         </select>
@@ -139,7 +137,7 @@ if(!isset($_SESSION['username'])) {
                           <?php for ($i = 1; $i <=12 ; $i++)
                           {
                               $month = date('F', mktime(0, 0, 0, $i, 10));
-                              echo "<option value='$month'>" . $month . "</option>";
+                              echo "<option value='$i'>" . $month . "</option>";
                           }
                           ?>
                         </select>
@@ -156,25 +154,25 @@ if(!isset($_SESSION['username'])) {
                         <label for="startdayBox">Start day:</label>
                         <select class="custom-select" id="startdayBox" name ="startdayBox" required>
                           <option value=""></option>
-                          <option value ="Sunday"> Sunday  </option>
-                          <option value ="Monday"> Monday </option>
-                          <option value ="Tuesday"> Tuesday </option>
-                          <option value ="Wednesday"> Wednesday </option>
-                          <option value ="Thursday"> Thursday </option>
-                          <option value ="Friday"> Friday </option>
-                          <option value ="Saturday"> Saturday </option>
+                          <option value ="0"> Sunday  </option>
+                          <option value ="1"> Monday </option>
+                          <option value ="2"> Tuesday </option>
+                          <option value ="3"> Wednesday </option>
+                          <option value ="4"> Thursday </option>
+                          <option value ="5"> Friday </option>
+                          <option value ="6"> Saturday </option>
                         </select>
 
                         <label for="enddayBox">End day:</label>
                         <select class="custom-select" id="enddayBox" name = "enddayBox" required>
                           <option value=""></option>
-                          <option value ="Sunday"> Sunday  </option>
-                          <option value ="Monday"> Monday </option>
-                          <option value ="Tuesday"> Tuesday </option>
-                          <option value ="Wednesday"> Wednesday </option>
-                          <option value ="Thursday"> Thursday </option>
-                          <option value ="Friday"> Friday </option>
-                          <option value ="Saturday"> Saturday </option>
+                          <option value ="0"> Sunday  </option>
+                          <option value ="1"> Monday </option>
+                          <option value ="2"> Tuesday </option>
+                          <option value ="3"> Wednesday </option>
+                          <option value ="4"> Thursday </option>
+                          <option value ="5"> Friday </option>
+                          <option value ="6"> Saturday </option>
                         </select>
 
                         <br><br> <label for="allYearsCheckBox"> Check to select all days:</label>

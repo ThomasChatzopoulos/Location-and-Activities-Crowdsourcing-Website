@@ -18,26 +18,23 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
       $erroryear = true;
     }
   }
+
   if($_POST['select_allmonths']=='true') {
-    $startmonth = "January";
-    $endmonth = "December";
+    $startmonth = "01";
+    $endmonth = "12";
   }else {
     $startmonth = $_POST['startmonth'];
     $endmonth = $_POST['endmonth'];
-    // if ($startmonth > $endmonth) {
-    //   $errormonth = true;
-    // }
   }
+
   if($_POST['select_alldays']=='true') {
-    $startday = "Sunday";
-    $endday = "Saturday";
+    $startday = "0";
+    $endday = "6";
   }else {
     $startday = $_POST['startday'];
     $endday = $_POST['endday'];
-    // if ($startday > $endday) {
-    //   $errorday = true;
-    // }
   }
+
   if($_POST['select_allhours']=='true') {
     $starthour = "00";
     $endhour = "23";
@@ -79,41 +76,38 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   }
 
   $timestamps = array();
-  $year = $startYear;
   $counter=0;
 
-  for($i=1;$i<=($endYear-$startYear+1)*2;$i++){ //(διαφορά χρόνων+1)*(2μήνες)
-    if($i%2==1){//αν είναι ο μήνας εκκίνησης
-      for($day=strtotime("first $startday of $startmonth $year");$day<=strtotime("last $startday of $startmonth $year");$day+=604800){//κάθε μέρα εκκίνησης
-        $d=date('d',$day);
-        array_push($timestamps, strtotime("$starthour:00 $d $startmonth $year")*1000); //ώρα εκκίνησης
-        array_push($timestamps, strtotime("$endhour:59:59 $d $startmonth $year")*1000); //ώρα λήξης
+  if($endmonth>=$startmonth){
+    $months=$endmonth-$startmonth;
+  }
+  elseif($endmonth<$startmonth){
+    $months= 12+$endmonth;
+  }
+
+  if($endday>=$startday){
+    $days=$endday-$startday;
+  }
+  elseif($endday<$startday){
+    $days=7+$endday;
+  }
+
+  for($currentYear=$startYear;$currentYear<=$endYear;$currentYear++){
+    for($forMonth=$startmonth;$forMonth<=$startmonth+$months;$forMonth++){
+      $currentMonth=date('F', mktime(0, 0, 0, ($forMonth-1)%12+1, 10));
+      for($forday=$startday;$forday<=$startday+$days;$forday++){
+        $currentDay=jddayofweek(($forday-1)%7,1);
+        for($day=strtotime("first $currentDay of $currentMonth $currentYear");$day<=strtotime("last $currentDay of $currentMonth $currentYear");$day+=604800){//κάθε μέρα εκκίνησης
+          $d=date('d',$day);
+          array_push($timestamps, strtotime("$starthour:00 $d $currentMonth $currentYear")*1000); //ώρα εκκίνησης
+          array_push($timestamps, strtotime("$endhour:59:59 $d $currentMonth $currentYear")*1000+999); //ώρα λήξης
+        }
       }
-      for($day=strtotime("first $endday of $startmonth $year");$day<=strtotime("last $endday of $startmonth $year");$day+=604800){//κάθε μέρα λήξης
-        $d=date('d',$day);
-        array_push($timestamps, strtotime("$starthour:00 $d $startmonth $year")*1000); //ώρα εκκίνησης
-        array_push($timestamps, strtotime("$endhour:59:59 $d $startmonth $year")*1000); //ώρα λήξης
-      }
-      $counter++;
-    }
-    elseif($i%2==0) {//αν είναι ο μήνας λήξης
-      for($day=strtotime("first $startday of $endmonth $year");$day<=strtotime("last $startday of $endmonth $year");$day+=604800){//κάθε μέρα εκκίνησης
-        $d=date('d',$day);
-        array_push($timestamps, strtotime("$starthour:00 $d $endmonth $year")*1000); //ώρα εκκίνησης
-        array_push($timestamps, strtotime("$endhour:59:59 $d $endmonth $year")*1000); //ώρα λήξης
-      }
-      for($day=strtotime("first $endday of $endmonth $year");$day<=strtotime("last $endday of $endmonth $year");$day+=604800){//κάθε μέρα λήξης
-        $d=date('d',$day);
-        array_push($timestamps, strtotime("$starthour:00 $d $endmonth $year")*1000); //ώρα εκκίνησης
-        array_push($timestamps, strtotime("$endhour:59:59 $d $endmonth $year")*1000); //ώρα λήξης
-      }
-      $counter++;
-    }
-    if($counter==2){
-      $year++;
-      $counter=0;
     }
   }
+
+  asort($timestamps);
+  // print_r($timestamps);
 
   if(!$erroryear && !$errormonth && !$errorday && !$errorhour && !$erroractivity)
   {
@@ -125,12 +119,12 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     elseif ($_POST['exp_submit'] == 'true') {
       include 'export_file.php';
       $export_array = array();
+      $where="";
       for($i=0; $i<count($timestamps); $i+=2){
         $ts1 = $timestamps[$i];
         $ts2 = $timestamps[$i+1];
         $sql = "SELECT heading, velocity, accuracy, longitude, latitude, altitude, timestampMs, userId FROM `usermapdata` WHERE timestampMs BETWEEN $ts1 AND $ts2";
         $select_result = mysqli_query($conn,$sql);
-        // echo $sql,";\n";
 
         if(!$select_result){
           exit();
@@ -148,7 +142,6 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
       $result_r=export_data($export_array, $_POST['exp_type']);
       $export_results=array($result_r);
       echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>null,'result3'=>$export_results));
-      // $path=("export_files/$result_r");
     }
   }
   else {

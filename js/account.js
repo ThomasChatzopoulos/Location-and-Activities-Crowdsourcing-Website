@@ -7,11 +7,12 @@ $(document).ready(function() {
       alert(xhr.responseText);
     },
     success: function(data) {
+
       var firstname = document.getElementById("name_label");
       var lastname = document.getElementById('last_label');
       var username = document.getElementById('username_label');
 
-      var  user_data = data;
+      var  user_data = data.result1;
       var counter=0;
 
       $.each(user_data, function (key, val) {
@@ -67,7 +68,19 @@ function save_data() {
     },
     dataType: 'json',
     success: function(data) {
+      if(data.result2==0){
         alert("Successful data update!");
+      }
+      if(data.result2==1){
+        alert("There are no changes!");
+      }
+      if(data.result2==2){
+        alert("There was a problem updating your data");
+      }
+    },
+    error: function(xhr, status, error) {
+      var err = eval("(" + xhr.responseText + ")");
+      alert(err.Message);
     }
   });
 }

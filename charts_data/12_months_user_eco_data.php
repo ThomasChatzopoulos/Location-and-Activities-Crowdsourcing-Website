@@ -1,18 +1,22 @@
 <?php
   require '../dbconnect.php';
   require 'set_colours.php';
-  session_start();
-
   //------------------------------------------------ 1st query - eco user ------------------------------------------------
+  session_start();
   $user_id_query = "SELECT userID FROM user WHERE username = '". $_SESSION['username'] . "'";
   $connected_user_id_result = mysqli_query($conn, $user_id_query);
   while ($row = mysqli_fetch_assoc($connected_user_id_result)) {
     $connected_user_id = sprintf($row['userID']);
   }
-  $nowtime = intval(sprintf('%d000',time()));
 
+  $all_user_activities_timestamps=array();
+  $eco_user_activities_timestamps=array();
+  $months=array();
+  $eco_months=array();
+  $user_score=array();
+
+  $nowtime = intval(sprintf('%d000',time()));
   $previus_months_sec = time() - strtotime("1-".(date("m",time())+1)."-".(date("Y",time())-1)); //sec for (11 months + this month days) before today
-  // $previus_months_sec =1576800000;
 
   $all_user_activities_query = sprintf("SELECT activity_timestamp FROM user_activity WHERE userMapData_userId = '%s'
   AND ($nowtime - activity_timestamp)/1000 < $previus_months_sec", mysqli_real_escape_string($conn,$connected_user_id));
@@ -34,6 +38,9 @@
   while ($row = mysqli_fetch_assoc($eco_user_activities_result)) {
     $eco_user_activities_timestamps[] = ($row['activity_timestamp'])/1000;
   }
+
+  // print_r($all_user_activities_timestamps);
+  // print_r($eco_user_activities_timestamps);
 
   if(isset($all_user_activities_timestamps) && isset($eco_user_activities_timestamps)){
     $months_counter = 0;
@@ -70,7 +77,9 @@
     else{
       $this_month_score = 0;
     }
-    arsort($user_score);
+    if($user_score!=null){
+      arsort($user_score);
+    }
     // echo "<br>";
     // print_r($user_score);
     $colours_months = set_Chart_colours($user_score);

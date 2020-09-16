@@ -1,4 +1,4 @@
-<?php  
+<?php
 session_start();
 if(!isset($_SESSION['username'])) {
     header("Location: index.php");
@@ -76,7 +76,7 @@ if(!isset($_SESSION['username'])) {
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="accounts.php">
+                <a class="nav-link" href="accountPage.php">
                   <i class="far fa-user"></i>
                   Account
                 </a>

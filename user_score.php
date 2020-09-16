@@ -1,15 +1,14 @@
 <?php
   require 'dbconnect.php';
   session_start();
-
-  $user_id_query = "SELECT userID FROM user WHERE username = ".$_SESSION['username'];
-  $connected_user_id = mysqli_query($conn, $user_id_query);
-  // $connected_user_id="X9CxPW5LDR+CJ5bRD2N+0Hl4TkErMStGamlJNnZTUjBGQ0sxcUE9PQ==";
+  $user_id_query = "SELECT userID FROM user WHERE username = '". $_SESSION['username']."'";
+  $connected_user_id_result = mysqli_query($conn, $user_id_query);
+  while ($row = mysqli_fetch_assoc($connected_user_id_result)) {
+    $connected_user_id = sprintf($row['userID']);
+  }
 
   $nowtime = intval(sprintf('%d000',time()));
-
-  //$this_months_sec = time() - strtotime("1-".(date("m-Y",time())));
-  $this_months_sec =1576800000;
+  $this_months_sec = time() - strtotime("1-".(date("m-Y",time())));
 
   $all_user_activities_query = sprintf("SELECT  count(activity_timestamp) FROM user_activity WHERE userMapData_userId = '%s'
   AND ($nowtime - activity_timestamp)/1000 < $this_months_sec", mysqli_real_escape_string($conn,$connected_user_id));

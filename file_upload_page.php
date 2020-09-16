@@ -1,4 +1,4 @@
-<?php  
+<?php
 session_start();
 if(!isset($_SESSION['username'])) {
     header("Location: index.php");
@@ -58,7 +58,7 @@ if(!isset($_SESSION['username'])) {
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="adminPage.php">
+                  <a class="nav-link" href="userDataAnalysisPage.php">
                     <i class="far fa-chart-bar"></i>
                     Data analysis
                   </a>
@@ -73,7 +73,7 @@ if(!isset($_SESSION['username'])) {
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" href="accounts.html">
+                  <a class="nav-link" href="accountPage.php">
                     <i class="far fa-user"></i>
                     Account
                   </a>

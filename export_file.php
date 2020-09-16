@@ -13,7 +13,7 @@
         break;
       case 'xml':
         $xml = arrayToXml($export_array);
-        print $xml->asXML('export_files/'.$file_name.'.xml');
+        $xml->asXML('export_files/'.$file_name.'.xml');
         $return=$file_name.'.xml';
         break;
       case 'csv':

@@ -1,4 +1,4 @@
-<?php  
+<?php
 session_start();
 if(!isset($_SESSION['username'])) {
     header("Location: index.php");
@@ -45,7 +45,7 @@ if(!isset($_SESSION['username'])) {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto h-100">
                         <li class="nav-item">
-                            <a class="nav-link active" href="admin_page.php">
+                            <a class="nav-link active" href="#">
                                 <i class="fas fa-tachometer-alt"></i>
                                 Dashboard
                                 <span class="sr-only">(current)</span>
@@ -58,7 +58,7 @@ if(!isset($_SESSION['username'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="accounts.html">
+                            <a class="nav-link" href="adminAccountPage.php">
                                 <i class="far fa-user"></i>
                                 Accounts
                             </a>

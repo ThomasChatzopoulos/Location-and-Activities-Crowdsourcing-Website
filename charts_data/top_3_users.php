@@ -1,17 +1,14 @@
 <?php
   require '../dbconnect.php';
-  session_start();
 
-  // $connected_user_id="X9CxPW5LDR+CJ5bRD2N+0Hl4TkErMStGamlJNnZTUjBGQ0sxcUE9PQ==";
-  $user_id_query = "SELECT userID FROM user WHERE username = '".$_SESSION['username']."'";
+  session_start();
+  $user_id_query = "SELECT userID FROM user WHERE username = '". $_SESSION['username']."'";
   $connected_user_id_result = mysqli_query($conn, $user_id_query);
   while ($row = mysqli_fetch_assoc($connected_user_id_result)) {
     $connected_user_id = sprintf($row['userID']);
   }
   $nowtime = intval(sprintf('%d000',time()));
-
   $this_months_sec = time() - strtotime("1-".(date("m-Y",time())));
-  // $this_months_sec =1576800000;
 
   $all_user_activities_query = sprintf("SELECT count(activity_timestamp) FROM user_activity WHERE userMapData_userId = '%s'
   AND ($nowtime - activity_timestamp)/1000 < $this_months_sec", mysqli_real_escape_string($conn,$connected_user_id));
@@ -42,26 +39,23 @@
   }
 
 //------------------------------------------------ 4th query - top 3 for last month ------------------------------------------------
-  $users_act_array=[];
-  $temp_top_users=[];
-  $top_users_table=[];
-  $users_rank_table=[];
+  $users_act_array=array();
+  $temp_top_users=array();
+  $top_users_table=array();
+  $users_rank_table=array();
+  $users_eco_act_array=array();
 
   $number_of_users_act_query = "SELECT COUNT(eco), userMapData_userId FROM user_activity
   WHERE ($nowtime - activity_timestamp)/1000 < $this_months_sec GROUP BY userMapData_userId";
   $number_of_users_eco_act_query = "SELECT COUNT(eco) FROM user_activity
   WHERE eco=1 AND ($nowtime - activity_timestamp)/1000 < $this_months_sec GROUP BY userMapData_userId";
-  // echo $number_of_users_act_query,"<br>";
-  // echo $number_of_users_eco_act_query;
 
   $number_of_users_act_results = mysqli_query($conn, $number_of_users_act_query);
   if(!$number_of_users_act_results){
-    echo "SQL error <br>";
     exit();
   }
   $number_of_users_eco_act_result = mysqli_query($conn, $number_of_users_eco_act_query);
   if(!$number_of_users_eco_act_result){
-    echo "SQL error <br>";
     exit();
   }
 
@@ -74,10 +68,13 @@
   }
 
   $counter=0;
-    foreach ($users_act_array as $key => $value) {
-      $temp_top_users[$key] = $users_eco_act_array[$counter]/$value; // $temp_top_users[]: $key: userId, $value: eco percent
-      $counter++;
-    }
+  foreach ($users_act_array as $key => $value) {
+    $temp_top_users[$key] = $users_eco_act_array[$counter]/$value; // $temp_top_users[]: $key: userId, $value: eco percent
+    $counter++;
+  }
+
+  // print_r($temp_top_users);
+
   if(!is_null($temp_top_users)){
     arsort($temp_top_users);
 
@@ -101,7 +98,6 @@
       $top_rank_users = array_slice($temp_top_users,0,3);
       $top_rank_users += [$connected_user_id=>$connected_user_score];
     }
-    // print_r($top_rank_users);
     arsort($top_rank_users);
 
     foreach ($top_rank_users as $key => $value) { //get name and surname
@@ -123,14 +119,9 @@
       exit();
     }
 
-    // echo $connected_user_id,"<br>";
-    // echo $connected_user_name_result,"<br>";
-
     while ($row = mysqli_fetch_assoc($connected_user_name_result)) {
       $connected_user_name = sprintf($row['name']." ".substr($row['surname'],0,1));
     }
-    // print_r($connected_user_name);
-    // echo '<br>';
 
     $counter=0;
     foreach ($top_rank_users as $key => $value) {

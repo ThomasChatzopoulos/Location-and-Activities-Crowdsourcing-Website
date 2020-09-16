@@ -56,20 +56,20 @@ if(!isset($_SESSION['username'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mx-auto h-100">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="admin_page.php">
                                     <i class="fas fa-tachometer-alt"></i>
                                     Dashboard
                                 </a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link active"  href="admin_page.php">
+                              <a class="nav-link active"  href="adminPage.php">
                                 <i class="far fa-chart-bar"></i>
                                 Data analysis
                                 <span class="sr-only">(current)</span>
                               </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="accounts.html">
+                                <a class="nav-link" href="adminAccountPage.php">
                                     <i class="far fa-user"></i>
                                     Account
                                 </a>
@@ -252,12 +252,10 @@ if(!isset($_SESSION['username'])) {
                 <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
                   <div class="text-center">
                     <h2 class="tm-block-title"> Erase Database </h2>
-                    <form action = "admin.php" method="post">
-                      <p align ="center">
-                        If you press this button you will erase the database <br><br>
-                        <button class="btn-primary" type="submit" onclick="return confirm('Are you sure to delete?')" id = "erase_database" name="delete_button">Erase Database</button>
-                      </p>
-                    </form>
+                    <p align ="center">
+                      If you press this button you will erase the database <br><br>
+                      <button class="btn-primary" type="submit" onclick="erase_db()" id = "erase_database" name="delete_button">Erase Database</button>
+                    </p>
                 </div>
               </div>
           </div>
@@ -265,10 +263,8 @@ if(!isset($_SESSION['username'])) {
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/activities_from_db.js"></script>
+        <script src="js/ajax_admin.js"></script>
         <script src="js/erase_database.js"></script>
         <script src="js/disable_function.js"></script>
-        <!-- <script src="js/admin_years_loop.js"></script>
-        <script src="js/admin_hours_loop.js"></script> -->
-        <script src="js/ajax_admin.js"></script>
   </body>
 </html>

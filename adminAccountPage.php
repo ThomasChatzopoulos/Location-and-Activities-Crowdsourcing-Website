@@ -30,32 +30,29 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto h-100">
             <li class="nav-item">
-              <a class="nav-link" href="userDashboard.php">
-                <i class="fas fa-tachometer-alt"></i>
-                Dashboard
-              </a>
+                <a class="nav-link" href="admin_page.php">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link" href="userDataAnalysisPage.php">
+              <a class="nav-link"  href="adminPage.php">
                 <i class="far fa-chart-bar"></i>
                 Data analysis
               </a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link" href="file_upload_page.php">
-                <i class="fas fa-upload"></i>
-                File upload
-              </a>
+                <a class="nav-link active" href="#">
+                  <i class="far fa-user"></i>
+                  Account
+                  <span class="sr-only">(current)</span>
+                </a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link active" href="#">
-                <i class="far fa-user"></i>
-                Account
-                <span class="sr-only">(current)</span>
-              </a>
+                <a class="nav-link" href="logout.php">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">

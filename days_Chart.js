@@ -4,7 +4,7 @@ $(document).ready(function() {
     url: "charts_data/days_data.php",
     dataType: 'json',
     error: function(xhr, status, error) {
-    alert(xhr.responseText);
+    console.log(xhr.responseText);
     },
     success: function(data) {
       var days_obj = data[0];

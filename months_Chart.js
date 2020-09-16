@@ -5,7 +5,7 @@ $(document).ready(function() {
     url: "charts_data/months_data.php",
     dataType: 'json',
     error: function(xhr, status, error) {
-    alert(xhr.responseText);
+    console.log(xhr.responseText);
     },
     success: function(data) {
       var months_obj = data[0];

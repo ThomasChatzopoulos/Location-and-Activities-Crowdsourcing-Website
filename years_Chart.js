@@ -4,7 +4,7 @@ $(document).ready(function() {
     url: "charts_data/years_data.php",
     dataType: 'json',
     error: function(xhr, status, error) {
-    alert(xhr.responseText);
+    console.log(xhr.responseText);
     },
     success: function(data) {
       var years_obj = data[0];

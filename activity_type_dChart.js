@@ -4,7 +4,7 @@ $(document).ready(function() {
     url: "charts_data/activity_type_data.php",
     dataType: 'json',
     error: function(xhr, status, error) {
-    alert(xhr.responseText);
+    console.log(xhr.responseText);
     },
     success: function(data) {
       var activities_obj = data[0];
@@ -58,5 +58,3 @@ $(document).ready(function() {
       }
     });
 });
-// options.maintainAspectRatio =
-//   $(window).width() < width_threshold ? false : true;

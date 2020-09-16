@@ -61,9 +61,8 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
     }
   }
   //actarray εχει τις δραστηριότητες που επέλεξε ο χρήστης
- $actarray_test=json_decode($_POST['actarray']);
+  $actarray_test= $_POST['activarray'];
   $activities = array();
-  print_r($actarray_test);
   if($_POST['select_all_activities']=='true') { //all activities selected
     for ($i=0; $i < count($actarray) ; $i++) {
       array_push($activities,$actarray[$i]);
@@ -71,12 +70,11 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   }
   else {
     for ($i = 0; $i < count($actarray); $i++) {
-      if(isset($_POST[$actarray[$i]])) {
+      if (strpos($actarray_test, $actarray[$i]) !== false) { //ελεγχω αν το activity ειναι μεσα στο string
         array_push($activities,$actarray[$i]);
       }
     }
   }
-
   $timestamps = array();
   $counter=0;
 
@@ -109,13 +107,12 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
   }
 
   asort($timestamps);
-  // print_r($timestamps);
 
   if(!$erroryear && !$errormonth && !$errorday && !$errorhour && !$erroractivity)
   {
     if($_POST['submit'] == 'true') {      // TODO: CHECK FOR EASIER WAY
       include 'heatmap_data.php';
-      $datapoints = heatmapdata($timestamps);
+      $datapoints = heatmapdata($timestamps, $activities);
       echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>$datapoints, 'result3'=>null));
     }
     elseif ($_POST['exp_submit'] == 'true') {
@@ -135,9 +132,11 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
           while ($row = mysqli_fetch_assoc($select_result)) {
             $userId = $row['userId'];
             unset($row['userId']);
-            $row = add_activity_info($row, $conn);
-            $row['userId'] = $userId;
-            array_push($export_array, $row);
+            $row = add_activity_info($row, $activities, $conn);
+            if($row != false) {
+              $row['userId'] = $userId;
+              array_push($export_array, $row);
+            }
           }
         }
       }

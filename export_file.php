@@ -28,23 +28,33 @@
     return $return;
   }
 
-  function add_activity_info($row, $conn) {
-    $query_2 = sprintf("SELECT * FROM `user_activity` WHERE userMapData_timestampMs = '%s'",
+  function add_activity_info($row, $activities, $conn) {
+    $activities_check = "AND (";
+    for ($i=0; $i < count($activities) ; $i++) {
+      $activities_check.= "(".$activities[$i]. " IS NOT NULL) ";
+      if($i != count($activities) -1) {
+        $activities_check.="OR ";
+      }
+    }
+    $activities_check.=")";
+
+    $query_2 = sprintf("SELECT * FROM `user_activity` WHERE (userMapData_timestampMs = '%s') $activities_check",
     mysqli_real_escape_string($conn, $row["timestampMs"]));
     $result_2 = mysqli_query($conn, $query_2);
-
-    if (mysqli_num_rows($result_2) == 0) {
-      return $row;
+    if(!$result_2){
+      return false;
     }
-
-    while ($row_2 = mysqli_fetch_assoc($result_2)) {
-      foreach ($row_2 as $key => $value) {
-        if($key == 'userMapData_timestampMs' || $key == 'userMapData_userId'){
-          unset($row_2[$key]);
+    else {
+      $final_array =array();
+      while ($row_2 = mysqli_fetch_assoc($result_2)) {
+        foreach ($row_2 as $key => $value) {
+          if($key == 'userMapData_timestampMs' || $key == 'userMapData_userId'){
+            unset($row_2[$key]);
+          }
         }
+        //$row_2 += $userId;
+        $final_array=array_merge($row, $row_2);
       }
-      //$row_2 += $userId;
-      $final_array=array_merge($row, $row_2);
       return $final_array;
     }
   }

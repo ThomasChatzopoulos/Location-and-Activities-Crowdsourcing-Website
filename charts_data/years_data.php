@@ -5,7 +5,7 @@
   $timestamps_user_query = "SELECT timestampMs FROM userMapData";
   $timestamps_user_result = mysqli_query($conn, $timestamps_user_query);
 
-  if(!$timestamps_user_result){
+  if(mysqli_num_rows($timestamps_user_result)==0){
     exit();
   }
   while ($row = mysqli_fetch_assoc($timestamps_user_result)) {

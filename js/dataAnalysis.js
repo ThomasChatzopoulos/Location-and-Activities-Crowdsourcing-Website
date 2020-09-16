@@ -1,10 +1,10 @@
 function chart_date_range(a) {
   var startyear = $("#startyearBox").val();
   var endyear = $("#endyearBox").val();
-  var select_allyears = $('allYearsCheckBox').is(":checked");
+  var select_allyears_u = $("#allYearsCheckBox_u").is(":checked");
   var startmonth = $("#startmonthBox").val();
   var endmonth = $("#endmonthBox").val();
-  var select_allmonths = $('allMonthsCheckBox').is(":checked");
+  var select_allmonths_u = $("#allMonthsCheckBox_u").is(":checked");
   var submit = a;
 
   $.ajax({
@@ -13,10 +13,10 @@ function chart_date_range(a) {
     data: {
       startyear: startyear,
       endyear: endyear,
-      select_allyears: select_allyears,
+      select_allyears_u: select_allyears_u,
       startmonth: startmonth,
       endmonth: endmonth,
-      select_allmonths: select_allmonths,
+      select_allmonths_u: select_allmonths_u,
       submit: submit,
     },
     dataType: 'json',
@@ -31,7 +31,8 @@ function chart_date_range(a) {
         $("#endmonth").addClass("input-error");
         alert("start month cannot be less than end month");
       }
-      if(data.result2 != null) {
+      if(data.result2 != false) {
+        // console.log(data.result2);
         user_activity_distribution(data.result2[0],data.result2[1],data.result2[2]);
       }
       if(data.result3 != null) {
@@ -47,8 +48,9 @@ function chart_date_range(a) {
       }
     },
     error: function(xhr, status, error) {
-      alert(xhr.responseText);
-    },
+      console.log(error);
+      console.log(xhr.responseText);
+    }
   });
 }
 
@@ -67,7 +69,7 @@ function user_activity_distribution(activities_obj,colours_obj_act,act_table) {
   var colours = Object.values(colours_obj_act);
 
   var barChart = new Chart(myChart, {
-    type: 'doughnut',
+    type: 'bar',
     data:{
       labels:types,
       datasets:[{

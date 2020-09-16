@@ -11,6 +11,8 @@
       $connected_user_id=$row[0];
     }
 
+    $activity_type=array();
+    $colours_act=array();
     $user_activity_table_columns_query = "SHOW COLUMNS FROM user_activity";
     $user_activity_table_columns_result = mysqli_query($conn, $user_activity_table_columns_query);
 
@@ -29,26 +31,26 @@
         $ts2 = $timestamps[$i+1];
         $query = sprintf("SELECT count(%s) FROM user_activity WHERE (userMapData_userId='%s') AND (activity_timestamp BETWEEN $ts1 AND $ts2)",mysqli_real_escape_string($conn, $key), mysqli_real_escape_string($conn, $connected_user_id));
         $result = mysqli_query($conn, $query);
-
-        if(!$result){
-          echo "\nNo results\n";
-          exit();
+        if(mysqli_num_rows($result)==0){
         }
-        while ($row = mysqli_fetch_row($result)) {
-          $activity_type[$key] += $row[0];
-          $counter += $row[0];
+        else{
+          while ($row = mysqli_fetch_row($result)) {
+            $activity_type[$key] += $row[0];
+            $counter += $row[0];
+          }
         }
       }
     }
-    if($counter>0){
+    if($counter!=0){
       arsort($activity_type);
       foreach ($activity_type as $key_1 => $value_1) {
         $activity_type[$key_1] = round(($activity_type[$key_1]/$counter)*100,2);//TODO: αν βγαίνει 99,9- ή 100,01+
       }
+      $colours_act = set_Chart_colours($activity_type);
+
+      return array($activity_type, $colours_act, $activity_type);
     }else{
-      exit();
+      return false;
     }
-    $colours_act = set_Chart_colours($activity_type);
-    return array($activity_type, $colours_act, $activity_type);
   }
 ?>

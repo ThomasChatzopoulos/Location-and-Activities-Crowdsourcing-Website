@@ -96,7 +96,7 @@ if(!isset($_SESSION['username'])) {
                           <?php for ($i = 20; $i >=0 ; $i--)
                           {
                               $date = date("Y") - $i;
-                              echo "<option value='$date'>" . $date . "</option>";
+                              echo '<option value="'.$date.'">' . $date . '</option>';
                           }
                           ?>
                         </select>
@@ -106,7 +106,7 @@ if(!isset($_SESSION['username'])) {
                           <?php for ($i = 20; $i >=0 ; $i--)
                           {
                               $date = date("Y") - $i;
-                              echo "<option value='$date'>" . $date . "</option>";
+                              echo '<option value="'.$date.'">' . $date . '</option>';
                           }
                           ?>
                         </select>

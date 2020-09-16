@@ -1,10 +1,7 @@
 <?php
   function findBestHour($timestamps){
     require (dirname(dirname(__FILE__)) . '/dbconnect.php');
-    // require 'set_colours.php';
-    // $timestamps = [1283620675000,1599239876000];
 
-    // session_start();
     $user_id_query = 'SELECT userID FROM user WHERE username = "'.$_SESSION['username'].'"';
     $connected_user_id_r = mysqli_query($conn, $user_id_query);
 

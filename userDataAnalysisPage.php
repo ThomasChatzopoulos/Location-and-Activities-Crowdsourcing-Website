@@ -94,7 +94,6 @@ if(!isset($_SESSION['username'])) {
 
       <div class="container">
         <div class="row tm-content-row mar-top">
-        <!-- <form action="userDataAnalysis.php" method="POST"> -->
         <div class="tm-block-col tm-col-small">
           <div class="tm-bg-primary-dark tm-block">
             <div class="text-center">
@@ -119,8 +118,8 @@ if(!isset($_SESSION['username'])) {
                   }
                   ?>
                 </select>
-                <br><br> <label for="allYearsCheckBox"> Check to select all years:</label>
-                <input type="checkbox" name="allYearsCheckBox" id="allYearsCheckBox" onclick="disableFunction('allYearsCheckBox','startyearBox', 'endyearBox')">
+                <br><br> <label for="allYearsCheckBox_u"> Check to select all years:</label>
+                <input type="checkbox" name="allYearsCheckBox_u" id="allYearsCheckBox_u" onclick="disableFunction('allYearsCheckBox_u','startyearBox', 'endyearBox')">
               </div>
             </div>
           </div>
@@ -152,12 +151,11 @@ if(!isset($_SESSION['username'])) {
                     }
                     ?>
                   </select>
-                  <br><br> <label for="allMonthsCheckBox"> Check to select all months:</label>
-                  <input type="checkbox" name="allMonthsCheckBox" id="allMonthsCheckBox" onclick="disableFunction('allMonthsCheckBox','startmonthBox', 'endmonthBox')">
+                  <br><br> <label for="allMonthsCheckBox_u_u"> Check to select all months:</label>
+                  <input type="checkbox" name="allMonthsCheckBox_u" id="allMonthsCheckBox_u" onclick="disableFunction('allMonthsCheckBox_u','startmonthBox', 'endmonthBox')">
                 </div>
               </div>
             </div>
-            <!-- </form> -->
           </div>
 
           <div class="center">
@@ -230,12 +228,7 @@ if(!isset($_SESSION['username'])) {
   <script src="js/moment.min.js"></script>
   <script src="js/disable_function.js"></script>
   <script src="js/dataAnalysis.js"></script>
-
-  <!-- https://momentjs.com/ -->
-  <!-- <script src="js/Chart.min.js"></script> -->
-  <!-- http://www.chartjs.org/docs/latest/ -->
   <script src="js/bootstrap.min.js"></script>
-  <!-- https://getbootstrap.com/ -->
 
 </body>
 </html>

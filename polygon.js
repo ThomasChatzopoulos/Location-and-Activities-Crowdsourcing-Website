@@ -35,7 +35,6 @@ map.on(L.Draw.Event.CREATED, function (event){
   console.info(event);
   if( type === "rectangle"){
     coordinates[layer._leaflet_id] = layer.getLatLngs()[0] ;
-    console.log(coordinates[layer._leaflet_id]);
   }
 });
 //update coordinates of edited layers
@@ -43,7 +42,6 @@ map.on('draw:edited', function (e) {
   var layers = e.layers;
   layers.eachLayer(function (layer) {
     coordinates[layer._leaflet_id] = layer.getLatLngs()[0];
-    console.log(coordinates[layer._leaflet_id]);
          });
      });
 //remove coordinates of deleted layers
@@ -51,8 +49,6 @@ map.on('draw:deleted', function (e) {
   var layers = e.layers;
   layers.eachLayer(function (layer) {
     var lay_id = layer._leaflet_id;
-    console.log(lay_id);
     delete coordinates[lay_id];
-    console.log(coordinates);
          });
      });

@@ -19,7 +19,7 @@
   $distance = 10;
   $mysql_timestamp = date ("Y-m-d H:i:s");
   $filename = "files_for_upload/".$_POST['last_uploaded_file_name'];
-  //$userId = "6+DnaZ6c6xKau6Exa7sOpDZyVTFrTml0cHZyMFFJTVk0Y2QrdVE9PQ==";
+
   $query = sprintf("INSERT INTO `uploaded_by_user` (jsonFIleName, uploadTime, userId) VALUES ('%s', '%s', '%s')",
   mysqli_real_escape_string($conn, $filename), mysqli_real_escape_string($conn, $mysql_timestamp), mysqli_real_escape_string($conn, $userId));
 
@@ -32,7 +32,7 @@
   //$data = file_get_contents($filename); //Read the JSON file in PHP
   //$json_obj = json_decode($data, true); //Convert JSON String into PHP Array
   $json_obj = \JsonMachine\JsonMachine::fromFile($filename);
-  //print_r($json_obj);
+
   foreach ($json_obj as $key1 => $value1) {
     $locations = $value1;
     foreach ($locations as $key2 => $value2) {
@@ -106,7 +106,6 @@
     unlink($filename);
     echo json_encode($GLOBALS['duplicate_data']);
 
-      //print_r($json_obj[$key1][$key2]);
 
   function insert_location($userId, $timestampMS, $latitude, $longtitude, $accuracy, $velocity, $heading, $altitude, $vertical_accuracy, $conn){
     $query_il = sprintf("INSERT INTO `usermapdata` (userId, timestampMs, latitude, longitude, accuracy, velocity, heading, altitude, verticalAccuracy)
@@ -115,7 +114,7 @@
     mysqli_real_escape_string($conn, $accuracy),mysqli_real_escape_string($conn, $velocity), mysqli_real_escape_string($conn, $heading), mysqli_real_escape_string($conn, $altitude),
     mysqli_real_escape_string($conn, $vertical_accuracy));
     //echo "<br>";
-    $result_i = mysqli_query($conn, $query_il);  //or die(mysqli_error($conn));
+    $result_i = mysqli_query($conn, $query_il);
     if(!$result_i && ! $GLOBALS['duplicate_data']) {
       $GLOBALS['duplicate_data'] = true;
     }
@@ -125,13 +124,12 @@
   function insert_activity($userId, $activity_type_string, $timestampMS, $activity_timestamp, $activity_confidence_string, $conn) {
     $activity_array = preg_split("/\, /", $activity_type_string);
     foreach ($activity_array as $activity_type) {
-      $check_if_column_exists = mysqli_query($conn, "SHOW COLUMNS FROM user_activity LIKE '$activity_type'"); //if column exists => $check_if_column_exists=1
+      $check_if_column_exists = mysqli_query($conn, "SHOW COLUMNS FROM user_activity LIKE '$activity_type'");
       $column_exists = (mysqli_num_rows($check_if_column_exists))?TRUE:FALSE;
       if($column_exists != 1){
         $alter_query = "ALTER TABLE `user_activity` ADD `$activity_type` INT(11) NULL DEFAULT NULL";
-        //echo $alter_query;
-        //echo "<br>";
-        $result = mysqli_query($conn, $alter_query);   //or die(mysqli_error($conn));
+
+        $result = mysqli_query($conn, $alter_query);
 
         if(!$result && ! $GLOBALS['duplicate_data']) {
           $GLOBALS['duplicate_data'] = true;
@@ -141,10 +139,8 @@
     $query_i = sprintf("INSERT INTO `user_activity` (userMapData_userId, userMapData_timestampMs, activity_timestamp, %s) VALUES ('%s', '%s', '%s', %s)",
     mysqli_real_escape_string($conn, $activity_type_string),mysqli_real_escape_string($conn, $userId), mysqli_real_escape_string($conn, $timestampMS), mysqli_real_escape_string($conn, $activity_timestamp),
     mysqli_real_escape_string($conn, $activity_confidence_string));
-    //echo $query_i;
-    //echo "<br>";
-    //echo "<br>";
-    $result_i = mysqli_query($conn, $query_i);  //or die(mysqli_error($conn));
+
+    $result_i = mysqli_query($conn, $query_i); 
 
     if(!$result_i && !$GLOBALS['duplicate_data']) {
       $GLOBALS['duplicate_data'] = true;

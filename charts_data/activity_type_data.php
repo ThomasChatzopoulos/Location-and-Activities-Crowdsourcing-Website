@@ -28,18 +28,18 @@
         $counter += $row[0];
       }
     }
+  }
     if($counter != 0) {
       //table
       $activity_type_table = $activity_type;
       arsort($activity_type_table);
       //distr of all activity types
       foreach ($activity_type as $key_1 => $value_1) {
-        $activity_type[$key_1] = round(($activity_type[$key_1]/$counter)*100,3);
+        $activity_type[$key_1] = round(($activity_type[$key_1]/$counter)*100,2);
       }
       arsort($activity_type);
       $colours_act = set_Chart_colours($activity_type);
     }
-  }
   if(isset($colours_act)) {
   echo json_encode(array($activity_type, $colours_act, $activity_type_table));
 }

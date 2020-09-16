@@ -24,7 +24,6 @@ $('#file_form').submit(function(e) {
           },
           dataType: 'json',
           success: function(data2) {
-            console.log(data2);
             if (data2) {
               alert("Duplicate entries were detected!");
             } else {
@@ -33,31 +32,27 @@ $('#file_form').submit(function(e) {
 
           },
           error: function(xhr, status, error) {
-            alert(xhr.responseText);
+            console.log(xhr.responseText);
           }
         });
         $('#msg').html("<span style='color:lawngreen;'>File '" + data[4] + "' is being uploaded. Ιt will take us a while for your data to be available.</span>");
       } else {
         if (data[0] == true) {
-          // $('#msg').html("<span style='color:red;'>Error during '"+ data[4] +"' file uploading. Please try again!</span>");
           alert("Error during '" + data[4] + "' file uploading. Please try again!");
         }
         if (data[1] == true) {
-          // $('#msg').html("<span style='color:red;'>File with the same name already exists ('"+data[4]+"'). Rename your file, or try again (we will do our best)!</span>");
           alert("File with the same name already exists ( '" + data[4] + "' ). Rename your file, or try again (we will do our best)!");
         }
         if (data[2] == true) {
-          // $('#msg').html("<span style='color:red;'>Please choose a file!</span>");
           alert("Please choose a file!");
         }
         if (data[3] == true) {
-          // $('#msg').html("<span style='color:red;'>Please choose a json file (.json)</span>");
           alert("Please choose a json file (.json)");
         }
       }
     },
     error: function(xhr, status, error) {
-      alert(xhr.responseText);
+      console.log(xhr.responseText);
     },
   });
 });

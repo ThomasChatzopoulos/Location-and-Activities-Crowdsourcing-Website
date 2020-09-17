@@ -16,25 +16,22 @@ else {
 
     $result = mysqli_query($conn, $query);
     if(!$result) {
-      // exit();
+      exit();
     }
-    else {
-      while ($row_2 = mysqli_fetch_assoc($result)) {
-        $username = $row_2['username'];
-      }
+    while ($row_2 = mysqli_fetch_assoc($result)) {
+      $username = $row_2['username'];
       $record_per_user[$username] = $row['COUNT(userId)'];
       $counter_u += $row['COUNT(userId)'];
     }
-    $record_per_user_table = $record_per_user;
-
-    foreach ($record_per_user as $key => $value) {
-    $record_per_user[$key] = round(($record_per_user[$key]/$counter_u)*100,3);
-    }
-    arsort($record_per_user);
-    arsort($record_per_user_table);
-    //colours for chart
-    $colours_rec = set_Chart_colours($record_per_user);
   }
+  $record_per_user_table = $record_per_user;
+  foreach ($record_per_user as $key => $value) {
+    $record_per_user[$key] = round(($record_per_user[$key]/$counter_u)*100,3);
+  }
+  arsort($record_per_user);
+  arsort($record_per_user_table);
+  //colours for chart
+  $colours_rec = set_Chart_colours($record_per_user);
   echo json_encode(array($record_per_user, $colours_rec, $record_per_user_table));
 }
 ?>

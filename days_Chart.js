@@ -29,7 +29,7 @@ $(document).ready(function() {
 
 
       var barChart = new Chart(myChart, {
-        type: 'pie',
+        type: 'bar',
         data:{
           labels:types,
           datasets:[{

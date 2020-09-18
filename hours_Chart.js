@@ -27,7 +27,7 @@ $(document).ready(function() {
       var colours = Object.values(colours_obj_hours);
 
       var DonChart = new Chart(myChart, {
-        type: 'doughnut',
+        type: 'bar',
         data:{
           labels:types,
           datasets:[{

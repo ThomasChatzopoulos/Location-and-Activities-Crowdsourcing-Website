@@ -110,7 +110,7 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
 
   if(!$erroryear && !$errormonth && !$errorday && !$errorhour && !$erroractivity)
   {
-    if($_POST['submit'] == 'true') {      // TODO: CHECK FOR EASIER WAY
+    if($_POST['submit'] == 'true') {
       include 'heatmap_data.php';
       $datapoints = heatmapdata($timestamps, $activities);
       echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>$datapoints, 'result3'=>null));
@@ -122,24 +122,29 @@ if ($_POST['submit'] || $_POST['exp_submit']) {  //submit button
       for($i=0; $i<count($timestamps); $i+=2){
         $ts1 = $timestamps[$i];
         $ts2 = $timestamps[$i+1];
-        $sql = "SELECT heading, velocity, accuracy, longitude, latitude, altitude, timestampMs, userId FROM `usermapdata` WHERE timestampMs BETWEEN $ts1 AND $ts2";
-        $select_result = mysqli_query($conn,$sql);
-
-        if(!$select_result){
-          exit();
+        $where.= " (timestampMs BETWEEN ". $ts1. " AND ". $ts2.") ";
+        if($i<(count($timestamps)-2)){
+          $where.= "OR";
         }
-        else {
-          while ($row = mysqli_fetch_assoc($select_result)) {
-            $userId = $row['userId'];
-            unset($row['userId']);
-            $row = add_activity_info($row, $activities, $conn);
-            if($row != false) {
-              $row['userId'] = $userId;
-              array_push($export_array, $row);
-            }
+      }
+      $sql = "SELECT heading, velocity, accuracy, longitude, latitude, altitude, timestampMs, userId FROM `usermapdata` WHERE $where";
+      $select_result = mysqli_query($conn,$sql);
+
+      if(!$select_result){
+        exit();
+      }
+      else {
+        while ($row = mysqli_fetch_assoc($select_result)) {
+          $userId = $row['userId'];
+          unset($row['userId']);
+          $row = add_activity_info($row, $activities, $conn);
+          if($row != false) {
+            $row['userId'] = $userId;
+            array_push($export_array, $row);
           }
         }
       }
+
       $result_r=export_data($export_array, $_POST['exp_type']);
       $export_results=array($result_r);
       echo json_encode(array('result1'=>array($erroryear, $errormonth, $errorday, $errorhour, $erroractivity), 'result2'=>null,'result3'=>$export_results));

@@ -81,6 +81,9 @@ BEGIN
 	IF NEW.ON_BICYCLE > 0 THEN
 		SET @eco_score=@eco_score+NEW.ON_BICYCLE;
   END IF;
+  IF NEW.ON_FOOT > 0 THEN
+    SET @eco_score=@eco_score+NEW.ON_FOOT;
+  END IF;
 	IF NEW.RUNNING > 0 THEN
 		SET @eco_score=@eco_score+NEW.RUNNING;
   END IF;

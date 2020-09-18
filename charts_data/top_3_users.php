@@ -7,6 +7,9 @@
   while ($row = mysqli_fetch_assoc($connected_user_id_result)) {
     $connected_user_id = sprintf($row['userID']);
   }
+
+  $connected_user_score=0;
+
   $nowtime = intval(sprintf('%d000',time()));
   $this_months_sec = time() - strtotime("1-".(date("m-Y",time())));
 
@@ -44,10 +47,11 @@
   $top_users_table=array();
   $users_rank_table=array();
   $users_eco_act_array=array();
+  $connected_user_rank=0;
 
   $number_of_users_act_query = "SELECT COUNT(eco), userMapData_userId FROM user_activity
   WHERE ($nowtime - activity_timestamp)/1000 < $this_months_sec GROUP BY userMapData_userId";
-  $number_of_users_eco_act_query = "SELECT COUNT(eco) FROM user_activity
+  $number_of_users_eco_act_query = "SELECT COUNT(eco), userMapData_userId FROM user_activity
   WHERE eco=1 AND ($nowtime - activity_timestamp)/1000 < $this_months_sec GROUP BY userMapData_userId";
 
   $number_of_users_act_results = mysqli_query($conn, $number_of_users_act_query);
@@ -64,31 +68,27 @@
   }
 
   while ($row = mysqli_fetch_assoc($number_of_users_eco_act_result)) {
-      $users_eco_act_array[]=$row['COUNT(eco)'];  //$users_eco_act_array[]: $key: increasing numbering, $value: number of eco user registrations
+      $users_eco_act_array[$row['userMapData_userId']]=$row['COUNT(eco)'];  //$users_eco_act_array[]: $key: increasing numbering, $value: number of eco user registrations
   }
-
   $counter=0;
   foreach ($users_act_array as $key => $value) {
-    $temp_top_users[$key] = $users_eco_act_array[$counter]/$value; // $temp_top_users[]: $key: userId, $value: eco percent
-    $counter++;
-  }
-
-  // print_r($temp_top_users);
-
-  if(!is_null($temp_top_users)){
-    arsort($temp_top_users);
-
-    if($connected_user_score !=0){
-      $counter=1;
-      foreach ($temp_top_users as $key => $value) { // check if user is in top 3
-        if($key==$connected_user_id){
-            $connected_user_rank = $counter;
-        }
-        $counter++;
-      }
+    if(isset($users_eco_act_array[$key])){
+      $temp_top_users[$key] = $users_eco_act_array[$key]/$value; // $temp_top_users[]: $key: userId, $value: eco percent
     }
     else{
-      $connected_user_rank = count($temp_top_users)+1;
+      $temp_top_users[$key] = 0;
+    }
+  }
+
+  if($temp_top_users!=null){
+    arsort($temp_top_users);
+
+    $counter=1;
+    foreach ($temp_top_users as $key => $value) { // check if user is in top 3
+      if($key==$connected_user_id){
+          $connected_user_rank = $counter;
+      }
+      $counter++;
     }
 
     if($connected_user_rank<=3){
@@ -104,7 +104,6 @@
       $user_names_query = sprintf("SELECT name, surname FROM user WHERE userId = '$key'");
       $user_names_result = mysqli_query($conn, $user_names_query);
       if(!$user_names_result){
-        echo "SQL error <br>";
         exit();
       }
       while ($row = mysqli_fetch_assoc($user_names_result)) {
@@ -115,7 +114,6 @@
     $connected_user_name_query = sprintf("SELECT name, surname FROM user WHERE userId = '%s'", mysqli_real_escape_string($conn,$connected_user_id));
     $connected_user_name_result = mysqli_query($conn, $connected_user_name_query);
     if(!$connected_user_name_result){
-      echo "SQL error <br>";
       exit();
     }
 
@@ -136,6 +134,19 @@
         $counter++;
       }
     }
-}
-echo json_encode(array($top_users_table,$users_rank_table));
+    echo json_encode(array($top_users_table,$users_rank_table));
+  }else{
+    $connected_user_name_query = sprintf("SELECT name, surname FROM user WHERE userId = '%s'", mysqli_real_escape_string($conn,$connected_user_id));
+    $connected_user_name_result = mysqli_query($conn, $connected_user_name_query);
+    if(!$connected_user_name_result){
+      exit();
+    }
+
+    while ($row = mysqli_fetch_assoc($connected_user_name_result)) {
+      $connected_user_name = sprintf($row['name']." ".substr($row['surname'],0,1));
+      $top_users_table["You"]=0;
+      $users_rank_table[0] = 1;
+    }
+    echo json_encode(array($top_users_table,$users_rank_table));
+  }
 ?>

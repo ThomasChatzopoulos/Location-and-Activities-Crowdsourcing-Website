@@ -44,7 +44,7 @@
     if($counter!=0){
       arsort($activity_type);
       foreach ($activity_type as $key_1 => $value_1) {
-        $activity_type[$key_1] = round(($activity_type[$key_1]/$counter)*100,2);//TODO: αν βγαίνει 99,9- ή 100,01+
+        $activity_type[$key_1] = round(($activity_type[$key_1]/$counter)*100,2);
       }
       $colours_act = set_Chart_colours($activity_type);
 

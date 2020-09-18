@@ -14,6 +14,7 @@
   $months=array();
   $eco_months=array();
   $user_score=array();
+  $colours_months=array();
 
   $nowtime = intval(sprintf('%d000',time()));
   $previus_months_sec = time() - strtotime("1-".(date("m",time())+1)."-".(date("Y",time())-1)); //sec for (11 months + this month days) before today
@@ -38,9 +39,6 @@
   while ($row = mysqli_fetch_assoc($eco_user_activities_result)) {
     $eco_user_activities_timestamps[] = ($row['activity_timestamp'])/1000;
   }
-
-  // print_r($all_user_activities_timestamps);
-  // print_r($eco_user_activities_timestamps);
 
   if(isset($all_user_activities_timestamps) && isset($eco_user_activities_timestamps)){
     $months_counter = 0;
@@ -69,7 +67,12 @@
     }
 
     foreach ($months as $key => $value) {
-      $user_score[$key]=round(($eco_months[$key]/$months[$key])*100,2);
+      if(isset($eco_months[$key]) && isset($months[$key])){
+        $user_score[$key]=round(($eco_months[$key]/$months[$key])*100,2);
+      }
+      elseif(isset($months[$key])){
+        $user_score[$key]=0;
+      }
     }
     if(isset($user[date("m",time())])){
       $this_month_score = $user[date("m",time())];
@@ -79,14 +82,12 @@
     }
     if($user_score!=null){
       arsort($user_score);
+      $colours_months = set_Chart_colours($user_score);
+
     }
-    // echo "<br>";
-    // print_r($user_score);
-    $colours_months = set_Chart_colours($user_score);
   }else{
     $user_score[date("F",time())]=0;
     $colours_months=set_Chart_colours($user_score);
   }
-
   echo json_encode(array($user_score, $colours_months, $user_score));
 ?>

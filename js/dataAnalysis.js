@@ -7,6 +7,13 @@ function chart_date_range(a) {
   var select_allmonths_u = $("#allMonthsCheckBox_u").is(":checked");
   var submit = a;
 
+  if(startyear==="" && endyear==="" && select_allyears_u==false) {
+    alert("Year range required");
+  }
+  else if(startmonth==="" && endmonth==="" && select_allmonths_u==false) {
+    alert("Month range required");
+  }
+
   $.ajax({
     type: 'POST',
     url: "userDataAnalysis.php",

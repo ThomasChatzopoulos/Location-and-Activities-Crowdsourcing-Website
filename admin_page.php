@@ -122,26 +122,6 @@ if(!isset($_SESSION['username'])) {
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Hour Distribution Chart</h2>
-                        <canvas id="hours_chart"></canvas>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                        <h2 class="tm-block-title">Records per Hour</h2>
-                        <table class="table" id="hours_table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">HOUR</th>
-                                    <th scope="col">COLOR</th>
-                                    <th scope="col">RECORDS NO.</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block">
                         <h2 class="tm-block-title">Month Distribution Chart</h2>
                         <canvas id="months_chart"></canvas>
                     </div>
@@ -153,26 +133,6 @@ if(!isset($_SESSION['username'])) {
                             <thead>
                                 <tr>
                                     <th scope="col">MONTH</th>
-                                    <th scope="col">COLOR</th>
-                                    <th scope="col">RECORDS NO.</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block">
-                        <h2 class="tm-block-title">Year Distribution Chart</h2>
-                        <canvas id="years_chart"></canvas>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                        <h2 class="tm-block-title">Records per Year</h2>
-                        <table class="table" id="years_table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">YEAR</th>
                                     <th scope="col">COLOR</th>
                                     <th scope="col">RECORDS NO.</th>
                                 </tr>
@@ -200,6 +160,47 @@ if(!isset($_SESSION['username'])) {
                         </table>
                     </div>
                 </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block">
+                        <h2 class="tm-block-title">Hour Distribution Chart</h2>
+                        <canvas id="hours_chart"></canvas>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                        <h2 class="tm-block-title">Records per Hour</h2>
+                        <table class="table" id="hours_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">HOUR</th>
+                                    <th scope="col">COLOR</th>
+                                    <th scope="col">RECORDS NO.</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block">
+                        <h2 class="tm-block-title">Year Distribution Chart</h2>
+                        <canvas id="years_chart"></canvas>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                        <h2 class="tm-block-title">Records per Year</h2>
+                        <table class="table" id="years_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">YEAR</th>
+                                    <th scope="col">COLOR</th>
+                                    <th scope="col">RECORDS NO.</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
     </div>
     <script>
       Chart.defaults.global.defaultFontColor = 'white';

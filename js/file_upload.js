@@ -32,6 +32,7 @@ $('#file_form').submit(function(e) {
 
           },
           error: function(xhr, status, error) {
+            alert("Invalid file");
             console.log(xhr.responseText);
           }
         });

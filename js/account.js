@@ -1,3 +1,4 @@
+var connected_username = "";
 $(document).ready(function() {
   $.ajax({
     type: 'POST',
@@ -11,7 +12,6 @@ $(document).ready(function() {
       var firstname = document.getElementById("name_label");
       var lastname = document.getElementById('last_label');
       var username = document.getElementById('username_label');
-
       var  user_data = data.result1;
       var counter=0;
 
@@ -24,6 +24,7 @@ $(document).ready(function() {
         }
         if(counter==2){
           document.getElementById("username_label").value = user_data[counter];
+          connected_username = user_data[counter];
         }
         if(counter==3){
           document.getElementById("email_label").value = user_data[counter];
@@ -71,16 +72,23 @@ function save_data() {
       if(data.result2==0){
         alert("Successful data update!");
       }
-      if(data.result2==1){
+      else if(data.result2==1){
         alert("There are no changes!");
       }
-      if(data.result2==2){
+      else if(data.result2==2){
         alert("There was a problem updating your data");
+      }
+      else if(data.result2==3){
+        alert("Admin can't change username!");
+        document.getElementById('username_label').value = 'admin';
+      }
+      else if(data.result2==4){
+        alert("Username already exists!");
+        document.getElementById('username_label').value = connected_username;
       }
     },
     error: function(xhr, status, error) {
-      var err = eval("(" + xhr.responseText + ")");
-      alert(err.Message);
+      console.log(xhr);
     }
   });
 }

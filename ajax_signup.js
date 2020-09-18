@@ -28,7 +28,7 @@ $(document).ready(function() {
         success: function(data) {
           if(data[0] == false && data[1] == false && data[2] == false && data[3] == false) {
             if(username == 'admin') {
-              window.location = "admin_page.php";
+              window.location = "adminDashboardPage.php";
               alert("Sign Up successful");
             }
             else {

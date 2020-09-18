@@ -147,15 +147,9 @@ if(!isset($_SESSION['username'])) {
   <script src="js/user_file_data.js"></script>
   <script src="js/user_score.js"></script>
   <script src="js/connected_user_name.js"></script>
-
   <script src="js/jquery-3.3.1.min.js"></script>
-  <!-- https://jquery.com/download/ -->
   <script src="js/moment.min.js"></script>
-  <!-- https://momentjs.com/ -->
-  <!-- <script src="js/Chart.min.js"></script> -->
-  <!-- http://www.chartjs.org/docs/latest/ -->
   <script src="js/bootstrap.min.js"></script>
-  <!-- https://getbootstrap.com/ -->
 
 </body>
 </html>

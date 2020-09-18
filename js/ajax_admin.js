@@ -50,7 +50,7 @@ function date_ranges(a, b) {
     else {
       $.ajax({
         type: 'POST',
-        url: "admin.php",
+        url: "adminDataAnalysis.php",
         data: {
           startyear: startyear,
           endyear: endyear,

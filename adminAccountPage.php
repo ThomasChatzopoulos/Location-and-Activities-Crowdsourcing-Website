@@ -30,13 +30,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto h-100">
             <li class="nav-item">
-                <a class="nav-link" href="admin_page.php">
+                <a class="nav-link" href="adminDashboardPage.php">
                     <i class="fas fa-tachometer-alt"></i>
                     Dashboard
                 </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"  href="adminPage.php">
+              <a class="nav-link"  href="adminDataAnalysisPage.php">
                 <i class="far fa-chart-bar"></i>
                 Data analysis
               </a>

@@ -20,10 +20,7 @@ if(!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="css/templatemo-style.css">
-    <!--
-	Product Admin CSS Template
-	https://templatemo.com/tm-524-product-admin
-	-->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"> </script>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
     <script
@@ -45,14 +42,14 @@ if(!isset($_SESSION['username'])) {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto h-100">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="adminDashboardPage.php">
                                 <i class="fas fa-tachometer-alt"></i>
                                 Dashboard
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="adminPage.php">
+                            <a class="nav-link" href="adminDataAnalysisPage.php">
                                 <i class="far fa-chart-bar"></i>
                                 Data analysis
                             </a>
@@ -205,12 +202,12 @@ if(!isset($_SESSION['username'])) {
     <script>
       Chart.defaults.global.defaultFontColor = 'white';
     </script>
-    <script src="activity_type_dChart.js"></script>
-    <script src="user_files_Chart.js"></script>
-    <script src="hours_Chart.js"></script>
-    <script src="months_Chart.js"></script>
-    <script src="years_Chart.js"></script>
-    <script src="days_Chart.js"></script>
+    <script src="js/activity_type_dChart.js"></script>
+    <script src="js/user_files_Chart.js"></script>
+    <script src="js/hours_Chart.js"></script>
+    <script src="js/months_Chart.js"></script>
+    <script src="js/years_Chart.js"></script>
+    <script src="js/days_Chart.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
     <script src="js/moment.min.js"></script>

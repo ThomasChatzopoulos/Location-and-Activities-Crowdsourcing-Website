@@ -7,9 +7,6 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 // FeatureGroup is to store editable layers
 var drawnItems = L.featureGroup().addTo(map);
-//map.addLayer(drawnItems);
-
-//L.control.layers({'drawlayer': drawnItems}, {position: 'topleft', collapsed: false}).addTo(map);
 
 var drawControl = new L.Control.Draw({
   draw: {

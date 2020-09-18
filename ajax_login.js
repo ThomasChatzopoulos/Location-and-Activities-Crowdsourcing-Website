@@ -17,7 +17,7 @@ $(document).ready(function() {
                 success: function(data) {
                   if(data[0] == false && data[1] == false) {
                     if(username == 'admin') {
-                      window.location = "admin_page.php";
+                      window.location = "adminDashboardPage.php";
                     }
                     else {
                       window.location = "userDashboard.php";

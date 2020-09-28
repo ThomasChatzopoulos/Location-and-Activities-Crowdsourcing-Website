@@ -34,11 +34,11 @@
       $duplicate_username_result = mysqli_query($conn, $duplicate_username_query);
       while ($number_of_users = mysqli_fetch_row($duplicate_username_result)) {
         $duplicate_username_number = $number_of_users[0];
-    }
-      if($duplicate_username_number == 0) {
+      }
+      if($duplicate_username_number == 0 && $_POST['new_username']!=$users_act_array[2]) {
         if($_SESSION['username'] == 'admin') {
           $_POST['new_username'] ='admin';
-          $error = 3;
+          $error = 3; //admin username
         }
         $sql_update='UPDATE user SET name="'.$_POST['new_name'].'", surname="'.$_POST['new_surname'].'",username="'.$_POST['new_username'].'" WHERE userId ="'.$connected_user_id.'"';
         $update_result = mysqli_query($conn, $sql_update);

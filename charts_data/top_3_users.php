@@ -47,7 +47,7 @@
   $top_users_table=array();
   $users_rank_table=array();
   $users_eco_act_array=array();
-  $connected_user_rank=0;
+  $connected_user_rank=4;
 
   $number_of_users_act_query = "SELECT COUNT(eco), userMapData_userId FROM user_activity
   WHERE ($nowtime - activity_timestamp)/1000 < $this_months_sec GROUP BY userMapData_userId";

@@ -209,10 +209,7 @@ if(!isset($_SESSION['username'])) {
     <script src="js/years_Chart.js"></script>
     <script src="js/days_Chart.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
-    <!-- https://jquery.com/download/ -->
     <script src="js/moment.min.js"></script>
-    <!-- https://momentjs.com/ -->
     <script src="js/bootstrap.min.js"></script>
-    <!-- https://getbootstrap.com/ -->
 </body>
 </html>

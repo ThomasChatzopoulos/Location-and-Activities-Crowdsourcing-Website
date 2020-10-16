@@ -33,3 +33,15 @@ Dashboard that visualizes all the user's data providing information about:
 Export user data filtered by year/month/day/hour and activity type
 
 ![](GIFS/Export_Erase.png)
+
+### User
+Dashboard that visualizes the user's data providing information about:
+* the user eco-movement score for the last 12 months
+* the period covered by user records and the date of last file upload
+* the 3 users with the highest eco-score for the current month in a leaderboard and the position of the user
+
+![](GIFS/user_dashboard.png)
+
+Upload new JSON file rejecting unwanted locations from the wider area of Patras
+
+![](GIFS/file_upload.gif)
